@@ -1,0 +1,30 @@
+[submodule "opt/vim-pathogen/.vim/bundle/pathogen"]
+	path = opt/vim-pathogen/.vim/bundle/pathogen
+	url = https://github.com/tpope/vim-pathogen.git
+[submodule "opt/vim-fugitive/.vim/bundle/fugitive"]
+	path = opt/vim-fugitive/.vim/bundle/fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "opt/vim-surround/.vim/bundle/surround"]
+	path = opt/vim-surround/.vim/bundle/surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "opt/vim-commentary/.vim/bundle/commentary"]
+	path = opt/vim-commentary/.vim/bundle/commentary
+	url = https://github.com/tpope/vim-commentary.git
+[submodule "opt/vim-gitgutter/.vim/bundle/gitgutter"]
+	path = opt/vim-gitgutter/.vim/bundle/gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git
+[submodule "opt/vim-gnupg/.vim/bundle/gnupg"]
+	path = opt/vim-gnupg/.vim/bundle/gnupg
+	url = https://github.com/jamessan/vim-gnupg.git
+[submodule "opt/vim-lightline/.vim/bundle/lightline"]
+	path = opt/vim-lightline/.vim/bundle/lightline
+	url = https://github.com/itchyny/lightline.vim.git
+[submodule "opt/vim-nerdtree/.vim/bundle/nerdtree"]
+	path = opt/vim-nerdtree/.vim/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "opt/vim-supertab/.vim/bundle/supertab"]
+	path = opt/vim-supertab/.vim/bundle/supertab
+	url = https://github.com/ervandew/supertab.git
+[submodule "opt/vim-markdown/.vim/bundle/markdown"]
+	path = opt/vim-markdown/.vim/bundle/markdown
+	url = https://github.com/plasticboy/vim-markdown.git
