@@ -1,0 +1,29 @@
+#!/bin/sh
+export HISTFILE="${XDG_CACHE_HOME}/sh/history"
+# for OSX
+export CLICOLOR_FORCE=1
+alias less='less -R'
+
+if [ -d "${HOME}/.config/dotfiles/etc/rc.d" ]; then
+    for i in ${HOME}/.config/dotfiles/etc/rc.d/*.sh; do
+        if [ -r "${i}" ]; then
+            . "${i}"
+        fi
+    done
+    unset i
+fi
+# Load all of the plugins
+__dir_dotfiles_startup="${DFC}/etc/rc.d"
+if [ -d "${__dir_dotfiles_startup}" ]; then
+    __script_count=$(find "${__dir_dotfiles_startup}/" -name '*.sh' | wc -l | awk '{print $1}')
+    if [ "${__script_count}" -gt 0 ]; then
+        for plugin in ${__dir_dotfiles_startup}/*.sh; do
+            if [ -r "${plugin}" ]; then
+                . "${plugin}"
+            fi
+        done
+        unset plugin
+    fi
+    unset __script_count
+fi
+unset __dir_dotfiles_startup

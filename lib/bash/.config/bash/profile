@@ -1,0 +1,28 @@
+#!/bin/bash
+if [ -s "${HOME}/.config/sh/profile" ]; then
+    . "${HOME}/.config/sh/profile"
+fi
+if [ -s "${BASH_ENV}" ]; then
+    . "${BASH_ENV}"
+fi
+BASH_ENV=
+# Load all of the plugins
+__dir_dotfiles_startup="${DFC}/etc/profile.d"
+if [ -d "${__dir_dotfiles_startup}" ]; then
+    __script_count=$(find "${__dir_dotfiles_startup}/" -name '*.bash' | wc -l | awk '{print $1}')
+    if [ "${__script_count}" -gt 0 ]; then
+        for plugin in ${__dir_dotfiles_startup}/*.bash; do
+            if [ -r "${plugin}" ]; then
+                . "${plugin}"
+            fi
+        done
+        unset plugin
+    fi
+    unset __script_count
+fi
+unset __dir_dotfiles_startup
+if [ -n "${PS1}" ]; then
+    if [ -s "${HOME}/.config/bash/rc" ]; then
+        . "${HOME}/.config/bash/rc"
+    fi
+fi
