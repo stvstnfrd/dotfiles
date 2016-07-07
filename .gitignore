@@ -1,0 +1,4 @@
+# Local configuration
+/etc/
+# Private modules
+/usr/
