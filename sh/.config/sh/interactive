@@ -1,0 +1,32 @@
+#!/bin/sh
+if [ -n "${debug}" ]; then
+    echo 'funk:sh:interactive'
+fi
+# Configure common interactive shells
+export HISTFILE="${XDG_CACHE_HOME}/sh/history"
+export HISTSIZE=10000
+export HISTFILESIZE=1000000
+
+# for OSX
+export CLICOLOR_FORCE=1
+alias less='less -R'
+
+# Load all of the plugins
+__dir_dotfiles_startup="${DFC}/interactive.d"
+if [ -d "${__dir_dotfiles_startup}" ]; then
+    __script_count=$(find "${__dir_dotfiles_startup}/" -name '*.sh' | wc -l | awk '{print $1}')
+    if [ "${__script_count}" -gt 0 ]; then
+        for plugin in ${__dir_dotfiles_startup}/*.sh; do
+            if [ -r "${plugin}" ]; then
+                . "${plugin}"
+            fi
+        done
+        unset plugin
+    fi
+    unset __script_count
+fi
+unset __dir_dotfiles_startup
+
+PS1=""
+PS1="${PS1}\n# "
+export PS1

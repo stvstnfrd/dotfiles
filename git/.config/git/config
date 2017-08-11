@@ -1,0 +1,108 @@
+[alias]
+	a = add
+	ap = add --patch
+	au = add -u
+	b = branch -vvvv
+	ba = branch --all
+	bam = branch --all --merged
+	bd = branch --delete
+	bm = branch --merged
+	c = commit
+	ca = commit --amend
+	cm = commit -m
+	cms = commit -m 'TODO: squash'
+	d = diff
+	da = apply
+	dc = diff --cached
+	dm = diff master
+	dom = diff origin/master
+	dum = diff upstream/master
+	e = format-patch
+	ea = am
+	es = send-email
+	f = fetch
+	fo = fetch origin
+	fop = fetch origin --prune
+	fu = fetch upstream
+	fup = fetch upstream --prune
+	g = grep
+	h = hub
+	hh = hub help
+	hi = hub issue
+	his = hub issues
+	i = !test ! -d "${GIT_DIR:-./.git}" && git init && git commit --allow-empty -m 'Initialize empty directory'
+	k = checkout
+	k- = checkout --
+	kb = checkout -b
+	km = checkout master
+	l = log
+	lh = !git log | head
+	lp = log --patch --pretty=medium
+	lpr = log --patch --pretty=medium --reverse
+	lr = log --reverse
+	last = !git log -1 | cat
+	m = merge
+	ma = merge --abort
+	mn = merge --no-ff
+	mnl = merge --no-ff --log=30000
+	mom = merge origin/master
+	ms = merge --squash
+	mum = merge upstream/master
+	o = clone
+	p = push
+	pd = push downstream
+	pdu = push -u downstream
+	pdm = push downstream master
+	po = push origin
+	pom = push origin master
+	q = blame
+	r = rebase
+	ra = rebase --abort
+	rc = rebase --continue
+	resolve-all = "!git status -sb | grep UU | sed 's/^UU //' | xargs vi"
+	ri = rebase -i
+	rim = rebase -i master
+	riom = rebase -i origin/master
+	rium = rebase -i upstream/master
+	rom = rebase origin/master
+	rorc = rebase origin/rc
+	rum = rebase upstream/master
+	s = status -sb
+	t = stash
+	ta = stash apply
+	tl = stash list
+	u = submodule
+	ua = submodule add
+	unstage = reset HEAD --
+	v = revert
+	w = show
+	x = reset
+	y = cherry-pick
+	ya = cherry-pick --abort
+	yn = cherry-pick --no-commit
+	yx = cherry-pick -x
+	z = remote -vvvv
+	za = remote add
+	zn = remote rename
+	zr = remote remove
+
+[core]
+	excludesfile = ~/.config/git/ignore
+	pager = diff-so-fancy | less --tabs=1,5 -R
+
+[format]
+	pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+
+[include]
+	path = ~/.config/git/config.local
+
+[url "git@github.com"]
+	insteadOf = "hub"
+
+[filter "media"]
+	clean = git media clean %f
+	smudge = git media smudge %f
+	required = true
+
+[push]
+	default = simple

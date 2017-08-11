@@ -1,0 +1,25 @@
+#!/bin/sh
+if [ -n "${debug}" ]; then
+    echo 'funk:sh:environment'
+fi
+# https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html
+export XDG_CACHE_HOME=${HOME}/.cache
+export XDG_CONFIG_DIRS=/etc/xdg
+export XDG_CONFIG_HOME=${HOME}/.config
+export XDG_DATA_DIRS=/usr/local/share/:/usr/share/
+export XDG_DATA_HOME=${HOME}/.local/share
+# Then a few more basic paths
+export DFC=${XDG_CONFIG_HOME}/dotfiles
+PATH="/bin"
+PATH="/sbin:${PATH}"
+PATH="/usr/bin:${PATH}"
+PATH="/usr/sbin:${PATH}"
+PATH="/opt/X11/bin:${PATH}"
+PATH="/usr/local/bin:${PATH}"
+PATH="/usr/local/sbin:${PATH}"
+PATH="${HOME}/local/bin:${PATH}"
+PATH="${HOME}/bin:${PATH}"
+export PATH
+# This path is sourced by interactive POSIX shells
+export ENV=${XDG_CONFIG_HOME}/sh/interactive
+export BASH_ENV=${XDG_CONFIG_HOME}/bash/environment
