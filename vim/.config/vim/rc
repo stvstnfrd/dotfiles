@@ -106,6 +106,7 @@ nmap <leader>ga <Plug>GitGutterStageHunk
 nmap <leader>gx <Plug>GitGutterUndoHunk
 nmap <leader>gb :Gblame<cr>
 nmap <leader>gs :Gstatus<cr>
+" let g:gitgutter_highlight_lines = 1
 
 " OSX-specific copy/paste
 nmap <leader>P :set paste!<cr>
