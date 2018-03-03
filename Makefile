@@ -47,4 +47,5 @@ vagrant:  ## Perform vagrant tasks
 	rm /home/vagrant/.bash_logout || true
 	usermod -s /usr/bin/zsh vagrant
 	hostname dotfiles
+	chown -R vagrant:vagrant /home/vagrant
 	cd $(DOTFILES) && sudo -u vagrant -H make install
