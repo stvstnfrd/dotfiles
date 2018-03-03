@@ -20,6 +20,12 @@ install:  ## Stow/symlinked packages into your ${HOME} directory
 		$(STOW) --restow $$filename; \
 	done
 
+.PHONY: system
+system:  ## Install system packages (linux only)
+	$(SUDO) apt-get update
+	$(SUDO) apt-get install -y $(APT_PACKAGES)
+	$(SUDO) apt-get autoremove -y
+
 .PHONY: uninstall
 uninstall:  ## Remove symlinked packages from your ${HOME} and ${DFC} directories
 	@for package in $(PACKAGES); do \
@@ -34,28 +40,11 @@ update:  ## Update the core code and all submodules
 	git submodule init
 	git submodule update --recursive
 
-.PHONY: prerequisites
-prerequisites:  ## Install required system packages
-	$(SUDO) apt-get update
-	$(SUDO) apt-get install -y $(APT_PACKAGES)
-	$(SUDO) apt-get autoremove -y
+.PHONY: vagrant
+vagrant:  ## Perform vagrant tasks
 	rm /home/vagrant/.profile || true
 	rm /home/vagrant/.bashrc || true
 	rm /home/vagrant/.bash_logout || true
-	test -e $(HOME)/dotfiles || \
-		sudo -u vagrant -H git clone --recursive https://github.com/stvstnfrd/dotfiles.git $(DOTFILES)
-	cd $(DOTFILES) && sudo -u vagrant -H git checkout v1
-	cd $(DOTFILES) && sudo -u vagrant -H git submodule init
-	cd $(DOTFILES) && sudo -u vagrant -H git submodule update --recursive
-	cd $(DOTFILES) && sudo -u vagrant -H make install
-	hostname demo
 	usermod -s /usr/bin/zsh vagrant
-	# $(SUDO) pip install --upgrade pip
-	# $(SUDO) pip install --upgrade virtualenv virtualenvwrapper
-	# $(SUDO) pip install --upgrade ansible
-	# easy_install pip
-	# sudo -u vagrant -H git clone https://github.com/alanctkc/dotfiles.git /home/vagrant/.config/dotfiles
-	# pushd /home/vagrant/.config/dotfiles
-	# sudo -u vagrant -H ./bootstrap.sh --no-i3 --git-name "Vagrant User" --git-email vagrant@example.com
-	# sudo -u vagrant -H ./bootstrap.sh --delete-backups
-	# popd
+	hostname dotfiles
+	cd $(DOTFILES) && sudo -u vagrant -H make install
