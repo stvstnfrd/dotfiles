@@ -3,8 +3,6 @@ PREFIX=$(HOME)
 PACKAGES=$(shell find . -maxdepth 1 -mindepth 1 -type d ! -path '.\/.*' | sed 's/^..//' | sort)
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
-SUDO=sudo
-DOTFILES=/home/vagrant/dotfiles
 APT_PACKAGES=python-dev python-setuptools git zsh curl stow python-pip build-essential virtualenvwrapper
 
 .PHONY: help
@@ -22,9 +20,9 @@ install:  ## Stow/symlinked packages into your ${HOME} directory
 
 .PHONY: system
 system:  ## Install system packages (linux only)
-	$(SUDO) apt-get update
-	$(SUDO) apt-get install -y $(APT_PACKAGES)
-	$(SUDO) apt-get autoremove -y
+	apt-get update
+	apt-get install -y $(APT_PACKAGES)
+	apt-get autoremove -y
 
 .PHONY: uninstall
 uninstall:  ## Remove symlinked packages from your ${HOME} and ${DFC} directories
@@ -41,11 +39,10 @@ update:  ## Update the core code and all submodules
 	git submodule update --recursive
 
 .PHONY: vagrant
-vagrant:  ## Perform vagrant tasks
+vagrant: system  ## Perform vagrant tasks
 	rm /home/vagrant/.profile || true
 	rm /home/vagrant/.bashrc || true
 	rm /home/vagrant/.bash_logout || true
 	usermod -s /usr/bin/zsh vagrant
 	hostname dotfiles
-	chown -R vagrant:vagrant /home/vagrant
 	cd $(DOTFILES) && sudo -u vagrant -H make install
