@@ -51,9 +51,10 @@ update:  ## Update the core code and all submodules
 
 .PHONY: vagrant
 vagrant: system  ## Perform vagrant tasks
-	rm /home/vagrant/.profile || true
-	rm /home/vagrant/.bashrc || true
-	rm /home/vagrant/.bash_logout || true
+	rm -f /home/vagrant/.profile
+	rm -f /home/vagrant/.bashrc
+	rm -f /home/vagrant/.bash_logout
+	rm -f /home/vagrant/.sudo_as_admin_successful
 	usermod -s /usr/bin/zsh vagrant
 	hostname dotfiles
 	cd $(DOTFILES) && sudo -u vagrant -H make install
