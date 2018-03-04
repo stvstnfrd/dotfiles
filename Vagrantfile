@@ -7,8 +7,26 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision 'shell' do |s|
     s.path = 'Makefile'
     s.args = [
-        'DOTFILES=/home/vagrant/.dotfiles',
         'vagrant',
+    ]
+  end
+  config.vm.provision 'shell' do |s|
+    s.path = 'Makefile'
+    s.privileged = false
+    s.args = [
+        '-C',
+        '.dotfiles',
+        'install',
+    ]
+  end
+  config.vm.provision 'shell',
+    privileged: false,
+    inline: 'pip install --user --upgrade pip'
+  config.vm.provision 'shell' do |s|
+    s.path = 'Makefile'
+    s.privileged = false
+    s.args = [
+        'python',
     ]
   end
   config.vm.synced_folder './', '/home/vagrant/.dotfiles',

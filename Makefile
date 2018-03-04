@@ -4,8 +4,9 @@ PACKAGES=$(shell find . -maxdepth 1 -mindepth 1 -type d ! -path '.\/.*' | sed 's
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
 APT_PACKAGES=autojump curl git pass stow zsh python-dev python-setuptools python-pip build-essential virtualenvwrapper
+APT_PACKAGES=stow zsh python-dev python-setuptools python-pip build-essential virtualenvwrapper
 BREW_PACKAGES=autojump curl git pass stow zsh
-PYTHON_PACKAGES=ansible pip virtualenv
+PYTHON_PACKAGES=ansible virtualenv
 
 .PHONY: help
 help:  ## This.
@@ -22,7 +23,6 @@ install:  ## Stow/symlinked packages into your ${HOME} directory
 
 .PHONY: python
 python:  ## Install python packages
-	pip install --upgrade pip
 	pip install $(PYTHON_PACKAGES)
 
 .PHONY: system
@@ -56,5 +56,4 @@ vagrant: system  ## Perform vagrant tasks
 	rm -f /home/vagrant/.bash_logout
 	rm -f /home/vagrant/.sudo_as_admin_successful
 	usermod -s /usr/bin/zsh vagrant
-	hostname dotfiles
-	cd $(DOTFILES) && sudo -u vagrant -H make install
+	# sudo -u vagrant -H pip install --user --upgrade pip
