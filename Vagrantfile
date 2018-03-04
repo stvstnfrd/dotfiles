@@ -32,6 +32,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder './', '/home/vagrant/.dotfiles',
     owner: 'vagrant', group: 'vagrant'
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", MEMORY.to_s]
+    vb.customize ['modifyvm', :id, '--memory', MEMORY.to_s]
   end
 end
