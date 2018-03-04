@@ -3,7 +3,9 @@ PREFIX=$(HOME)
 PACKAGES=$(shell find . -maxdepth 1 -mindepth 1 -type d ! -path '.\/.*' | sed 's/^..//' | sort)
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
-APT_PACKAGES=python-dev python-setuptools git zsh curl stow python-pip build-essential virtualenvwrapper
+APT_PACKAGES=autojump curl git pass stow zsh python-dev python-setuptools python-pip build-essential virtualenvwrapper
+BREW_PACKAGES=autojump curl git pass stow zsh
+PYTHON_PACKAGES=ansible pip virtualenv
 
 .PHONY: help
 help:  ## This.
@@ -18,11 +20,19 @@ install:  ## Stow/symlinked packages into your ${HOME} directory
 		$(STOW) --restow $$filename; \
 	done
 
+.PHONY: python
+python:  ## Install python packages
+	pip install $(PYTHON_PACKAGES)
+
 .PHONY: system
 system:  ## Install system packages (linux only)
 	apt-get update
 	apt-get install -y $(APT_PACKAGES)
 	apt-get autoremove -y
+
+.PHONY: osx
+osx:  ## Install MacOS packages via brew
+	brew install $(BREW_PACKAGES)
 
 .PHONY: uninstall
 uninstall:  ## Remove symlinked packages from your ${HOME} and ${DFC} directories
