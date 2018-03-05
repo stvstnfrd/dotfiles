@@ -3,10 +3,9 @@ PREFIX=$(HOME)
 PACKAGES=$(shell find . -maxdepth 1 -mindepth 1 -type d ! -path '.\/.*' | sed 's/^..//' | sort)
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
-APT_PACKAGES=autojump curl git pass stow zsh python-dev python-setuptools python-pip build-essential virtualenvwrapper
-APT_PACKAGES=stow zsh python-dev python-setuptools python-pip build-essential virtualenvwrapper
+APT_PACKAGES=autojump curl git pass stow zsh python-dev python-setuptools python-pip build-essential virtualenv
 BREW_PACKAGES=autojump curl git pass stow zsh
-PYTHON_PACKAGES=ansible virtualenv
+PYTHON_PACKAGES=ansible ptpython virtualenvwrapper
 
 .PHONY: help
 help:  ## This.
