@@ -20,6 +20,12 @@ install:  ## Stow/symlinked packages into your ${HOME} directory
 		$(STOW) --restow $$filename; \
 	done
 
+.PHONY: nix
+nix:  # Install nix package manager
+	sh .requirements/nix.sh
+	. ~/.nix-profile/etc/profile.d/nix.sh
+	nix-env -i git vim curl autojump stow zsh bash
+
 .PHONY: python
 python:  ## Install python packages
 	virtualenv $(HOME)/.local
