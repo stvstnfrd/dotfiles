@@ -2,10 +2,6 @@
 if [ -n "${debug}" ]; then
     echo 'funk:bash:interactive'
 fi
-if [ -s "${HOME}/.config/bash/environment" ]; then
-    . "${HOME}/.config/bash/environment"
-fi
-BASH_ENV=
 if [ -s "${HOME}/.config/sh/interactive" ]; then
     . "${HOME}/.config/sh/interactive"
 fi

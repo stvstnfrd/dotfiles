@@ -1,7 +1,10 @@
 #!/bin/zsh
+# `export debug=1` to trace who sources who
 if [ -n "${debug}" ]; then
     echo 'funk:zsh:interactive'
 fi
+# Perform any interactive zsh-only tasks here
+# This can be aliases,
 ZSH_COMPDUMP="${HOME}/.cache/zsh/compdump-${SHORT_HOST}-${ZSH_VERSION}"
 . "${ZDOTDIR}/.oh-my-zshrc"
 . "${HOME}/.config/sh/interactive"

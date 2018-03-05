@@ -2,8 +2,5 @@
 if [ -n "${debug}" ]; then
     echo 'funk:bash:environment'
 fi
-if [ -s "${HOME}/.config/sh/environment" ]; then
-    . "${HOME}/.config/sh/environment"
-fi
 export PROMPT_COMMAND="history -a; ${PROMPT_COMMAND}"
 export HISTCONTROL=ignorespace:ignoredups
