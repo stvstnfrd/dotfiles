@@ -22,6 +22,8 @@ install:  ## Stow/symlinked packages into your ${HOME} directory
 
 .PHONY: python
 python:  ## Install python packages
+	virtualenv $(HOME)/.local
+	pip install --upgrade pip
 	pip install $(PYTHON_PACKAGES)
 
 .PHONY: system
@@ -55,4 +57,4 @@ vagrant: system  ## Perform vagrant tasks
 	rm -f /home/vagrant/.bash_logout
 	rm -f /home/vagrant/.sudo_as_admin_successful
 	usermod -s /usr/bin/zsh vagrant
-	# sudo -u vagrant -H pip install --user --upgrade pip
+	sudo -u vagrant -H make -C /home/vagrant/.dotfiles install
