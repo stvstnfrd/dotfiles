@@ -1,11 +1,12 @@
+echo 'FUNK AJ zsh'
 export AUTOJUMP_SOURCED=1
 
 # set user installation paths
 if [[ -d ~/.autojump/bin ]]; then
     path=(~/.autojump/bin ${path})
 fi
-if [[ -d ~/.autojump/functions ]]; then
-    fpath=(~/.autojump/functions ${fpath})
+if [[ -d ~/.local/share/autojump/functions ]]; then
+    fpath=(~/.local/share/autojump/functions ${fpath})
 fi
 
 
@@ -19,9 +20,7 @@ fi
 
 
 # set error file location
-if [[ "$(uname)" == "Darwin" ]]; then
-    export AUTOJUMP_ERROR_PATH=~/Library/autojump/errors.log
-elif [[ -n "${XDG_DATA_HOME}" ]]; then
+if [[ -n "${XDG_DATA_HOME}" ]]; then
     export AUTOJUMP_ERROR_PATH="${XDG_DATA_HOME}/autojump/errors.log"
 else
     export AUTOJUMP_ERROR_PATH=~/.local/share/autojump/errors.log

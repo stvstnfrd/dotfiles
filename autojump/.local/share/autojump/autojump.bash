@@ -1,15 +1,8 @@
+echo 'FUNK AJ bash'
 export AUTOJUMP_SOURCED=1
 
-# set user installation paths
-if [[ -d ~/.autojump/ ]]; then
-    export PATH=~/.autojump/bin:"${PATH}"
-fi
-
-
 # set error file location
-if [[ "$(uname)" == "Darwin" ]]; then
-    export AUTOJUMP_ERROR_PATH=~/Library/autojump/errors.log
-elif [[ -n "${XDG_DATA_HOME}" ]]; then
+if [[ -n "${XDG_DATA_HOME}" ]]; then
     export AUTOJUMP_ERROR_PATH="${XDG_DATA_HOME}/autojump/errors.log"
 else
     export AUTOJUMP_ERROR_PATH=~/.local/share/autojump/errors.log
