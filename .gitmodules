@@ -28,3 +28,6 @@
 [submodule "vim-supertab/.config/vim/bundle/supertab"]
 	path = vim-supertab/.config/vim/bundle/supertab
 	url = https://github.com/ervandew/supertab.git
+[submodule "autojump/.config/autojump/src"]
+	path = autojump/.config/autojump/src
+	url = https://github.com/wting/autojump.git
