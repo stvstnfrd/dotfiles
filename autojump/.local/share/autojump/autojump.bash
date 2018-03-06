@@ -1,4 +1,3 @@
-echo 'FUNK AJ bash'
 export AUTOJUMP_SOURCED=1
 
 # set error file location

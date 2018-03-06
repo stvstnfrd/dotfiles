@@ -1,4 +1,3 @@
-echo 'FUNK AJ zsh'
 export AUTOJUMP_SOURCED=1
 
 # set user installation paths
