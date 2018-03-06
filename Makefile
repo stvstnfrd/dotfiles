@@ -28,18 +28,19 @@ nix:  # Install nix package manager
 
 .PHONY: python
 python:  ## Install python packages
-	virtualenv $(HOME)/.local
+	test -e $(HOME)/.local || virtualenv $(HOME)/.local
 	pip install --upgrade pip
 	pip install $(PYTHON_PACKAGES)
 
-.PHONY: system
-system:  ## Install system packages (linux only)
+.PHONY: ubuntu
+ubuntu:  ## Install system packages (linux only)
 	apt-get update
 	apt-get install -y $(APT_PACKAGES)
 	apt-get autoremove -y
 
-.PHONY: osx
-osx:  ## Install MacOS packages via brew
+.PHONY: mac
+mac:  ## Install MacOS packages via brew
+	brew update
 	brew install $(BREW_PACKAGES)
 
 .PHONY: uninstall
@@ -57,7 +58,7 @@ update:  ## Update the core code and all submodules
 	git submodule update --recursive
 
 .PHONY: vagrant
-vagrant: system  ## Perform vagrant tasks
+vagrant: ubuntu  ## Perform vagrant tasks
 	rm -f /home/vagrant/.profile
 	rm -f /home/vagrant/.bashrc
 	rm -f /home/vagrant/.bash_logout
