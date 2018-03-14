@@ -1,0 +1,4 @@
+*.log
+bash/.cache/bash/history
+sh/.cache/sh/history
+git/.config/git/config.local
