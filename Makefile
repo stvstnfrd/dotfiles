@@ -3,8 +3,8 @@ PREFIX=$(HOME)
 PACKAGES=$(shell find . -maxdepth 1 -mindepth 1 -type d ! -path '.\/.*' | sed 's/^..//' | sort)
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
-APT_PACKAGES=autojump curl git pass stow zsh python-dev python-setuptools python-pip build-essential virtualenv
-BREW_PACKAGES=autojump curl git pass stow zsh
+APT_PACKAGES=curl git pass stow zsh python-dev python-setuptools python-pip build-essential virtualenv
+BREW_PACKAGES=curl git pass stow zsh
 PYTHON_PACKAGES=ansible ptpython virtualenvwrapper
 
 .PHONY: help
@@ -24,7 +24,7 @@ install:  ## Stow/symlinked packages into your ${HOME} directory
 nix:  # Install nix package manager
 	sh .requirements/nix.sh
 	. ~/.nix-profile/etc/profile.d/nix.sh
-	nix-env -i git vim curl autojump stow zsh bash
+	nix-env -i git vim curl stow zsh bash
 
 .PHONY: python
 python:  ## Install python packages
