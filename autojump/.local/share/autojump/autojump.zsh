@@ -9,15 +9,6 @@ if [[ -d ~/.local/share/autojump/functions ]]; then
 fi
 
 
-# set homebrew installation paths
-if command -v brew &>/dev/null; then
-  local brew_prefix=${BREW_PREFIX:-$(brew --prefix)}
-  if [[ -d "${brew_prefix}/share/zsh/site-functions" ]]; then
-    fpath=("${brew_prefix}/share/zsh/site-functions" ${fpath})
-  fi
-fi
-
-
 # set error file location
 if [[ -n "${XDG_DATA_HOME}" ]]; then
     export AUTOJUMP_ERROR_PATH="${XDG_DATA_HOME}/autojump/errors.log"
