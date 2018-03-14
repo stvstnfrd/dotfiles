@@ -125,8 +125,6 @@ _pass_complete_keys () {
 	_values 'gpg keys' $(gpg2 --list-secret-keys --with-colons | cut -d : -f 10 | sort -u | sed '/^$/d')
 }
 
-# _pass
-
 compdef _pass pass
 compdef _pass workpass
 zstyle ':completion::complete:workpass::' prefix "$HOME/.team-pass"
