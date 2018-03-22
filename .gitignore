@@ -1,0 +1,7 @@
+*.bak
+*.log
+.netrwhist
+autojump/.local/bin/pip*
+autojump/.local/lib/
+config.local
+history

@@ -1,0 +1,43 @@
+# Set escape character to backtick "`"
+escape `e
+# Manage session
+bind z suspend
+# Create/update/delete regions
+bind s split
+bind t title
+bind q remove
+# Resize regions
+bind + resize +1
+bind - resize -1
+bind = resize =
+bind _ resize max
+bind r resize
+# Navigate with vi-mode
+bind G focus bottom
+bind g focus top
+bind j focus down
+bind k focus up
+# Prevent hangups from terminating screen
+autodetach on
+# Display program/path and window number only with split windows
+caption string '%?%F%{= Bk}%? %t %{= kB} %u%= %?%F%{= Bk}%:%{= wk}%? %n '
+# Preserve more scrollback history; the default of 100 is too low
+defscrollback 10000
+# Default sessions to UTF8
+defutf8 on
+# Pin the status line to the bottom of the screen
+#   Inside the black magic, what it's really doing is creating a line of the form:
+#      [ SYSTEM_NAME ][    window1 window2 ... windowN    ][ DATE TIME ]
+#   It provides basic color support, as well as an active window indicator.
+hardstatus alwayslastline '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %Y/%m/%d %{W}%c %{g}]'
+# Disable message from each new window; it's annoying
+startup_message off
+# https://wiki.archlinux.org/index.php/GNU_Screen
+#   By default, screen uses an 8-color terminal emulator.
+#   First try the generic value:
+term screen-256color
+# If that does not work, try setting it based on the used terminal.
+#   When using xterm-based terminal:
+# term xterm-256color
+#   When using rxvt-unicode:
+# term rxvt-unicode-256color
