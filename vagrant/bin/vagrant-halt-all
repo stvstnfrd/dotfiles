@@ -1,0 +1,5 @@
+#!/bin/sh
+vms=$(VBoxManage list runningvms | awk '{ print $2; }')
+for vm in ${vms}; do
+    VBoxManage controlvm "${vm}" poweroff
+done
