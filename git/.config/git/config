@@ -73,6 +73,7 @@
 	t = stash
 	ta = stash apply
 	tl = stash list
+	tp = stash pop
 	u = submodule
 	ua = submodule add
 	unstage = reset HEAD --
