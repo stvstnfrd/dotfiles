@@ -6,6 +6,7 @@ STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
 APT_PACKAGES=curl git pass stow zsh python-dev python-setuptools python-pip build-essential virtualenv
 BREW_PACKAGES=curl git pass stow zsh
 PYTHON_PACKAGES=ansible ptpython virtualenvwrapper
+VAGRANT_USER=ubuntu
 
 .PHONY: help
 help:  ## This.
@@ -34,9 +35,11 @@ python:  ## Install python packages
 
 .PHONY: ubuntu
 ubuntu:  ## Install system packages (linux only)
-	apt-get update
-	apt-get install -y $(APT_PACKAGES)
-	apt-get autoremove -y
+	apt-get update --yes
+	apt-get upgrade --yes
+	apt-get dist-upgrade --yes
+	apt-get install --yes $(APT_PACKAGES)
+	apt-get autoremove --yes
 
 .PHONY: mac
 mac:  ## Install MacOS packages via brew
@@ -59,9 +62,9 @@ update:  ## Update the core code and all submodules
 
 .PHONY: vagrant
 vagrant: ubuntu  ## Perform vagrant tasks
-	rm -f /home/vagrant/.profile
-	rm -f /home/vagrant/.bashrc
-	rm -f /home/vagrant/.bash_logout
-	rm -f /home/vagrant/.sudo_as_admin_successful
-	usermod -s /usr/bin/zsh vagrant
-	sudo -u vagrant -H make -C /home/vagrant/.dotfiles install
+	rm -f /home/$(VAGRANT_USER)/.profile
+	rm -f /home/$(VAGRANT_USER)/.bashrc
+	rm -f /home/$(VAGRANT_USER)/.bash_logout
+	rm -f /home/$(VAGRANT_USER)/.sudo_as_admin_successful
+	usermod -s /usr/bin/zsh $(VAGRANT_USER)
+	sudo -u $(VAGRANT_USER) -H make -C /home/$(VAGRANT_USER)/.dotfiles install
