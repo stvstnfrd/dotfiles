@@ -3,10 +3,10 @@ PREFIX=$(HOME)
 PACKAGES=$(shell find . -maxdepth 1 -mindepth 1 -type d ! -path '.\/.*' | sed 's/^..//' | sort)
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
-APT_PACKAGES=curl git pass stow zsh python-dev python-setuptools python-pip build-essential virtualenv
-BREW_PACKAGES=curl git pass stow zsh
-PYTHON_PACKAGES=ansible ptpython virtualenvwrapper
-VAGRANT_USER=ubuntu
+APT_PACKAGES=build-essential
+BREW_PACKAGES=sequel-pro
+PYTHON_PACKAGES=ptpython
+NIX_PACKAGES=nixpkgs.gitAndTools.gitFull nixpkgs.stow nixpkgs.curl nixpkgs.pass nixpkgs.bash nixpkgs.zsh nixpkgs.python37Full nixpkgs.python27Full nixpkgs.gnumake nixpkgs.python27Packages.virtualenv nixpkgs.python27Packages.virtualenvwrapper nixpkgs.vim nixpkgs.screen nixpkgs.coreutils-full nixpkgs.gnugrep nixpkgs.gron nixpkgs.jq nixpkgs.tree nixpkgs.gnused nixpkgs.findutils nixpkgs.apg nixpkgs.sbcl nixpkgs.dash nixpkgs.sqlite nixpkgs.mutt nixpkgs.newsboat nixpkgs.unixtools.watch nixpkgs.wget nixpkgs.graphviz
 
 .PHONY: help
 help:  ## This.
@@ -23,28 +23,31 @@ install:  ## Stow/symlinked packages into your ${HOME} directory
 
 .PHONY: nix
 nix:  # Install nix package manager
-	sh .requirements/nix.sh
-	. ~/.nix-profile/etc/profile.d/nix.sh
-	nix-env -i git vim curl stow zsh bash
+	nix-env -iA $(NIX_PACKAGES)
 
 .PHONY: python
 python:  ## Install python packages
-	virtualenv $(HOME)/.local
+	curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
+	python /tmp/get-pip.py --user
 	pip install --upgrade pip
-	pip install $(PYTHON_PACKAGES)
+	pip install --user $(PYTHON_PACKAGES)
 
-.PHONY: ubuntu
-ubuntu:  ## Install system packages (linux only)
+UNAME_S := $(shell uname -s)
+.PHONY: system
+system: python  ## Install system packages
+# Ideally, we'd branch on command availability
+ifeq ($(UNAME_S),Darwin)
+	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
+	brew update
+	brew install caskroom/cask/brew-cask 2> /dev/null
+	brew install $(BREW_PACKAGES)
+else
 	apt-get update --yes
 	apt-get upgrade --yes
 	apt-get dist-upgrade --yes
 	apt-get install --yes $(APT_PACKAGES)
 	apt-get autoremove --yes
-
-.PHONY: mac
-mac:  ## Install MacOS packages via brew
-	brew update
-	brew install $(BREW_PACKAGES)
+endif
 
 .PHONY: uninstall
 uninstall:  ## Remove symlinked packages from your ${HOME} and ${DFC} directories
@@ -59,12 +62,3 @@ update:  ## Update the core code and all submodules
 	git rebase origin/master
 	git submodule init
 	git submodule update --recursive
-
-.PHONY: vagrant
-vagrant: ubuntu  ## Perform vagrant tasks
-	rm -f /home/$(VAGRANT_USER)/.profile
-	rm -f /home/$(VAGRANT_USER)/.bashrc
-	rm -f /home/$(VAGRANT_USER)/.bash_logout
-	rm -f /home/$(VAGRANT_USER)/.sudo_as_admin_successful
-	usermod -s /usr/bin/zsh $(VAGRANT_USER)
-	sudo -u $(VAGRANT_USER) -H make -C /home/$(VAGRANT_USER)/.dotfiles install

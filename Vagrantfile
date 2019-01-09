@@ -1,25 +1,14 @@
 #!/usr/bin/env ruby
 VAGRANTFILE_API_VERSION = '2'
-MEMORY = 1024
-VAGRANT_USER = 'ubuntu'
+MEMORY = 2048
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.forward_agent = true
   config.vm.box = 'ubuntu/xenial64'
   config.vm.provision 'shell' do |s|
-    s.path = 'Makefile'
-    s.args = [
-        'vagrant',
-    ]
-  end
-  config.vm.provision 'shell' do |s|
-    s.path = 'Makefile'
+    s.path = 'bootstrap.sh'
     s.privileged = false
-    s.args = [
-        'python',
-    ]
+    s.args = []
   end
-  config.vm.synced_folder './', "/home/#{VAGRANT_USER}/.dotfiles",
-    owner: VAGRANT_USER, group: VAGRANT_USER
   config.vm.provider :virtualbox do |vb|
     vb.customize ['modifyvm', :id, '--memory', MEMORY.to_s]
   end
