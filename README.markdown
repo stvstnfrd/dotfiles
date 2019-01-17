@@ -1,11 +1,27 @@
 # dotfiles
 
+## Installation
 
-## packages
+### virtual machine
 
+```sh
+git clone https://github.com/stvstnfrd/dotfiles.git ${HOME}/.config/dotfiles
+cd ${HOME}/.config/dotfiles
+vagrant up
+vagrant ssh
+```
 
-### git-hub
+### config-only
 
-```shell
-INSTALL_LIB="${HOME}/dotfiles/git-hub/.local/bin" PREFIX="${HOME}/dotfiles/git-hub/.local" make install
+```sh
+git clone https://github.com/stvstnfrd/dotfiles.git ${HOME}/.config/dotfiles
+cd ${HOME}/.config/dotfiles
+# make help
+make install
+```
+
+### metal, bootstrap
+
+```sh
+curl https://raw.githubusercontent.com/stvstnfrd/dotfiles/master/bootstrap.sh | sh
 ```

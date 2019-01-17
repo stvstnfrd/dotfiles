@@ -9,7 +9,7 @@ export XDG_CONFIG_HOME=${HOME}/.config
 export XDG_DATA_HOME=${HOME}/.local/share
 export XDG_DATA_DIRS=${XDG_DATA_HOME}:/usr/local/share/:/usr/share/
 # Then a few more basic paths
-export DFC=${XDG_CONFIG_HOME}/dotfiles
+export DFC=${XDG_CONFIG_HOME}/dotfiles.d
 PATH="/bin"
 PATH="/sbin:${PATH}"
 PATH="/usr/bin:${PATH}"
@@ -17,6 +17,7 @@ PATH="/usr/sbin:${PATH}"
 PATH="/opt/X11/bin:${PATH}"
 PATH="/usr/local/bin:${PATH}"
 PATH="/usr/local/sbin:${PATH}"
+PATH="${HOME}/.nix-profile/bin:${PATH}"
 PATH="${HOME}/local/bin:${PATH}"
 PATH="${HOME}/.local/bin:${PATH}"
 PATH="${HOME}/bin:${PATH}"
