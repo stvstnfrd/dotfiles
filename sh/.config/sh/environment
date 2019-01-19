@@ -17,7 +17,10 @@ PATH="/usr/sbin:${PATH}"
 PATH="/opt/X11/bin:${PATH}"
 PATH="/usr/local/bin:${PATH}"
 PATH="/usr/local/sbin:${PATH}"
-PATH="${HOME}/.nix-profile/bin:${PATH}"
+if [ -e "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]; then
+    . ${HOME}/.nix-profile/etc/profile.d/nix.sh
+    PATH="${HOME}/.nix-profile/bin:${PATH}"
+fi
 PATH="${HOME}/local/bin:${PATH}"
 PATH="${HOME}/.local/bin:${PATH}"
 PATH="${HOME}/bin:${PATH}"
