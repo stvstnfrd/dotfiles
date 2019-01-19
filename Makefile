@@ -4,7 +4,8 @@ PACKAGES=$(shell find . -maxdepth 1 -mindepth 1 -type d ! -path '.\/.*' | sed 's
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
 APT_PACKAGES=build-essential
-BREW_PACKAGES=sequel-pro
+BREW_CASKS=sequel-pro vlc robo-3t spectacle docker caskroom/versions/firefox-developer-edition
+# https://download.virtualbox.org/virtualbox/5.2.24/VirtualBox-5.2.24-128163-OSX.dmg
 PYTHON_PACKAGES=ptpython
 NIX_PACKAGES=nixpkgs.gitAndTools.gitFull nixpkgs.stow nixpkgs.curl nixpkgs.pass nixpkgs.bash nixpkgs.zsh nixpkgs.python37Full nixpkgs.python27Full nixpkgs.gnumake nixpkgs.python27Packages.virtualenv nixpkgs.python27Packages.virtualenvwrapper nixpkgs.vim nixpkgs.screen nixpkgs.coreutils-full nixpkgs.gnugrep nixpkgs.gron nixpkgs.jq nixpkgs.tree nixpkgs.gnused nixpkgs.findutils nixpkgs.apg nixpkgs.sbcl nixpkgs.dash nixpkgs.sqlite nixpkgs.mutt nixpkgs.newsboat nixpkgs.unixtools.watch nixpkgs.wget nixpkgs.graphviz
 
@@ -40,7 +41,7 @@ ifeq ($(UNAME_S),Darwin)
 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
 	brew update
 	brew install caskroom/cask/brew-cask 2> /dev/null
-	brew install $(BREW_PACKAGES)
+	brew cask install $(BREW_CASKS)
 else
 	apt-get update --yes
 	apt-get upgrade --yes
