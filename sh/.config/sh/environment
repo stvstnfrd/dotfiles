@@ -22,6 +22,11 @@ PATH="${HOME}/local/bin:${PATH}"
 PATH="${HOME}/.local/bin:${PATH}"
 PATH="${HOME}/bin:${PATH}"
 export PATH
+MANPATH="/usr/local/man"
+MANPATH="/usr/local/share/man:${MANPATH}"
+MANPATH="/usr/share/man:${MANPATH}"
+MANPATH="${HOME}/.nix-profile/share/man:${MANPATH}"
+export MANPATH
 # This path is sourced by interactive POSIX shells
 export ENV=${XDG_CONFIG_HOME}/sh/interactive
 export BASH_ENV=${XDG_CONFIG_HOME}/bash/environment
