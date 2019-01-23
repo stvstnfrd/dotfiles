@@ -1,4 +1,4 @@
 #!/bin/sh
 ptpython () {
-    command ptpython --config-dir ${XDG_CONFIG_HOME}/ptpython ${@}
+    command ptpython --vi --config-dir ${XDG_CONFIG_HOME}/ptpython ${@}
 }
