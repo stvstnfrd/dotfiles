@@ -93,6 +93,7 @@
 	excludesfile = ~/.config/git/ignore
 	editor = vim
 	# pager = diff-so-fancy | less --tabs=1,5 -R
+	sshCommand = "ssh -F ~/.config/ssh/config"
 
 [format]
 	pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
