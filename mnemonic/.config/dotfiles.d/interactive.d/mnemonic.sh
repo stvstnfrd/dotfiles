@@ -51,9 +51,6 @@ alias v='vim '
 alias w='watch -n1 --color '
 alias x='xargs '
 alias x0='xargs -0 '
-alias z='zip '
-alias zu='unzip '
-alias zul='unzip -l '
 
 # map aliases from git to bash
 # foreach git alias 'x', create bash alias 'gx'
