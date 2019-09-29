@@ -43,3 +43,6 @@
 [submodule "z/src/z"]
 	path = z/src/z
 	url = https://github.com/rupa/z.git
+[submodule "neofetch/src/neofetch"]
+	path = neofetch/src/neofetch
+	url = https://github.com/dylanaraps/neofetch.git
