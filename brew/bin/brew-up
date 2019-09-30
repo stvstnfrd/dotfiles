@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+brew update
+brew outdated
+brew cask outdated
+brew upgrade
+brew cleanup
+brew list --versions
+brew cask list --versions
