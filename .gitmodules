@@ -46,3 +46,6 @@
 [submodule "neofetch/src/neofetch"]
 	path = neofetch/src/neofetch
 	url = https://github.com/dylanaraps/neofetch.git
+[submodule "autoenv/src/autoenv"]
+	path = autoenv/src/autoenv
+	url = https://github.com/inishchith/autoenv.git
