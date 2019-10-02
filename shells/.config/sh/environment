@@ -26,6 +26,7 @@ MANPATH="/usr/local/man"
 MANPATH="/usr/local/share/man:${MANPATH}"
 MANPATH="/usr/share/man:${MANPATH}"
 MANPATH="${HOME}/.nix-profile/share/man:${MANPATH}"
+MANPATH="${XDG_DATA_HOME}/man:${MANPATH}"
 export MANPATH
 # This path is sourced by interactive POSIX shells
 export ENV=${XDG_CONFIG_HOME}/sh/interactive
