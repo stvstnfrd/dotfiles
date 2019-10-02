@@ -4,10 +4,10 @@ PACKAGES=$(shell find . -maxdepth 1 -mindepth 1 -type d ! -path '.\/.*' | sed 's
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
 APT_PACKAGES=build-essential
-BREW_CASKS=sequel-pro vlc robo-3t spectacle docker caskroom/versions/firefox-developer-edition
+BREW_CASKS=sequel-pro vlc robo-3t spectacle docker caskroom/versions/firefox-developer-edition alfred save-hollywood
 # https://download.virtualbox.org/virtualbox/5.2.24/VirtualBox-5.2.24-128163-OSX.dmg
 PYTHON_PACKAGES=ptpython
-NIX_PACKAGES=nixpkgs.gitAndTools.gitFull nixpkgs.stow nixpkgs.curl nixpkgs.pass nixpkgs.bash nixpkgs.zsh nixpkgs.python37Full nixpkgs.python27Full nixpkgs.gnumake nixpkgs.python27Packages.virtualenv nixpkgs.python27Packages.virtualenvwrapper nixpkgs.vim nixpkgs.screen nixpkgs.coreutils-full nixpkgs.gnugrep nixpkgs.gron nixpkgs.jq nixpkgs.tree nixpkgs.gnused nixpkgs.findutils nixpkgs.apg nixpkgs.sbcl nixpkgs.dash nixpkgs.sqlite nixpkgs.mutt nixpkgs.newsboat nixpkgs.unixtools.watch nixpkgs.wget nixpkgs.graphviz nixpkgs.vagrant nixpkg.gnupg1
+NIX_PACKAGES=nixpkgs.gitAndTools.gitFull nixpkgs.stow nixpkgs.curl nixpkgs.pass nixpkgs.bash nixpkgs.zsh nixpkgs.python37Full nixpkgs.python27Full nixpkgs.gnumake nixpkgs.python27Packages.virtualenv nixpkgs.python27Packages.virtualenvwrapper nixpkgs.vim nixpkgs.screen nixpkgs.coreutils-full nixpkgs.gnugrep nixpkgs.gron nixpkgs.jq nixpkgs.tree nixpkgs.gnused nixpkgs.findutils nixpkgs.apg nixpkgs.sbcl nixpkgs.dash nixpkgs.sqlite nixpkgs.mutt nixpkgs.newsboat nixpkgs.unixtools.watch nixpkgs.wget nixpkgs.graphviz nixpkgs.vagrant nixpkgs.gnupg1 nixpkgs.rsync nixpkgs.nodejs nixpkgs.libqrencode nixpkgs.xpdf
 
 .PHONY: help
 help:  ## This.
@@ -63,3 +63,7 @@ update:  ## Update the core code and all submodules
 	git rebase origin/master
 	git submodule init
 	git submodule update --recursive
+# nix-install nixpkgs.ag
+# nix-install nixpkgs.netcat
+# nix-install nixpkgs.figlet
+# nix-install nixpkgs.neofetch
