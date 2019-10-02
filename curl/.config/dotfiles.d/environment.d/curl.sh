@@ -1,4 +1,7 @@
 #!/bin/sh
 curl() {
-    command curl --netrc-file "${HOME}/.netrc" ${@}
+    if [ -n "${NETRC}" ]; then
+        _flags="--netrc-file '${NETRC}"
+    fi
+    command curl ${_flags} ${@}
 }
