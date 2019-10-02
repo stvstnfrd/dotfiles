@@ -49,3 +49,6 @@
 [submodule "autoenv/src/autoenv"]
 	path = autoenv/src/autoenv
 	url = https://github.com/inishchith/autoenv.git
+[submodule "git-hub/src/git-hub"]
+	path = git-hub/src/git-hub
+	url = https://github.com/ingydotnet/git-hub.git
