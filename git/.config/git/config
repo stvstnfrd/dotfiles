@@ -95,6 +95,7 @@
 	excludesfile = ~/.config/git/ignore
 	editor = vim
 	# pager = diff-so-fancy | less --tabs=1,5 -R
+	pager = diff-so-fancy | less --tabs=4 -RFX
 	sshCommand = "ssh -F ~/.config/ssh/config"
 
 [format]
@@ -113,3 +114,17 @@
 
 [push]
 	default = simple
+[color]
+	ui = true
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
