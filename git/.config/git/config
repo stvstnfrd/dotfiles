@@ -9,7 +9,7 @@
 	bm = branch --merged
 	c = commit
 	ca = commit --amend
-	cm = commit -m
+	cm = commit-message
 	cms = commit -m 'TODO: squash'
 	d = diff
 	da = apply
