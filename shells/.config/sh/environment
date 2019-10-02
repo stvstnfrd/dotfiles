@@ -1,4 +1,9 @@
 #!/bin/sh
+# Default permissions for new files
+# User has read + write
+# Group is readonly
+# Other get nothing
+umask 0037
 # Then a few more basic paths
 . "${HOME}/.config/sh/xdg"
 export DFC=${XDG_CONFIG_HOME}/dotfiles.d
@@ -25,6 +30,7 @@ export MANPATH
 # This path is sourced by interactive POSIX shells
 export ENV=${XDG_CONFIG_HOME}/sh/interactive
 export BASH_ENV=${XDG_CONFIG_HOME}/bash/environment
+export EDITOR=vim
 # Load all of the plugins
 __dir_dotfiles_startup="${DFC}/environment.d"
 if [ -d "${__dir_dotfiles_startup}" ]; then
