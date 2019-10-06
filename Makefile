@@ -8,7 +8,7 @@ BREW_CASKS=sequel-pro vlc robo-3t spectacle docker caskroom/versions/firefox-dev
 # gfortran ## needed for scipy
 # https://download.virtualbox.org/virtualbox/5.2.24/VirtualBox-5.2.24-128163-OSX.dmg
 PYTHON_PACKAGES=ptpython
-NIX_PACKAGES=nixpkgs.gitAndTools.gitFull nixpkgs.stow nixpkgs.curl nixpkgs.pass nixpkgs.bashInteractive nixpkgs.zsh nixpkgs.python37Full nixpkgs.python27Full nixpkgs.gnumake nixpkgs.python27Packages.virtualenv nixpkgs.python27Packages.virtualenvwrapper nixpkgs.vim nixpkgs.screen nixpkgs.coreutils-full nixpkgs.gnugrep nixpkgs.gron nixpkgs.jq nixpkgs.tree nixpkgs.gnused nixpkgs.findutils nixpkgs.apg nixpkgs.sbcl nixpkgs.dash nixpkgs.sqlite nixpkgs.mutt nixpkgs.unixtools.watch nixpkgs.wget nixpkgs.graphviz nixpkgs.vagrant nixpkgs.gnupg1 nixpkgs.rsync nixpkgs.nodejs nixpkgs.libqrencode nixpkgs.xpdf
+NIX_PACKAGES=nixpkgs.gitAndTools.gitFull nixpkgs.stow nixpkgs.curl nixpkgs.pass nixpkgs.bashInteractive nixpkgs.zsh nixpkgs.python37Full nixpkgs.python27Full nixpkgs.gnumake nixpkgs.python27Packages.virtualenv nixpkgs.python27Packages.virtualenvwrapper nixpkgs.vim nixpkgs.screen nixpkgs.coreutils-full nixpkgs.gnugrep nixpkgs.gron nixpkgs.jq nixpkgs.tree nixpkgs.gnused nixpkgs.findutils nixpkgs.apg nixpkgs.sbcl nixpkgs.dash nixpkgs.sqlite nixpkgs.mutt nixpkgs.unixtools.watch nixpkgs.wget nixpkgs.graphviz nixpkgs.vagrant nixpkgs.gnupg1 nixpkgs.rsync nixpkgs.nodejs nixpkgs.libqrencode nixpkgs.xpdf nixpkgs.ag nixpkgs.netcat nixpkgs.figlet nixpkgs.neofetch nixpkgs.exa nixpkgs.ranger nixpkgs.fortune
 # nixpkgs.newsboat
 
 .PHONY: help
@@ -65,10 +65,3 @@ update:  ## Update the core code and all submodules
 	git rebase origin/master
 	git submodule init
 	git submodule update --recursive
-# nix-install nixpkgs.ag
-# nix-install nixpkgs.netcat
-# nix-install nixpkgs.figlet
-# nix-install nixpkgs.neofetch
-# nix-install nixpkgs.exa
-# nix-install nixpkgs.ranger
-# nix-install nixpkgs.fortune
