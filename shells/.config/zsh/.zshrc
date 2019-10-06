@@ -25,8 +25,8 @@ if [ -d "${__dir_dotfiles_startup}" ]; then
 fi
 unset __dir_dotfiles_startup
 
-if [ -e "${ZDOTDIR}/completion.zsh" ]; then
-    . "${ZDOTDIR}/completion.zsh"
+if [ -e "${ZDOTDIR}/completion.d/pass.zsh" ]; then
+    . "${ZDOTDIR}/completion.d/pass.zsh"
 fi
 
 # vi-mode
