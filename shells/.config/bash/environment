@@ -1,7 +1,4 @@
 #!/bin/bash
-if [ -n "${debug}" ]; then
-    echo 'funk:bash:environment'
-fi
 export PROMPT_COMMAND="history -a; ${PROMPT_COMMAND}"
 export HISTCONTROL=ignorespace:ignoredups
 __dir_dotfiles_startup="${DFC}/environment.d"

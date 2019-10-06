@@ -1,4 +1,11 @@
 #!/bin/sh
+if command -v fortune 2>&1 >/dev/null; then
+    if command -v cowsay 2>&1 >/dev/null; then
+        fortune | cowsay -f /dev/null
+    else
+        fortune
+    fi
+fi
 # Configure common interactive shells
 export HISTFILE="${XDG_CACHE_HOME}/sh/history"
 export HISTSIZE=10000

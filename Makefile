@@ -69,3 +69,4 @@ update:  ## Update the core code and all submodules
 # nix-install nixpkgs.neofetch
 # nix-install nixpkgs.exa
 # nix-install nixpkgs.ranger
+# nix-install nixpkgs.fortune
