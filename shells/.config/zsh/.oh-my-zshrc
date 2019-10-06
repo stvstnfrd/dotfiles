@@ -62,9 +62,23 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 #autopep8,aws,ruby,pep8,pylint
 # plugins=(common-aliases virtualenvwrapper 
-plugins=(git git-extras brew vi-mode vagrant python pip npm web-search
+plugins=(
+colored-man-pages
+docker
+encode64
+github
+history
+npm
 pass
-encode64 pp_json virtualenv screen history)
+pip
+screen
+python
+vagrant
+vi-mode
+virtualenv
+virtualenvwrapper
+web-search
+)
 
 source $ZSH/oh-my-zsh.sh
 
