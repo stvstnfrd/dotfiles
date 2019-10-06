@@ -1,2 +1,2 @@
 #!/bin/sh
-alias r='ranger'
+alias r='ranger '
