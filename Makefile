@@ -5,6 +5,7 @@ VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
 APT_PACKAGES=build-essential
 BREW_CASKS=sequel-pro vlc robo-3t spectacle docker caskroom/versions/firefox-developer-edition alfred save-hollywood
+# gfortran ## needed for scipy
 # https://download.virtualbox.org/virtualbox/5.2.24/VirtualBox-5.2.24-128163-OSX.dmg
 PYTHON_PACKAGES=ptpython
 NIX_PACKAGES=nixpkgs.gitAndTools.gitFull nixpkgs.stow nixpkgs.curl nixpkgs.pass nixpkgs.bashInteractive nixpkgs.zsh nixpkgs.python37Full nixpkgs.python27Full nixpkgs.gnumake nixpkgs.python27Packages.virtualenv nixpkgs.python27Packages.virtualenvwrapper nixpkgs.vim nixpkgs.screen nixpkgs.coreutils-full nixpkgs.gnugrep nixpkgs.gron nixpkgs.jq nixpkgs.tree nixpkgs.gnused nixpkgs.findutils nixpkgs.apg nixpkgs.sbcl nixpkgs.dash nixpkgs.sqlite nixpkgs.mutt nixpkgs.newsboat nixpkgs.unixtools.watch nixpkgs.wget nixpkgs.graphviz nixpkgs.vagrant nixpkgs.gnupg1 nixpkgs.rsync nixpkgs.nodejs nixpkgs.libqrencode nixpkgs.xpdf
