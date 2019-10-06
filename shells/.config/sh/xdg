@@ -14,7 +14,7 @@ export PIP_LOG_FILE=${XDG_CACHE_HOME}/pip/log
 export PYTHON_EGG_CACHE="${XDG_CACHE_HOME}/python-eggs"
 export SCREENRC="${XDG_CONFIG_HOME}/screen/rc"
 export VAGRANT_HOME=${XDG_CONFIG_HOME}/vagrant.d
-export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/rc" | source $MYVIMRC'
+export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/rc.vim" | source $MYVIMRC'
 export ZSH_PIP_CACHE_FILE=${XDG_CACHE_HOME}/pip/zsh
 export _Z_DATA=${XDG_CACHE_HOME}/z
 ptpython () {
