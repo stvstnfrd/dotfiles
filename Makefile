@@ -67,3 +67,5 @@ update:  ## Update the core code and all submodules
 # nix-install nixpkgs.netcat
 # nix-install nixpkgs.figlet
 # nix-install nixpkgs.neofetch
+# nix-install nixpkgs.exa
+# nix-install nixpkgs.ranger
