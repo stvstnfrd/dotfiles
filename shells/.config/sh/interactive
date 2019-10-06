@@ -13,10 +13,12 @@ export HISTFILESIZE=1000000
 # for OSX
 export CLICOLOR_FORCE=1
 alias less='less -R'
-PS1=""
-PS1="${PS1}
-# "
-export PS1
+if [ -z "${ZSH_VERSION}" -a -z "${BASH_VERSION}" ]; then
+    PS1=""
+    PS1="${PS1}
+    # "
+    export PS1
+fi
 
 # Load all of the plugins
 __dir_dotfiles_startup="${DFC}/interactive.d"

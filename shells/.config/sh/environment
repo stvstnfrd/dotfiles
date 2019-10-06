@@ -32,6 +32,7 @@ export MANPATH
 export ENV=${XDG_CONFIG_HOME}/sh/interactive
 export BASH_ENV=${XDG_CONFIG_HOME}/bash/environment
 export EDITOR=vim
+export LANG=en_US.UTF-8
 # Load all of the plugins
 __dir_dotfiles_startup="${DFC}/environment.d"
 if [ -d "${__dir_dotfiles_startup}" ]; then

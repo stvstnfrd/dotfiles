@@ -43,22 +43,13 @@ bindkey '^e' end-of-line
 bindkey '^f' forward-char
 bindkey '^b' backward-char
 
-function zle-line-init zle-keymap-select {
-    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
-    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(git_prompt_status) $EPS1"
-    zle reset-prompt
-}
+# function zle-line-init zle-keymap-select {
+#     VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+#     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(git_prompt_status) $EPS1"
+#     zle reset-prompt
+# }
 
 # zle -N zle-line-init
 # zle -N zle-keymap-select
 export KEYTIMEOUT=1
-
-PS1=""
-PS1="${PS1}
-#"
-PS1="${PS1} [%T]"
-PS1="${PS1} [%n@%m:%d]"
-PS1="${PS1}
-# "
-export PS1
 export HISTFILE="${XDG_CACHE_HOME}/zsh/history"
