@@ -3,12 +3,12 @@ PREFIX=$(HOME)
 PACKAGES=$(shell find . -maxdepth 1 -mindepth 1 -type d ! -path '.\/.*' | sed 's/^..//' | sort)
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
-APT_PACKAGES=build-essential
-BREW_CASKS=sequel-pro vlc robo-3t spectacle docker caskroom/versions/firefox-developer-edition alfred save-hollywood
+APT_PACKAGES=$(shell cat requirements.apt.txt)
+BREW_CASKS=$(shell cat requirements.cask.txt)
+NIX_PACKAGES=$(shell cat requirements.nix.txt)
+PIP_PACKAGES=$(shell cat requirements.pip.txt)
 # gfortran ## needed for scipy
 # https://download.virtualbox.org/virtualbox/5.2.24/VirtualBox-5.2.24-128163-OSX.dmg
-PYTHON_PACKAGES=ptpython
-NIX_PACKAGES=nixpkgs.gitAndTools.gitFull nixpkgs.stow nixpkgs.curl nixpkgs.pass nixpkgs.bashInteractive nixpkgs.zsh nixpkgs.python37Full nixpkgs.python27Full nixpkgs.gnumake nixpkgs.python27Packages.virtualenv nixpkgs.python27Packages.virtualenvwrapper nixpkgs.vim nixpkgs.screen nixpkgs.coreutils-full nixpkgs.gnugrep nixpkgs.gron nixpkgs.jq nixpkgs.tree nixpkgs.gnused nixpkgs.findutils nixpkgs.apg nixpkgs.sbcl nixpkgs.dash nixpkgs.sqlite nixpkgs.mutt nixpkgs.unixtools.watch nixpkgs.wget nixpkgs.graphviz nixpkgs.vagrant nixpkgs.gnupg1 nixpkgs.rsync nixpkgs.nodejs nixpkgs.libqrencode nixpkgs.xpdf nixpkgs.ag nixpkgs.netcat nixpkgs.figlet nixpkgs.neofetch nixpkgs.exa nixpkgs.ranger nixpkgs.fortune
 # nixpkgs.newsboat
 
 .PHONY: help
@@ -16,6 +16,19 @@ help:  ## This.
 	@perl -ne 'print if /^[a-zA-Z_-]+:.*## .*$$/' $(MAKEFILE_LIST) \
 	| sort \
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+
+.PHONY: docker
+docker:  # Build a docker container
+	docker build -t dotfiles:latest .
+
+docker-bash: docker
+	docker run --rm -it --name dotfiles dotfiles:latest bash --login
+
+docker-zsh: docker
+	docker run --rm -it --name dotfiles dotfiles:latest zsh --login
+
+docker-sh: docker
+	docker run --rm -it --name dotfiles dotfiles:latest sh --login
 
 .PHONY: install
 install:  ## Stow/symlinked packages into your ${HOME} directory
@@ -28,12 +41,15 @@ install:  ## Stow/symlinked packages into your ${HOME} directory
 nix:  # Install nix package manager
 	nix-env -iA $(NIX_PACKAGES)
 
+PIP_EXISTS=$(shell command -v pip && echo 1 || echo 0)
 .PHONY: python
 python:  ## Install python packages
+ifeq ($(PIP_EXISTS),0)
 	curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
 	python /tmp/get-pip.py --user
+endif
 	pip install --upgrade pip
-	pip install --user $(PYTHON_PACKAGES)
+	pip install --user $(PIP_PACKAGES)
 
 UNAME_S := $(shell uname -s)
 .PHONY: system
