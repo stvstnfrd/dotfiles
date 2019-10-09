@@ -1,7 +1,6 @@
 #!/bin/sh
-if [ -n "${debug}" ]; then
-    echo 'funk:sh:keyboard'
-fi
-if which setxkbmap 2>&1 >/dev/null; then
-    setxkbmap -option caps:swapescape
+set -o vi
+if command setxkbmap 2>&1 >/dev/null; then
+    printf ''
+    # setxkbmap -option caps:swapescape
 fi

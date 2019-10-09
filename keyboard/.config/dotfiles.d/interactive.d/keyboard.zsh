@@ -1,7 +1,4 @@
 #!/bin/zsh
-if [ -n "${debug}" ]; then
-    echo 'funk:zsh:keyboard'
-fi
 bindkey -v
 bindkey '^P' up-history
 bindkey '^N' down-history
