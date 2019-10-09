@@ -16,7 +16,7 @@ PATH="/usr/local/bin:${PATH}"
 PATH="/usr/local/sbin:${PATH}"
 if [ -e "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]; then
     . ${HOME}/.nix-profile/etc/profile.d/nix.sh
-    PATH="${HOME}/.nix-profile/bin:${PATH}"
+    # PATH="${HOME}/.nix-profile/bin:${PATH}"
 fi
 PATH="${HOME}/local/bin:${PATH}"
 PATH="${HOME}/.local/bin:${PATH}"
@@ -33,6 +33,7 @@ export ENV=${XDG_CONFIG_HOME}/sh/interactive
 export BASH_ENV=${XDG_CONFIG_HOME}/bash/environment
 export EDITOR=vim
 export LANG=en_US.UTF-8
+export LANGUAGE=en_US
 # Load all of the plugins
 __dir_dotfiles_startup="${DFC}/environment.d"
 if [ -d "${__dir_dotfiles_startup}" ]; then
