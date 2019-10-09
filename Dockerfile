@@ -16,14 +16,14 @@ ENV PATH=/root/.local/bin:/root/.nix-profile/bin/:${PATH}
 RUN nix-env -iA nixpkgs.gitMinimal nixpkgs.gnumake
 RUN mkdir -p /root/.config/dotfiles
 WORKDIR /root/.config/dotfiles
-COPY requirements.nix.txt requirements.nix.txt
-RUN xargs nix-env -iA < requirements.nix.txt
-COPY requirements.apt.txt requirements.apt.txt
-RUN xargs apt install -y < requirements.apt.txt
+COPY .requirements/nix.txt .requirements/nix.txt
+RUN xargs nix-env -iA < .requirements/nix.txt
+COPY .requirements/apt.txt .requirements/apt.txt
+RUN xargs apt install -y < .requirements/apt.txt
 ADD https://bootstrap.pypa.io/get-pip.py /tmp/get-pip.py
 RUN python /tmp/get-pip.py --user
-COPY requirements.pip.txt requirements.pip.txt
-RUN xargs pip install --user < requirements.pip.txt
+COPY .requirements/pip.txt .requirements/pip.txt
+RUN xargs pip install --user < .requirements/pip.txt
 COPY Makefile ./Makefile
 RUN make system
 RUN mkdir .backup

@@ -3,10 +3,10 @@ PREFIX=$(HOME)
 PACKAGES=$(shell find . -maxdepth 1 -mindepth 1 -type d ! -path '.\/.*' | sed 's/^..//' | sort)
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
-APT_PACKAGES=$(shell cat requirements.apt.txt)
-BREW_CASKS=$(shell cat requirements.cask.txt)
-NIX_PACKAGES=$(shell cat requirements.nix.txt)
-PIP_PACKAGES=$(shell cat requirements.pip.txt)
+APT_PACKAGES=$(shell cat .requirements/apt.txt)
+BREW_CASKS=$(shell cat .requirements/cask.txt)
+NIX_PACKAGES=$(shell cat .requirements/nix.txt)
+PIP_PACKAGES=$(shell cat .requirements/pip.txt)
 # gfortran ## needed for scipy
 # https://download.virtualbox.org/virtualbox/5.2.24/VirtualBox-5.2.24-128163-OSX.dmg
 # nixpkgs.newsboat
@@ -21,13 +21,13 @@ help:  ## This.
 docker:  # Build a docker container
 	docker build -t dotfiles:latest .
 
-docker-bash: docker
+docker-bash:
 	docker run --rm -it --name dotfiles dotfiles:latest bash --login
 
-docker-zsh: docker
+docker-zsh:
 	docker run --rm -it --name dotfiles dotfiles:latest zsh --login
 
-docker-sh: docker
+docker-sh:
 	docker run --rm -it --name dotfiles dotfiles:latest sh --login
 
 .PHONY: install
