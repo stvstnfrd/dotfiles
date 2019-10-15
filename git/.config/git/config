@@ -111,10 +111,18 @@
 	smudge = git media smudge %f
 	required = true
 
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+
+[mergetool]
+	prompt = false
+
 [push]
 	default = simple
 [color]
 	ui = true
+	diff = auto
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52
