@@ -6,6 +6,7 @@ export XDG_CONFIG_HOME=${HOME}/.config
 export XDG_DATA_HOME=${HOME}/.local/share
 export XDG_DATA_DIRS=${XDG_DATA_HOME}:/usr/local/share/:/usr/share/
 
+export GIMP2_DIRECTORY="${XDG_CONFIG_HOME}/gimp"
 export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
 export NETRC=${XDG_CONFIG_HOME}/dotsecrets/netrc/.netrc
