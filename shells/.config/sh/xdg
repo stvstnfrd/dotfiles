@@ -1,0 +1,26 @@
+#!/bin/sh
+# https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html
+export XDG_CACHE_HOME=${HOME}/.cache
+export XDG_CONFIG_DIRS=/etc/xdg
+export XDG_CONFIG_HOME=${HOME}/.config
+export XDG_DATA_HOME=${HOME}/.local/share
+export XDG_DATA_DIRS=${XDG_DATA_HOME}:/usr/local/share/:/usr/share/
+
+export GIMP2_DIRECTORY="${XDG_CONFIG_HOME}/gimp"
+export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
+export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
+export NETRC=${XDG_CONFIG_HOME}/dotsecrets/netrc/.netrc
+export PIP_CONFIG_FILE=${XDG_CONFIG_HOME}/pip/conf
+export PIP_LOG_FILE=${XDG_CACHE_HOME}/pip/log
+export PYTHON_EGG_CACHE="${XDG_CACHE_HOME}/python-eggs"
+export SCREENRC="${XDG_CONFIG_HOME}/screen/rc"
+export VAGRANT_HOME=${XDG_CONFIG_HOME}/vagrant.d
+export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/rc.vim" | source $MYVIMRC'
+export ZSH_PIP_CACHE_FILE=${XDG_CACHE_HOME}/pip/zsh
+export _Z_DATA=${XDG_CACHE_HOME}/z
+ptpython () {
+    command ptpython --vi --config-dir ${XDG_CONFIG_HOME}/ptpython ${@}
+}
+ssh () {
+    command ssh -F ${XDG_CONFIG_HOME}/ssh/config ${@}
+}
