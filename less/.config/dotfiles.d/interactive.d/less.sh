@@ -1,6 +1,6 @@
 #!/bin/sh
 # export LESS='--quit-if-one-screen --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=-4'
-export LESS='--LONG-PROMPT --HILITE-UNREAD --tabs=4 --no-init --window=-4'
+export LESS='--LONG-PROMPT --tabs=4 --no-init --window=-4'
 # Set colors for less. Borrowed from
 # https://wiki.archlinux.org/index.php/Color_output_in_console#less .
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
