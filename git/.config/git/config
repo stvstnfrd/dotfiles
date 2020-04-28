@@ -7,6 +7,7 @@
 	bam = branch --all --merged
 	bd = branch --delete
 	bm = branch --merged
+	br = branch --move
 	c = commit
 	ca = commit --amend
 	cm = commit-message
