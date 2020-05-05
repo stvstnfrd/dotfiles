@@ -1,0 +1,4 @@
+#!/bin/bash
+if [ -e "../sh/login" ]; then
+    . "../sh/login"
+fi

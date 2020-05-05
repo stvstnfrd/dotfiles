@@ -1,0 +1,4 @@
+#!/bin/bash
+if [ -e "../sh/logout" ]; then
+    . "../sh/logout"
+fi
