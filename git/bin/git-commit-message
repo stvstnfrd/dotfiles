@@ -1,0 +1,4 @@
+#!/bin/sh
+sh << EOF
+git commit -m "${@}"
+EOF
