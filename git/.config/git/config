@@ -7,15 +7,17 @@
 	bam = branch --all --merged
 	bd = branch --delete
 	bm = branch --merged
+	br = branch --move
 	c = commit
 	ca = commit --amend
-	cm = commit -m
+	cm = commit-message
 	cms = commit -m 'TODO: squash'
 	d = diff
 	da = apply
 	dc = diff --cached
 	df = diff upstream/open-release/ficus.master -- 
 	dg = diff upstream/open-release/ginkgo.master -- 
+	dh = diff upstream/open-release/hawthorn.master -- 
 	dm = diff master
 	dom = diff origin/master
 	dum = diff upstream/master
@@ -80,6 +82,7 @@
 	v = revert
 	w = show
 	x = reset
+	xh = reset --hard
 	y = cherry-pick
 	ya = cherry-pick --abort
 	yn = cherry-pick --no-commit
@@ -90,6 +93,7 @@
 	zr = remote remove
 
 [core]
+	editor = vim
 	excludesfile = ~/.config/git/ignore
 	# pager = diff-so-fancy | less --tabs=1,5 -R
 
