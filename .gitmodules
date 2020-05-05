@@ -40,3 +40,6 @@
 [submodule "z/src/z"]
 	path = cd/src/z
 	url = https://github.com/rupa/z.git
+[submodule "autoenv/src/autoenv"]
+	path = autoenv/src/autoenv
+	url = https://github.com/inishchith/autoenv.git
