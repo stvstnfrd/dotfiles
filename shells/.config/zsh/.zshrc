@@ -6,8 +6,12 @@ fi
 # Perform any interactive zsh-only tasks here
 # This can be aliases,
 ZSH_COMPDUMP="${HOME}/.cache/zsh/compdump-${SHORT_HOST}-${ZSH_VERSION}"
-. "${ZDOTDIR}/.oh-my-zshrc"
-. "${HOME}/.config/sh/interactive"
+if [ -e "${ZDOTDIR}/.oh-my-zshrc" ]; then
+    . "${ZDOTDIR}/.oh-my-zshrc"
+fi
+if [ -e "${HOME}/.config/sh/interactive" ]; then
+    . "${HOME}/.config/sh/interactive"
+fi
 
 # Load all of the plugins
 __dir_dotfiles_startup="${DFC}/interactive.d"
@@ -25,8 +29,8 @@ if [ -d "${__dir_dotfiles_startup}" ]; then
 fi
 unset __dir_dotfiles_startup
 
-if [ -e "${ZDOTDIR}/completion.zsh" ]; then
-    . "${ZDOTDIR}/completion.zsh"
+if [ -e "${ZDOTDIR}/completion.d/pass.zsh" ]; then
+    . "${ZDOTDIR}/completion.d/pass.zsh"
 fi
 
 # vi-mode
@@ -43,22 +47,13 @@ bindkey '^e' end-of-line
 bindkey '^f' forward-char
 bindkey '^b' backward-char
 
-function zle-line-init zle-keymap-select {
-    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
-    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(git_prompt_status) $EPS1"
-    zle reset-prompt
-}
+# function zle-line-init zle-keymap-select {
+#     VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+#     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(git_prompt_status) $EPS1"
+#     zle reset-prompt
+# }
 
 # zle -N zle-line-init
 # zle -N zle-keymap-select
 export KEYTIMEOUT=1
-
-PS1=""
-PS1="${PS1}
-#"
-PS1="${PS1} [%T]"
-PS1="${PS1} [%n@%m:%d]"
-PS1="${PS1}
-# "
-export PS1
 export HISTFILE="${XDG_CACHE_HOME}/zsh/history"
