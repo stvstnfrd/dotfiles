@@ -1,12 +1,16 @@
 #!/bin/sh
-if [ -n "${debug}" ]; then
-    echo 'funk:sh:interactive'
+if command -v fortune 2>&1 >/dev/null; then
+    if command -v cowsay 2>&1 >/dev/null; then
+        fortune | cowsay -f /dev/null
+    else
+        fortune
+    fi
 fi
+set -o vi
 # Configure common interactive shells
 export HISTFILE="${XDG_CACHE_HOME}/sh/history"
 export HISTSIZE=10000
 export HISTFILESIZE=1000000
-
 # for OSX
 export CLICOLOR_FORCE=1
 alias less='less -R'
@@ -26,8 +30,3 @@ if [ -d "${__dir_dotfiles_startup}" ]; then
     unset __script_count
 fi
 unset __dir_dotfiles_startup
-
-PS1=""
-PS1="${PS1}
-# "
-export PS1

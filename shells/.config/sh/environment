@@ -1,14 +1,11 @@
 #!/bin/sh
-if [ -n "${debug}" ]; then
-    echo 'funk:sh:environment'
-fi
-# https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html
-export XDG_CACHE_HOME=${HOME}/.cache
-export XDG_CONFIG_DIRS=/etc/xdg
-export XDG_CONFIG_HOME=${HOME}/.config
-export XDG_DATA_HOME=${HOME}/.local/share
-export XDG_DATA_DIRS=${XDG_DATA_HOME}:/usr/local/share/:/usr/share/
+# Default permissions for new files
+# User has read + write
+# Group is readonly
+# Other get nothing
+umask 0037
 # Then a few more basic paths
+. "${HOME}/.config/sh/xdg"
 export DFC=${XDG_CONFIG_HOME}/dotfiles.d
 PATH="/bin"
 PATH="/sbin:${PATH}"
@@ -17,14 +14,25 @@ PATH="/usr/sbin:${PATH}"
 PATH="/opt/X11/bin:${PATH}"
 PATH="/usr/local/bin:${PATH}"
 PATH="/usr/local/sbin:${PATH}"
-PATH="${HOME}/.nix-profile/bin:${PATH}"
+if [ -e "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]; then
+    . ${HOME}/.nix-profile/etc/profile.d/nix.sh
+fi
 PATH="${HOME}/local/bin:${PATH}"
 PATH="${HOME}/.local/bin:${PATH}"
 PATH="${HOME}/bin:${PATH}"
 export PATH
+MANPATH="/usr/local/man"
+MANPATH="/usr/local/share/man:${MANPATH}"
+MANPATH="/usr/share/man:${MANPATH}"
+MANPATH="${HOME}/.nix-profile/share/man:${MANPATH}"
+MANPATH="${XDG_DATA_HOME}/man:${MANPATH}"
+export MANPATH
 # This path is sourced by interactive POSIX shells
 export ENV=${XDG_CONFIG_HOME}/sh/interactive
 export BASH_ENV=${XDG_CONFIG_HOME}/bash/environment
+export EDITOR=vim
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US
 # Load all of the plugins
 __dir_dotfiles_startup="${DFC}/environment.d"
 if [ -d "${__dir_dotfiles_startup}" ]; then
