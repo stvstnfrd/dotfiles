@@ -1,1 +1,4 @@
 build-essential
+curl
+sudo
+xz-utils

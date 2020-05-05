@@ -18,15 +18,13 @@ nixpkgs.gron
 nixpkgs.jq
 nixpkgs.less
 nixpkgs.libqrencode
+nixpkgs.man
 nixpkgs.mutt
 nixpkgs.neofetch
 nixpkgs.netcat
 nixpkgs.nodejs
 nixpkgs.pass
-nixpkgs.python27Full
-nixpkgs.python27Packages.virtualenv
-nixpkgs.python27Packages.virtualenvwrapper
-nixpkgs.python37Full
+nixpkgs.python35Full
 nixpkgs.ranger
 nixpkgs.rsync
 nixpkgs.sbcl
@@ -38,5 +36,4 @@ nixpkgs.unixtools.watch
 nixpkgs.vagrant
 nixpkgs.vim
 nixpkgs.wget
-nixpkgs.xpdf
 nixpkgs.zsh
