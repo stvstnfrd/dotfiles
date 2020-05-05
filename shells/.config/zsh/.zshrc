@@ -33,20 +33,6 @@ if [ -e "${ZDOTDIR}/completion.d/pass.zsh" ]; then
     . "${ZDOTDIR}/completion.d/pass.zsh"
 fi
 
-# vi-mode
-bindkey -v
-
-bindkey '^P' up-history
-bindkey '^N' down-history
-# bindkey '^?' backward-delete-char
-bindkey '^h' backward-delete-char
-bindkey '^w' backward-kill-word
-bindkey '^r' history-incremental-search-backward
-bindkey '^a' beginning-of-line
-bindkey '^e' end-of-line
-bindkey '^f' forward-char
-bindkey '^b' backward-char
-
 # function zle-line-init zle-keymap-select {
 #     VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
 #     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(git_prompt_status) $EPS1"
