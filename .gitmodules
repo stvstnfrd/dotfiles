@@ -43,3 +43,6 @@
 [submodule "autoenv/src/autoenv"]
 	path = autoenv/src/autoenv
 	url = https://github.com/inishchith/autoenv.git
+[submodule "nvm/.config/nvm"]
+	path = nvm/.config/nvm
+	url = https://github.com/nvm-sh/nvm.git

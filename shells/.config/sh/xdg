@@ -10,6 +10,7 @@ export GIMP2_DIRECTORY="${XDG_CONFIG_HOME}/gimp"
 export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
 export NETRC=${XDG_CONFIG_HOME}/dotsecrets/netrc/.netrc
+export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
 export PIP_CONFIG_FILE=${XDG_CONFIG_HOME}/pip/conf
 export PIP_LOG_FILE=${XDG_CACHE_HOME}/pip/log
 export PYTHON_EGG_CACHE="${XDG_CACHE_HOME}/python-eggs"
