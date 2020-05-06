@@ -3,10 +3,13 @@ PREFIX=$(HOME)
 PACKAGES=$(shell find . -maxdepth 1 -mindepth 1 -type d ! -path '.\/.*' | sed 's/^..//' | sort)
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
-APT_PACKAGES=build-essential
-BREW_PACKAGES=sequel-pro
-PYTHON_PACKAGES=ptpython
-NIX_PACKAGES=nixpkgs.gitAndTools.gitFull nixpkgs.stow nixpkgs.curl nixpkgs.pass nixpkgs.bash nixpkgs.zsh nixpkgs.python37Full nixpkgs.python27Full nixpkgs.gnumake nixpkgs.python27Packages.virtualenv nixpkgs.python27Packages.virtualenvwrapper nixpkgs.vim nixpkgs.screen nixpkgs.coreutils-full nixpkgs.gnugrep nixpkgs.gron nixpkgs.jq nixpkgs.tree nixpkgs.gnused nixpkgs.findutils nixpkgs.apg nixpkgs.sbcl nixpkgs.dash nixpkgs.sqlite nixpkgs.mutt nixpkgs.newsboat nixpkgs.unixtools.watch nixpkgs.wget nixpkgs.graphviz
+APT_PACKAGES=$(shell cat .requirements/apt.txt)
+BREW_CASKS=$(shell cat .requirements/cask.txt)
+NIX_PACKAGES=$(shell cat .requirements/nix.txt)
+PIP_PACKAGES=$(shell cat .requirements/pip.txt)
+# gfortran ## needed for scipy
+# https://download.virtualbox.org/virtualbox/5.2.24/VirtualBox-5.2.24-128163-OSX.dmg
+# nixpkgs.newsboat
 
 .PHONY: help
 help:  ## This.
@@ -30,7 +33,7 @@ python:  ## Install python packages
 	curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
 	python /tmp/get-pip.py --user
 	pip install --upgrade pip
-	pip install --user $(PYTHON_PACKAGES)
+	pip install --user $(PIP_PACKAGES)
 
 UNAME_S := $(shell uname -s)
 .PHONY: system
@@ -40,7 +43,7 @@ ifeq ($(UNAME_S),Darwin)
 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
 	brew update
 	brew install caskroom/cask/brew-cask 2> /dev/null
-	brew install $(BREW_PACKAGES)
+	brew cask install $(BREW_CASKS)
 else
 	apt-get update --yes
 	apt-get upgrade --yes

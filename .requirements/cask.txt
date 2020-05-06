@@ -1,0 +1,11 @@
+alfred
+caskroom/versions/firefox-developer-edition
+docker
+robo-3t
+save-hollywood
+sequel-pro
+slack
+spectacle
+thunderbird
+vlc
+zoomus
