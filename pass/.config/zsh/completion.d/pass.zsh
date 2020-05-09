@@ -127,7 +127,7 @@ _pass_complete_keys () {
 
 compdef _pass pass
 compdef _pass workpass
-zstyle ':completion::complete:workpass::' prefix "$HOME/.team-pass"
+zstyle ':completion::complete:workpass::' prefix "${XDG_CONFIG_HOME}/pass/team"
 workpass() {
-    PASSWORD_STORE_DIR=${HOME}/.team-pass pass ${@}
+    PASSWORD_STORE_DIR=${XDG_CONFIG_HOME}/pass/team pass ${@}
 }
