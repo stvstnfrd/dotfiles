@@ -11,10 +11,11 @@ if [ ! -d ${HOME}/.config/dotfiles ]; then
 fi
 cd ${HOME}/.config/dotfiles
 make update
-make nix
-sudo make system
-mkdir .backup
-mv -f ${HOME}/.bashrc ${HOME}/.bash_profile ${HOME}/.bash_history ${HOME}/.bash_logout ${HOME}/.profile .backup/
+sudo make system.apt
+make system.brew
+make system.nix
+make system.pip
+make backup
 PATH=${HOME}/.nix-profile/bin:${PATH} make install
 
 echo; echo
