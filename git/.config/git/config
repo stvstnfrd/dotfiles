@@ -95,7 +95,8 @@
 [core]
 	editor = vim
 	excludesfile = ~/.config/git/ignore
-	# pager = diff-so-fancy | less --tabs=1,5 -R
+	pager = diff-so-fancy | less --tabs=4 -rFX
+	# sshCommand = "ssh -F ~/.config/ssh/config"
 
 [format]
 	pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
@@ -111,5 +112,27 @@
 	smudge = git media smudge %f
 	required = true
 
+[merge]
+	tool = vimdiff
+
+[mergetool]
+	prompt = false
+
 [push]
 	default = simple
+
+[color]
+	ui = true
+	diff = auto
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
