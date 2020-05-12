@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
-FIND_ARGS_EXCLUDE = ! -path '*/src/*' ! -path './git-hub/.local/*' ! -path '*/.cache/*' ! -path './nvm/.config/nvm/*' ! -path '*/.git/*'
+FIND_ARGS_EXCLUDE = ! -path '*/src/*' ! -path './git-hub/.local/*' !  -path '*/.cache/*' ! -path './nvm/.config/nvm/*' ! -path '*/.git/*' !  -path '*/completion.d/*'
 ## FIND_ARGS_INCLUDE = \( -name '*.sh' -o -name '*.bash' \)
 SH_FILES_DIFF = git diff --name-only -z --diff-filter=AMd $(TRAVIS_BRANCH)..HEAD | grep --null --null-data '\.\(ba\)\?sh$$'
 ## SH_FILES_EXTENSION = find . -type f $(FIND_ARGS_EXCLUDE) $(FIND_ARGS_INCLUDE) -print0

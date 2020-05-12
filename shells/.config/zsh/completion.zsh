@@ -1,10 +1,11 @@
 #!/bin/zsh
-if [ -n "${debug}" ]; then
-    echo 'funk:zsh:completions'
-fi
+fpath=(${HOME}/.config/zsh/completion.d $fpath)
+fpath=(${HOME}/.nix-profile/share/zsh/site-functions $fpath)
+fpath=(${HOME}/.nix-profile/share/zsh/5.8 $fpath)
+echo $fpath
+
 # Load and run compinit
 autoload -U compinit
-compinit -i -d "${ZSH_COMPDUMP}"
 
 unsetopt menu_complete   # do not autoselect the first completion entry
 unsetopt flowcontrol
@@ -12,12 +13,18 @@ setopt auto_menu         # show completion menu on succesive tab press
 setopt complete_in_word
 setopt always_to_end
 
-# Save the location of the current completion dump file.
-if [ -z "$ZSH_COMPDUMP" ]; then
-  ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
+# Figure out the SHORT hostname
+if [[ "$OSTYPE" = darwin* ]]; then
+  # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
+  SHORT_HOST=$(scutil --get ComputerName 2>/dev/null) || SHORT_HOST=${HOST/.*/}
+else
+  SHORT_HOST=${HOST/.*/}
 fi
 
-WORDCHARS=''
+# Save the location of the current completion dump file.
+if [ -z "$ZSH_COMPDUMP" ]; then
+  ZSH_COMPDUMP="${HOME}/.cache/zsh/compdump-${SHORT_HOST}-${ZSH_VERSION}"
+fi
 
 zmodload -i zsh/complist
 
@@ -72,3 +79,5 @@ fi
 if [ -e "${ZDOTDIR}/completion.d/pass.zsh" ]; then
     . "${ZDOTDIR}/completion.d/pass.zsh"
 fi
+compinit -i -d "${ZSH_COMPDUMP}"
+compinit -u -C -d "${ZSH_COMPDUMP}"

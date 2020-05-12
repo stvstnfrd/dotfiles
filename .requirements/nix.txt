@@ -1,6 +1,7 @@
 nixpkgs.ag
 nixpkgs.apg
 nixpkgs.bashInteractive
+nixpkgs.bash-completion
 nixpkgs.coreutils-full
 nixpkgs.curl
 nixpkgs.dash

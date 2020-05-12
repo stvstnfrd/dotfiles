@@ -25,4 +25,8 @@ if [ -d "${__dir_dotfiles_startup}" ]; then
     unset __script_count
 fi
 unset __dir_dotfiles_startup
-# gsettings set com.canonical.Unity.Launcher launcher-position Bottom
+
+if [ -s "${HOME}/.config/bash/completion.bash" ]; then
+    # shellcheck source=shells/.config/bash/completion.bash
+    . "${HOME}/.config/bash/completion.bash"
+fi

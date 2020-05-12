@@ -6,4 +6,5 @@ if command -v git >/dev/null 2>&1; then
         # shellcheck disable=SC2139
         alias "g${a}=git ${a} "
     done
+    alias g='git '
 fi
