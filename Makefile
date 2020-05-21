@@ -32,6 +32,12 @@ backup:  ## Backup common configuration files
 docker:  ## Build a docker container
 	docker build -t dotfiles:latest .
 
+LINT_SH = find . -type f -path '*/src/*' -prune -o -path './nvm/.config/nvm/*' -o -name '*.sh' -print0 | xargs -0 --no-run-if-empty shellcheck
+
+.PHONY: docker.lint
+docker.lint:  ## Start a container and run the linter
+	docker run -v $(PWD):/root/.config/dotfiles --rm -it dotfiles:latest bash -c "$(LINT_SH) | less -R"
+
 docker-bash: docker  ## Start a container in a bash shell
 	docker run --rm -it --name dotfiles dotfiles:latest bash --login
 
@@ -47,6 +53,15 @@ install:  ## Stow/symlinked packages into your ${HOME} directory
 		filename=$$(echo $$package | sed 's/\/$$//; s/^.*\///'); \
 		$(STOW) --restow $$filename; \
 	done
+
+.PHONY: lint
+lint:  ## Run the linter against all files
+	$(LINT_SH)
+
+TRAVIS_BRANCH ?= master
+.PHONY: lint.diff
+lint.diff:  ## Run the linter against files changed since master
+	git diff --name-only HEAD..$(TRAVIS_BRANCH) | grep '\.sh$$' | xargs --no-run-if-empty shellcheck
 
 .PHONY: system
 system: system.apt  ## Bootstrap and install system packages

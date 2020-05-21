@@ -1,0 +1,13 @@
+dist: bionic
+language: sh
+services:
+- docker
+before_install:
+- sudo apt update -y
+install:
+- sudo apt install -y shellcheck
+env:
+- TARGET=lint.diff
+- TARGET=docker
+script:
+- make ${TARGET}
