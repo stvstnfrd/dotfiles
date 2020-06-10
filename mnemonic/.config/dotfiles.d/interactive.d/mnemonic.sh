@@ -6,7 +6,7 @@ alias ag='ag --pager=less '
 alias d='vimdiff '
 alias e='echo '
 alias f='find '
-alias g='grep '
+alias g='git '
 alias h='head '
 alias i='ipython '
 # j
