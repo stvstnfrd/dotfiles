@@ -52,3 +52,6 @@
 [submodule "git-hub/src/git-hub"]
 	path = git-hub/src/git-hub
 	url = https://github.com/ingydotnet/git-hub.git
+[submodule "vim-javascript/.config/vim/bundle/javascript"]
+	path = vim-javascript/.config/vim/bundle/javascript
+	url = https://github.com/pangloss/vim-javascript.git
