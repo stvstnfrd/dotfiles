@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 PREFIX=$(HOME)
-PACKAGES=$(shell find . -maxdepth 1 -mindepth 1 -type d ! -path '.\/.*' | sed 's/^..//' | sort)
+PACKAGES=$(shell cat .requirements/stow.txt)
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
 APT_PACKAGES=$(shell cat .requirements/apt.txt)
@@ -53,6 +53,10 @@ install:  ## Stow/symlinked packages into your ${HOME} directory
 		filename=$$(echo $$package | sed 's/\/$$//; s/^.*\///'); \
 		$(STOW) --restow $$filename; \
 	done
+
+.PHONY: install.update-requirements
+install.update-requirements:  # Update the list of stowed packages to match directory contents
+	find . -maxdepth 1 -mindepth 1 -type d ! -path '.\/.*' | sed 's/^..//' | sort > .requirements/stow.txt
 
 .PHONY: lint
 lint:  ## Run the linter against all files
