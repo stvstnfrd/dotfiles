@@ -6,9 +6,6 @@ fi
 # Perform any interactive zsh-only tasks here
 # This can be aliases,
 ZSH_COMPDUMP="${HOME}/.cache/zsh/compdump-${SHORT_HOST}-${ZSH_VERSION}"
-if [ -e "${ZDOTDIR}/.oh-my-zshrc" ]; then
-    . "${ZDOTDIR}/.oh-my-zshrc"
-fi
 if [ -e "${HOME}/.config/sh/interactive" ]; then
     . "${HOME}/.config/sh/interactive"
 fi
