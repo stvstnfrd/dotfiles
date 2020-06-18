@@ -30,4 +30,5 @@ vim-orgmode
 vim-pathogen
 vim-startify
 vim-supertab
+vim-syntax
 virtualenv

@@ -53,12 +53,20 @@ set softtabstop=4 "number of spaces that <Tab> uses while editing
 set tabstop=4 "number of spaces that <Tab> in file uses
 set list listchars=tab:>-,trail:.,extends:>,precedes:<
 
+autocmd FileType python set sw=4
+autocmd FileType python set ts=4
+autocmd FileType python set sts=4
+" autocmd FileType javascript set sw=2
+" autocmd FileType javascript set ts=2
+" autocmd FileType javascript set sts=2
+
 """"""""""""""""""""""""""""""""""""""""
 " Search                               "
 """"""""""""""""""""""""""""""""""""""""
 set incsearch "highlight match while typing search pattern
 set hlsearch "highlight matches with last search pattern
 
+filetype on
 """"""""""""""""""""""""""""""""""""""""
 " Shortcuts                            "
 """"""""""""""""""""""""""""""""""""""""
@@ -145,3 +153,5 @@ set timeoutlen=1000 ttimeoutlen=0
 """"""""""""""""""""""""""""""""""""""""
 runtime bundle/pathogen/autoload/pathogen.vim
 execute pathogen#infect()
+
+autocmd BufNewFile,BufRead *.html set syntax=mako
