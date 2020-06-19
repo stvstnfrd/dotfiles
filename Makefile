@@ -32,11 +32,17 @@ backup:  ## Backup common configuration files
 docker:  ## Build a docker container
 	docker build -t dotfiles:latest .
 
-LINT_SH = find . -type f -path '*/src/*' -prune -o -path './nvm/.config/nvm/*' -o -name '*.sh' -print0 | xargs -0 --no-run-if-empty shellcheck
+LINT_SH = find . -type f -path '*/src/*' -prune -o -path './nvm/.config/nvm/*' -o -name '*.sh' -o -name '*.bash' -print0 | xargs -0 --no-run-if-empty shellcheck --external-sources
+DIFF_LINT_SH = git diff --name-only HEAD..$(TRAVIS_BRANCH) | grep '\.\(ba\)\?sh$$' | xargs --no-run-if-empty shellcheck --external-sources
 
 .PHONY: docker.lint
 docker.lint:  ## Start a container and run the linter
-	docker run -v $(PWD):/root/.config/dotfiles --rm -it dotfiles:latest bash -c "$(LINT_SH) | less -R"
+	docker run -v $(PWD):/root/.config/dotfiles --rm -it dotfiles:latest \
+		bash -c "$(LINT_SH) | less -R --quit-if-one-screen"
+
+docker.lint.diff:  ## Start a container and run the linter against changed files
+	docker run -v $(PWD):/root/.config/dotfiles --rm -it dotfiles:latest \
+		bash -c "$(DIFF_LINT_SH) | less -R --quit-if-one-screen"
 
 docker-bash: docker  ## Start a container in a bash shell
 	docker run --rm -it --name dotfiles dotfiles:latest bash --login
@@ -65,7 +71,7 @@ lint:  ## Run the linter against all files
 TRAVIS_BRANCH ?= master
 .PHONY: lint.diff
 lint.diff:  ## Run the linter against files changed since master
-	git diff --name-only HEAD..$(TRAVIS_BRANCH) | grep '\.sh$$' | xargs --no-run-if-empty shellcheck
+	$(DIFF_LINT_SH)
 
 .PHONY: system
 system: system.apt  ## Bootstrap and install system packages
