@@ -2,7 +2,7 @@
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=
 
 _get_virtualenv_path() {
-    venv_name=${1:-$(basename $(pwd))}
+    venv_name=${1:-$(basename "$(pwd)")}
     if [ -z "${venv_name}" ]; then
         echo
         exit 1
@@ -12,12 +12,12 @@ _get_virtualenv_path() {
 }
 
 lsvirtualenv() {
-    find "${WORKON_HOME}" -maxdepth 1 -mindepth 1 -type d | \
-        xargs -n1 basename
+    find "${WORKON_HOME}" -maxdepth 1 -mindepth 1 -type d -print0 | \
+        xargs -0 -n1 basename
 }
 
 mkvirtualenv() {
-    venv_path="$(_get_virtualenv_path ${1})"
+    venv_path="$(_get_virtualenv_path "${1}")"
     if [ -z "${venv_path}" ]; then return 1; fi
     if [ -n "${VIRTUAL_ENV}" ]; then
         return
@@ -28,8 +28,10 @@ mkvirtualenv() {
         fi
     fi
     if [ ! -e "${venv_path}" ]; then
+        # shellcheck disable=SC2086
         python3 -m venv ${VIRTUALENVWRAPPER_VIRTUALENV_ARGS} "${venv_path}"
     fi
+    # shellcheck disable=SC1090
     . "${venv_path}/bin/activate"
 }
 
@@ -51,19 +53,19 @@ deactivate () {
         export PATH
         unset _OLD_VIRTUAL_PATH
     fi
-    if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
+    if [ -n "${BASH:-}" ] || [ -n "${ZSH_VERSION:-}" ] ; then
         hash -r
     fi
 }
 
 workon() {
     deactivate
-    venv_path="$(_get_virtualenv_path ${1})"
+    venv_path="$(_get_virtualenv_path "${1}")"
     if [ -z "${venv_path}" ]; then return 1; fi
     _OLD_VIRTUAL_PATH="${PATH}"
     export VIRTUAL_ENV="${venv_path}"
     export PATH="${VIRTUAL_ENV}/bin:${PATH}"
-    if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
+    if [ -n "${BASH:-}" ] || [ -n "${ZSH_VERSION:-}" ] ; then
         hash -r
     fi
 }
