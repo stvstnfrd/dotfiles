@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 PREFIX=$(HOME)
 PACKAGES=$(shell cat .requirements/stow.txt)
+SHELL=sh
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
 APT_PACKAGES=$(shell cat .requirements/apt.txt)
@@ -32,17 +33,24 @@ backup:  ## Backup common configuration files
 docker:  ## Build a docker container
 	docker build -t dotfiles:latest .
 
-LINT_SH = find . -type f -path '*/src/*' -prune -o -path './nvm/.config/nvm/*' -o -name '*.sh' -o -name '*.bash' -print0 | xargs -0 --no-run-if-empty shellcheck --external-sources
-DIFF_LINT_SH = git diff --name-only HEAD..$(TRAVIS_BRANCH) | grep '\.\(ba\)\?sh$$' | xargs --no-run-if-empty shellcheck --external-sources
+FIND_ARGS_EXCLUDE = ! -path '*/src/*' ! -path './git-hub/.local/*' ! -path '*/.cache/*' ! -path './nvm/.config/nvm/*' ! -path '*/.git/*' ! -path './.requirements/nix.sh'
+FIND_ARGS_INCLUDE = \( -name '*.sh' -o -name '*.bash' \)
+SH_FILES_DIFF = git diff --name-only -z --diff-filter=AM HEAD..$(TRAVIS_BRANCH) | grep --null --null-data '\.\(ba\)\?sh$$'
+SH_FILES_EXTENSION = find . -type f $(FIND_ARGS_EXCLUDE) $(FIND_ARGS_INCLUDE) -print0
+SH_FILES_SHEBANG = find . -type f $(FIND_ARGS_EXCLUDE) -print0 | xargs -0 grep -l --null --null-data '^\#!/bin/\(ba\)\?sh'
+XARGS_SHELLCHECK = xargs -0 --no-run-if-empty shellcheck --external-sources
+LINT_SH_DIFF = $(SH_FILES_DIFF) | $(XARGS_SHELLCHECK)
+LINT_SH_EXTENSION = $(SH_FILES_EXTENSION) | $(XARGS_SHELLCHECK)
+LINT_SH_SHEBANG = $(SH_FILES_SHEBANG) | $(XARGS_SHELLCHECK)
 
 .PHONY: docker.lint
 docker.lint:  ## Start a container and run the linter
 	docker run -v $(PWD):/root/.config/dotfiles --rm -it dotfiles:latest \
-		bash -c "$(LINT_SH) | less -R --quit-if-one-screen"
+		bash -c "$(LINT_SH_SHEBANG) | less -R --quit-if-one-screen"
 
 docker.lint.diff:  ## Start a container and run the linter against changed files
 	docker run -v $(PWD):/root/.config/dotfiles --rm -it dotfiles:latest \
-		bash -c "$(DIFF_LINT_SH) | less -R --quit-if-one-screen"
+		bash -c "$(LINT_SH_DIFF) | less -R --quit-if-one-screen"
 
 docker-bash: docker  ## Start a container in a bash shell
 	docker run --rm -it --name dotfiles dotfiles:latest bash --login
@@ -66,12 +74,12 @@ install.update-requirements:  # Update the list of stowed packages to match dire
 
 .PHONY: lint
 lint:  ## Run the linter against all files
-	$(LINT_SH)
+	$(LINT_SH_SHEBANG)
 
 TRAVIS_BRANCH ?= master
 .PHONY: lint.diff
 lint.diff:  ## Run the linter against files changed since master
-	$(DIFF_LINT_SH)
+	$(LINT_SH_DIFF)
 
 .PHONY: system
 system: system.apt  ## Bootstrap and install system packages

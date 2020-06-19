@@ -1,7 +1,7 @@
 #!/bin/sh
-if command -v fortune 2>&1 >/dev/null; then
+if command -v fortune >/dev/null 2>&1; then
     echo; echo
-    if command -v cowsay 2>&1 >/dev/null; then
+    if command -v cowsay >/dev/null 2>&1; then
         fortune | cowsay -f /dev/null
     else
         fortune
@@ -21,8 +21,9 @@ __dir_dotfiles_startup="${DFC}/interactive.d"
 if [ -d "${__dir_dotfiles_startup}" ]; then
     __script_count=$(find "${__dir_dotfiles_startup}/" -name '*.sh' | wc -l | awk '{print $1}')
     if [ "${__script_count}" -gt 0 ]; then
-        for plugin in ${__dir_dotfiles_startup}/*.sh; do
+        for plugin in "${__dir_dotfiles_startup}"/*.sh; do
             if [ -r "${plugin}" ]; then
+                # shellcheck disable=SC1090
                 . "${plugin}"
             fi
         done

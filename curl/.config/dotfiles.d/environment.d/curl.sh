@@ -4,5 +4,6 @@ curl() {
     if [ -e "${NETRC}" ]; then
         _flags="--netrc-file ${NETRC}"
     fi
-    command curl ${_flags} ${@}
+    # shellcheck disable=SC2086
+    command curl ${_flags} "${@}"
 }

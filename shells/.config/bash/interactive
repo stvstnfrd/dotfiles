@@ -1,12 +1,11 @@
 #!/bin/bash
-if [ -n "${debug}" ]; then
-    echo 'funk:bash:interactive'
-fi
 if [ -s "${HOME}/.config/sh/interactive" ]; then
+    # shellcheck source=shells/.config/sh/interactive
     . "${HOME}/.config/sh/interactive"
 fi
 export HISTFILE="${XDG_CACHE_HOME}/bash/history"
 if [ -s "${HOME}/.config/bash/options" ]; then
+    # shellcheck source=shells/.config/bash/options
     . "${HOME}/.config/bash/options"
 fi
 
@@ -15,8 +14,9 @@ __dir_dotfiles_startup="${DFC}/interactive.d"
 if [ -d "${__dir_dotfiles_startup}" ]; then
     __script_count=$(find "${__dir_dotfiles_startup}/" -name '*.bash' | wc -l | awk '{print $1}')
     if [ "${__script_count}" -gt 0 ]; then
-        for plugin in ${__dir_dotfiles_startup}/*.bash; do
+        for plugin in "${__dir_dotfiles_startup}"/*.bash; do
             if [ -r "${plugin}" ]; then
+                # shellcheck disable=SC1090
                 . "${plugin}"
             fi
         done

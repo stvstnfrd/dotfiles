@@ -11,13 +11,13 @@ if [ -z "${ZSH_VERSION}" ] && [ -z "${BASH_VERSION}" ]; then
 # "
     export PS1
 else
-	if ! type __git_ps1 >/dev/null 2>&1; then
+	if ! command -v __git_ps1 >/dev/null 2>&1; then
 		if [ -e "${HOME}/.config/bash/git-sh-prompt" ]; then
 			# shellcheck source=shells/.config/bash/git-sh-prompt
 			. "${HOME}/.config/bash/git-sh-prompt"
 		fi
 	fi
-	PS1_EMOTICON() {(
+	PS1_EMOTICON() { (
 		last_exit_code=${?}
 		emoticon_success='@(^_^)@'
 		emoticon_failure='@(>_<)@'
@@ -32,26 +32,26 @@ else
 		fi
 		printf "%b" "${output}"
 		return ${last_exit_code}
-	)}
+	) }
 
-	PS1_GIT() {(
+	PS1_GIT() { (
 		# shellcheck disable=SC2119
 		branch_info=$(__git_ps1 | tr -d '( )')
 		if [ -n "${branch_info}" ]; then
 			echo "[branch:${branch_info}]"
 		fi
-	)}
+	) }
 
-	PS1_NODE() {(
+	PS1_NODE() { (
 		if [ -n "${NVM_BIN}" ]; then
 			version=$(echo "${NVM_BIN}" | sed 's@.*/v\([0-9.]\+\)/.*@\1@')
 			echo "[node:${version}]"
 		fi
-	)}
+	) }
 
-	PS1_VENV() {
+	PS1_VENV() { (
 		if [ -n "${VIRTUAL_ENV}" ]; then
 			echo "[venv:$(basename "${VIRTUAL_ENV}")]"
 		fi
-	}
+	) }
 fi
