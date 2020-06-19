@@ -22,6 +22,7 @@ if [ -e "${XDG_CONFIG_HOME}/vim/rc.vim" ]; then
 else
     export VIMINIT=''
 fi
+export WORKON_HOME=${XDG_DATA_HOME}/virtualenvs
 export ZSH_PIP_CACHE_FILE=${XDG_CACHE_HOME}/pip/zsh
 export _Z_DATA=${XDG_CACHE_HOME}/z
 ptpython () {

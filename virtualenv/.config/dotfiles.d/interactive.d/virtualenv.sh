@@ -1,6 +1,5 @@
 #!/bin/sh
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=
-export WORKON_HOME=${HOME}/.local/venvs
 
 _get_virtualenv_path() {
     venv_name=${1:-$(basename $(pwd))}
