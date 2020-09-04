@@ -29,6 +29,7 @@ nixpkgs.ranger
 nixpkgs.rsync
 nixpkgs.sbcl
 nixpkgs.screen
+nixpkgs.shellcheck
 nixpkgs.sqlite
 nixpkgs.stow
 nixpkgs.tree
