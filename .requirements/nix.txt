@@ -24,7 +24,7 @@ nixpkgs.neofetch
 nixpkgs.netcat
 nixpkgs.nodejs
 nixpkgs.pass
-nixpkgs.python35Full
+nixpkgs.python38Full
 nixpkgs.ranger
 nixpkgs.rsync
 nixpkgs.sbcl
