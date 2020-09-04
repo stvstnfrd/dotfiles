@@ -1,4 +1,5 @@
 #!/bin/sh
 if [ -e "${HOME}/src/autoenv/activate.sh" ]; then
-    . ${HOME}/src/autoenv/activate.sh
+    # shellcheck source=autoenv/src/autoenv/activate.sh
+    . "${HOME}/src/autoenv/activate.sh"
 fi

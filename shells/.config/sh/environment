@@ -5,8 +5,9 @@
 # Other get nothing
 umask 0037
 # Then a few more basic paths
+# shellcheck source=shells/.config/sh/xdg
 . "${HOME}/.config/sh/xdg"
-export DFC=${XDG_CONFIG_HOME}/dotfiles.d
+export DFC="${XDG_CONFIG_HOME}/dotfiles.d"
 PATH="/bin"
 PATH="/sbin:${PATH}"
 PATH="/usr/bin:${PATH}"
@@ -15,7 +16,8 @@ PATH="/opt/X11/bin:${PATH}"
 PATH="/usr/local/bin:${PATH}"
 PATH="/usr/local/sbin:${PATH}"
 if [ -e "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]; then
-    . ${HOME}/.nix-profile/etc/profile.d/nix.sh
+    # shellcheck disable=SC1090
+    . "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 fi
 PATH="${HOME}/local/bin:${PATH}"
 PATH="${HOME}/.local/bin:${PATH}"
@@ -28,8 +30,8 @@ MANPATH="${HOME}/.nix-profile/share/man:${MANPATH}"
 MANPATH="${XDG_DATA_HOME}/man:${MANPATH}"
 export MANPATH
 # This path is sourced by interactive POSIX shells
-export ENV=${XDG_CONFIG_HOME}/sh/interactive
-export BASH_ENV=${XDG_CONFIG_HOME}/bash/environment
+export ENV="${XDG_CONFIG_HOME}/sh/interactive"
+export BASH_ENV="${XDG_CONFIG_HOME}/bash/environment"
 export EDITOR=vim
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US
@@ -38,8 +40,9 @@ __dir_dotfiles_startup="${DFC}/environment.d"
 if [ -d "${__dir_dotfiles_startup}" ]; then
     __script_count=$(find "${__dir_dotfiles_startup}/" -name '*.sh' | wc -l | awk '{print $1}')
     if [ "${__script_count}" -gt 0 ]; then
-        for plugin in ${__dir_dotfiles_startup}/*.sh; do
+        for plugin in "${__dir_dotfiles_startup}"/*.sh; do
             if [ -r "${plugin}" ]; then
+                # shellcheck disable=SC1090
                 . "${plugin}"
             fi
         done

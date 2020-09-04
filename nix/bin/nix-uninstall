@@ -1,2 +1,2 @@
 #!/bin/sh
-nix-env -e ${1}
+nix-env -e "${1}"
