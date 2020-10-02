@@ -22,6 +22,7 @@ nixpkgs.man
 nixpkgs.mutt
 nixpkgs.neofetch
 nixpkgs.netcat
+nixpkgs.newsboat
 nixpkgs.nodejs
 nixpkgs.pass
 nixpkgs.python38Full

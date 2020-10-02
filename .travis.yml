@@ -8,6 +8,6 @@ install:
 - sudo apt install -y shellcheck
 env:
 - TARGET=lint.diff
-- TARGET=docker
+- TARGET=docker.build
 script:
 - make ${TARGET}
