@@ -99,7 +99,7 @@
 	editor = vim
 	excludesfile = ~/.config/git/ignore
 	pager = diff-so-fancy | less --tabs=4 -rFX
-	# sshCommand = "ssh -F ~/.config/ssh/config"
+	sshCommand = "ssh $(test -e ~/.config/ssh/config && echo '-F' ~/.config/ssh/config || true)"
 
 [format]
 	pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
