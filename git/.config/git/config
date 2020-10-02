@@ -92,6 +92,9 @@
 	zn = remote rename
 	zr = remote remove
 
+[diff]
+	algorithm = patience
+
 [core]
 	editor = vim
 	excludesfile = ~/.config/git/ignore
