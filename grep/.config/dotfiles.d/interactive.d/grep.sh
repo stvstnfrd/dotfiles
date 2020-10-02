@@ -33,6 +33,26 @@ rg() {
         "${@}" \
     | less ${_LESS_OPTIONS}
 }
+rgl() {
+    grep \
+        ${_GREP_OPTIONS} \
+        --files-with-matches \
+        "${@}" \
+    ;
+}
+rgl0() {
+    rgl \
+        --null \
+        --color=never \
+        "${@}" \
+    ;
+}
+rg_each() {
+    EDITOR=${EDITOR:-vim}
+    rgl0 \
+        "${@}" \
+    | xargs -0 "${EDITOR}"
+}
 rg_docs() {
     grep \
         --include='*.markdown' \
