@@ -3,7 +3,7 @@
 # shellcheck disable=SC2089
 # shellcheck disable=SC2090
 _GREP_OPTIONS="--color=always --binary-files=without-match --recursive"
-_LESS_OPTIONS="--quit-if-one-screen --RAW-CONTROL-CHARS"
+_LESS_OPTIONS="--quit-if-one-screen --RAW-CONTROL-CHARS --chop-long-lines"
 _ignored_directories=".cvs .git .hg .svn __pycache__ test_root dist node_modules coverage htmlcov cover"
 _ignored_files='*.po *.mo'
 grep_flag_available() {
