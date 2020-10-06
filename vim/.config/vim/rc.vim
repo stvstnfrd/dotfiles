@@ -121,6 +121,7 @@ function! MergeCommitMessages()
     let g:git_ci_msg_user = substitute(system("git config --get user.name"), '\n$', '', '')
     let g:git_ci_msg_email = substitute(system("git config --get user.email"), '\n$', '', '')
     nmap S GoSigned-off-by: <C-R>=printf("%s <%s>", g:git_ci_msg_user, g:git_ci_msg_email)<CR><ESC>
+    nmap CO GoCo-authored-by: <C-R>=printf("%s <%s>", g:git_ci_msg_user, g:git_ci_msg_email)<CR><ESC>
     nmap R GoReviewed-by: <C-R>=printf("%s <%s>", g:git_ci_msg_user, g:git_ci_msg_email)<CR><ESC>
     nmap PR gg0CMerge PR #<ESC>JJo<CR>* Commits:<ESC>gg$x2F ct 
 endf

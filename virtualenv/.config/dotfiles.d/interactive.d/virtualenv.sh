@@ -13,7 +13,7 @@ _get_virtualenv_path() {
 
 lsvirtualenv() {
     find "${WORKON_HOME}" -maxdepth 1 -mindepth 1 -type d -print0 | \
-        xargs -0 -n1 basename
+        xargs -0 -n1 --no-run-if-empty basename
 }
 
 mkvirtualenv() {
