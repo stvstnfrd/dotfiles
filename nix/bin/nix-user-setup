@@ -1,0 +1,24 @@
+#!/bin/sh
+__nix_setup_user() {
+  TARGET_USER="${1:-${USER}}"
+  TARGET_USER_HOME=$(getent passwd "${TARGET_USER}" | cut -d: -f6)
+  TARGET_USER_GROUP=$(getent group "$(getent passwd "${TARGET_USER}" | cut -d: -f4)" | cut -d: -f1)
+  SYMLINK_PATH="${TARGET_USER_HOME}/.nix-profile"
+  PROFILE_DIR="/nix/var/nix/profiles/per-user/${TARGET_USER}"
+
+  echo "Creating profile ${PROFILE_DIR}..."
+  echo "Profile symlink: ${SYMLINK_PATH}"
+
+  rm "${SYMLINK_PATH}"
+  sudo mkdir -p "${PROFILE_DIR}"
+  sudo chown "${TARGET_USER}:${TARGET_USER_GROUP}" "${PROFILE_DIR}"
+
+  ln -s "${PROFILE_DIR}/profile" "${SYMLINK_PATH}"
+  chown -h "${TARGET_USER}:${TARGET_USER_GROUP}" "${SYMLINK_PATH}"
+
+  echo "export NIX_REMOTE=daemon" >> "$TARGET_USER_HOME/.profile"
+  echo ". /etc/profile.d/nix.sh" >> "$TARGET_USER_HOME/.profile"
+
+  su -lc "cd; . /etc/profile.d/nix.sh; NIX_REMOTE=daemon nix-channel --update" "${TARGET_USER}"
+}
+__nix-setup-user "${@}"
