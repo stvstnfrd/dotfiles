@@ -26,7 +26,7 @@
 	path = vim-plugins/.config/vim/bundle/supertab
 	url = https://github.com/ervandew/supertab.git
 [submodule "vim-startify/.config/vim/bundle/startify"]
-	path = vim-startify/.config/vim/bundle/startify
+	path = vim-plugins/.config/vim/bundle/startify
 	url = https://github.com/mhinz/vim-startify.git
 [submodule "vim-obsession/.config/vim/bundle/obsession"]
 	path = vim-obsession/.config/vim/bundle/obsession
