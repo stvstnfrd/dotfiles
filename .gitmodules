@@ -32,7 +32,7 @@
 	path = vim-plugins/.config/vim/bundle/obsession
 	url = git://github.com/tpope/vim-obsession.git
 [submodule "vim-orgmode/.config/vim/bundle/orgmode"]
-	path = vim-orgmode/.config/vim/bundle/orgmode
+	path = vim-plugins/.config/vim/bundle/orgmode
 	url = https://github.com/jceb/vim-orgmode.git
 [submodule "cd/src/z"]
 	path = cd/src/z
