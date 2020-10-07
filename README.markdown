@@ -2,6 +2,14 @@
 
 ## Installation
 
+### docker container
+
+```sh
+git clone https://github.com/stvstnfrd/dotfiles.git ${HOME}/.config/dotfiles
+cd ${HOME}/.config/dotfiles
+make docker.{build,bash}
+```
+
 ### config-only
 
 ```sh
