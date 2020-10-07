@@ -29,7 +29,7 @@
 	path = vim-plugins/.config/vim/bundle/startify
 	url = https://github.com/mhinz/vim-startify.git
 [submodule "vim-obsession/.config/vim/bundle/obsession"]
-	path = vim-obsession/.config/vim/bundle/obsession
+	path = vim-plugins/.config/vim/bundle/obsession
 	url = git://github.com/tpope/vim-obsession.git
 [submodule "vim-orgmode/.config/vim/bundle/orgmode"]
 	path = vim-orgmode/.config/vim/bundle/orgmode
