@@ -5,7 +5,7 @@
 	path = vim-plugins/.config/vim/bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
 [submodule "vim-gitgutter/.config/vim/bundle/gitgutter"]
-	path = vim-gitgutter/.config/vim/bundle/gitgutter
+	path = vim-plugins/.config/vim/bundle/gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
 [submodule "vim-gnupg/.config/vim/bundle/gnupg"]
 	path = vim-gnupg/.config/vim/bundle/gnupg
