@@ -2,15 +2,6 @@
 
 ## Installation
 
-### virtual machine
-
-```sh
-git clone https://github.com/stvstnfrd/dotfiles.git ${HOME}/.config/dotfiles
-cd ${HOME}/.config/dotfiles
-vagrant up
-vagrant ssh
-```
-
 ### config-only
 
 ```sh
