@@ -22,6 +22,7 @@ make install
 ### metal, bootstrap
 
 ```sh
+# TODO: update this?
 curl https://raw.githubusercontent.com/stvstnfrd/dotfiles/master/bootstrap.sh | sh
 ```
 
