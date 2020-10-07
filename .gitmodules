@@ -14,7 +14,7 @@
 	path = vim-plugins/.config/vim/bundle/lightline
 	url = https://github.com/itchyny/lightline.vim
 [submodule "vim-markdown/.config/vim/bundle/markdown"]
-	path = vim-markdown/.config/vim/bundle/markdown
+	path = vim-plugins/.config/vim/bundle/markdown
 	url = https://github.com/plasticboy/vim-markdown.git
 [submodule "vim-nerdtree/.config/vim/bundle/nerdtree"]
 	path = vim-nerdtree/.config/vim/bundle/nerdtree
