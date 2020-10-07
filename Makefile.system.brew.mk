@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 ifeq ($(UNAME_S),Darwin)
 # https://download.virtualbox.org/virtualbox/5.2.24/VirtualBox-5.2.24-128163-OSX.dmg
-BREW_CASKS=$(shell cat .requirements/cask.txt)
+BREW_CASKS=$(shell grep -v '^\#' .requirements/cask.txt)
 BREW_EXISTS=$(shell command -v brew 2>&1 >/dev/null && echo 1 || echo 0)
 UNAME_S := $(shell uname -s)
 
