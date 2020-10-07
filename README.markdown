@@ -82,3 +82,29 @@ curl https://raw.githubusercontent.com/stvstnfrd/dotfiles/master/bootstrap.sh | 
 - keyboard
 - mnemnoic
 - vagrant
+
+
+## Gotchas
+
+
+### gpg: decryption failed: No secret key
+
+This works as expected:
+- `gpg --list-secret-keys`
+
+but this does not:
+- `gpg --decrypt ...`
+- `pass -c something/inside/password/store`
+
+You may need to restart the GPG Agent [1]:
+- `pkill gpg-agent`
+
+
+
+`bash: __vte_prompt_command: command not found`
+
+
+## References
+- [1] https://stackoverflow.com/questions/28321712/gpg-decryption-fails-with-no-secret-key-error
+- [2] https://medium.com/@chasinglogic/the-definitive-guide-to-password-store-c337a8f023a1
+- [3] https://lists.gnupg.org/pipermail/gnupg-users/2017-August/058981.html
