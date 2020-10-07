@@ -8,7 +8,7 @@
 	path = vim-plugins/.config/vim/bundle/gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
 [submodule "vim-gnupg/.config/vim/bundle/gnupg"]
-	path = vim-gnupg/.config/vim/bundle/gnupg
+	path = vim-plugins/.config/vim/bundle/gnupg
 	url = https://github.com/jamessan/vim-gnupg.git
 [submodule "vim-lightline/.config/vim/bundle/lightline"]
 	path = vim-lightline/.config/vim/bundle/lightline
