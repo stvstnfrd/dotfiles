@@ -151,7 +151,11 @@ set timeoutlen=1000 ttimeoutlen=0
 """"""""""""""""""""""""""""""""""""""""
 " Plugins                              "
 """"""""""""""""""""""""""""""""""""""""
-runtime bundle/pathogen/autoload/pathogen.vim
-execute pathogen#infect()
+if filereadable(expand("$XDG_CONFIG_HOME/vim/bundle/pathogen/autoload/pathogen.vim"))
+    runtime bundle/pathogen/autoload/pathogen.vim
+    if exists("g:loaded_pathogen")
+        execute pathogen#infect()
+    endif
+endif
 
 autocmd BufNewFile,BufRead *.html set syntax=mako
