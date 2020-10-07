@@ -2,7 +2,7 @@
 	path = diff-so-fancy/.config/diff-so-fancy
 	url = https://github.com/so-fancy/diff-so-fancy.git
 [submodule "vim-fugitive/.config/vim/bundle/fugitive"]
-	path = vim-fugitive/.config/vim/bundle/fugitive
+	path = vim-plugins/.config/vim/bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
 [submodule "vim-gitgutter/.config/vim/bundle/gitgutter"]
 	path = vim-gitgutter/.config/vim/bundle/gitgutter
