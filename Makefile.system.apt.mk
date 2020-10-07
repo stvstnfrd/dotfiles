@@ -6,20 +6,21 @@ APT_INSTALL ?= 1
 APT_PACKAGES=$(shell grep -v '^\#' .requirements/apt.txt)
 APT_UPDATE ?= 0
 EUID ?= $(shell id -u)
+ifneq ($(EUID),0)
+SUDO=sudo
+else
+SUDO=
+endif
 
 .PHONY: system.apt
 system.apt:  ## Install apt packages
-ifneq ($(EUID),0)
-	echo "Please run as root"
-	exit 1
-endif
 ifeq ($(APT_UPDATE),1)
-	apt-get update --yes
-	apt-get upgrade --yes
-	apt-get dist-upgrade --yes
+	$(SUDO) apt-get update --yes
+	$(SUDO) apt-get upgrade --yes
+	$(SUDO) apt-get dist-upgrade --yes
 endif
 ifeq ($(APT_INSTALL),1)
-	apt-get install --yes $(APT_PACKAGES)
-	apt-get autoremove --yes
+	$(SUDO) apt-get install --yes $(APT_PACKAGES)
+	$(SUDO) apt-get autoremove --yes
 endif
 endif

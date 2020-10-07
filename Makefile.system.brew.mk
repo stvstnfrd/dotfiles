@@ -16,4 +16,8 @@ system.brew.bootstrap:  ## Bootstrap brew packages
 ifeq ($(BREW_EXISTS),0)
 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
 endif
+else
+.PHONY: system.brew
+system.brew:  ## Install brew packages
+	-echo 'Nothing to do on non-OSX systems...'
 endif

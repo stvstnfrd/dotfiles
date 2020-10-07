@@ -9,5 +9,6 @@ install:
 env:
 - TARGET=lint.diff
 - TARGET=docker.build
+- TARGET=from-scratch
 script:
 - make ${TARGET}
