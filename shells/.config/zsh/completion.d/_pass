@@ -1,7 +1,23 @@
-#!/bin/zsh
-if [ -n "${debug}" ]; then
-    echo 'funk:pass:interactive'
-fi
+#compdef pass
+#autoload
+
+# Copyright (C) 2012 - 2014:
+#    Johan Venant <jvenant@invicem.pro>
+#    Brian Mattern <rephorm@rephorm.com>
+#    Jason A. Donenfeld <Jason@zx2c4.com>.
+# All Rights Reserved.
+# This file is licensed under the GPLv2+. Please see COPYING for more information.
+
+
+# If you use multiple repositories, you can configure completion like this:
+#
+# compdef _pass workpass
+# zstyle ':completion::complete:workpass::' prefix "$HOME/work/pass"
+# workpass() {
+#   PASSWORD_STORE_DIR=$HOME/work/pass pass $@
+# }
+
+
 _pass () {
 	local cmd
 	if (( CURRENT > 2)); then
