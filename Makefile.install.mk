@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 PREFIX=$(HOME)
 SHELL=sh
-PACKAGES=$(shell cat .requirements/stow.txt)
+PACKAGES=$(shell grep -v '^\#' .requirements/stow.txt)
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
 

@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 NIX_EXISTS=$(shell test -e /nix 2>&1 >/dev/null && echo 1 || echo 0)
-NIX_PACKAGES=$(shell cat .requirements/nix.txt)
+NIX_PACKAGES=$(shell grep -v '^\#' .requirements/nix.txt)
 
 .PHONY: system.nix
 system.nix: system.nix.bootstrap  ## Install nix packages
