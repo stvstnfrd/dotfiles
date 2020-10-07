@@ -52,3 +52,12 @@
 [submodule "vim-javascript/.config/vim/bundle/javascript"]
 	path = vim-plugins/.config/vim/bundle/javascript
 	url = https://github.com/pangloss/vim-javascript.git
+[submodule "vim-plugins/.config/vim/bundle/surround"]
+	path = vim-plugins/.config/vim/bundle/surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "vim-plugins/.config/vim/bundle/nerdcommenter"]
+	path = vim-plugins/.config/vim/bundle/nerdcommenter
+	url = https://github.com/preservim/nerdcommenter.git
+[submodule "vim-plugins/.config/vim/bundle/syntastic"]
+	path = vim-plugins/.config/vim/bundle/syntastic
+	url = https://github.com/vim-syntastic/syntastic.git
