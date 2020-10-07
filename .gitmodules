@@ -11,7 +11,7 @@
 	path = vim-plugins/.config/vim/bundle/gnupg
 	url = https://github.com/jamessan/vim-gnupg.git
 [submodule "vim-lightline/.config/vim/bundle/lightline"]
-	path = vim-lightline/.config/vim/bundle/lightline
+	path = vim-plugins/.config/vim/bundle/lightline
 	url = https://github.com/itchyny/lightline.vim
 [submodule "vim-markdown/.config/vim/bundle/markdown"]
 	path = vim-markdown/.config/vim/bundle/markdown
