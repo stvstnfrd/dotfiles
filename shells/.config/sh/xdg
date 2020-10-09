@@ -36,6 +36,9 @@ export WORKON_HOME="${XDG_DATA_HOME}/virtualenvs"
 export XAUTHORITY="${XDG_CACHE_HOME}/.Xauthority"
 export ZSH_PIP_CACHE_FILE="${XDG_CACHE_HOME}/pip/zsh"
 export _Z_DATA="${XDG_CACHE_HOME}/z"
+sbcl () {
+    command sbcl --userinit "${XDG_CONFIG_HOME}/sbcl/rc" "${@}"
+}
 ssh () {
     command ssh -F "${XDG_CONFIG_HOME}/ssh/config" "${@}"
 }
