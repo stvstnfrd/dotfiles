@@ -21,6 +21,7 @@ export PIP_CONFIG_FILE="${XDG_CONFIG_HOME}/pip/conf"
 export PIP_LOG_FILE="${XDG_CACHE_HOME}/pip/log"
 export PYTHON_EGG_CACHE="${XDG_CACHE_HOME}/python-eggs"
 export SCREENRC="${XDG_CONFIG_HOME}/screen/rc"
+export SQLITE_HISTORY=${XDG_DATA_HOME}/sqlite_history
 export VAGRANT_HOME="${XDG_CONFIG_HOME}/vagrant.d"
 if command -v VBoxManage >/dev/null 2>&1; then
 	export VBOX_USER_HOME="${XDG_CONFIG_HOME}/virtualbox"
@@ -38,6 +39,9 @@ export ZSH_PIP_CACHE_FILE="${XDG_CACHE_HOME}/pip/zsh"
 export _Z_DATA="${XDG_CACHE_HOME}/z"
 sbcl () {
     command sbcl --userinit "${XDG_CONFIG_HOME}/sbcl/rc" "${@}"
+}
+sqlite3 () {
+    command sqlite3 -init "${XDG_CONFIG_HOME}/sqlite3/rc" "${@}"
 }
 ssh () {
     command ssh -F "${XDG_CONFIG_HOME}/ssh/config" "${@}"
