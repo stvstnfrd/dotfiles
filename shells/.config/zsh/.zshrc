@@ -2,7 +2,7 @@
 if [ -e "${HOME}/.config/sh/interactive" ]; then
     . "${HOME}/.config/sh/interactive"
 fi
-export HISTFILE="${XDG_CACHE_HOME}/zsh/history"
+export HISTFILE="${XDG_DATA_HOME}/zsh/history"
 export KEYTIMEOUT=1
 
 # Load all of the plugins
