@@ -8,7 +8,7 @@
 XDG_DESKTOP_DIR="$HOME/.local/share/desktop"
 XDG_DOWNLOAD_DIR="$HOME/.local/share/downloads"
 XDG_TEMPLATES_DIR="$HOME/.config/templates"
-XDG_PUBLICSHARE_DIR="$HOME/Public"
+XDG_PUBLICSHARE_DIR="$HOME/.local/share/public"
 XDG_DOCUMENTS_DIR="$HOME/media/documents"
 XDG_MUSIC_DIR="$HOME/Music"
 XDG_PICTURES_DIR="$HOME/Pictures"
