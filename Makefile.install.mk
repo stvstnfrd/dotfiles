@@ -4,6 +4,7 @@ SHELL=sh
 PACKAGES=$(shell grep -v '^\#' .requirements/stow.txt)
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
+_install_xdg_paths=XDG_DESKTOP_DIR XDG_DOWNLOAD_DIR XDG_TEMPLATES_DIR XDG_PUBLICSHARE_DIR XDG_DOCUMENTS_DIR XDG_MUSIC_DIR XDG_PICTURES_DIR XDG_VIDEOS_DIR
 
 .PHONY: backup
 backup:  ## Backup common configuration files
@@ -16,6 +17,7 @@ install:  ## Stow/symlinked packages into your ${HOME} directory
 		filename=$$(echo $$package | sed 's/\/$$//; s/^.*\///'); \
 		$(STOW) --restow $$filename; \
 	done
+	@make install.user-dirs
 
 .PHONY: install.update-requirements
 install.update-requirements:  # Update the list of stowed packages to match directory contents
@@ -34,3 +36,16 @@ update:  ## Update the core code and all submodules
 	git rebase origin/master
 	git submodule init
 	git submodule update --recursive
+
+.PHONY: install.user-dirs
+install.user-dirs:  ## Create untracked user directories
+	. shells/.config/sh/xdg \
+	&& for path in $(_install_xdg_paths); do \
+		eval 'test -e $$'$${path} || eval 'mkdir -p $$'$${path}; \
+	done \
+	&& for path in sh bash zsh; do \
+		if [ ! -e $${XDG_DATA_HOME}/$${path} ]; then \
+			mkdir -p $${XDG_DATA_HOME}/$${path}; \
+		fi \
+	done \
+	;
