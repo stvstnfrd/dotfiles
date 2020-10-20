@@ -15,9 +15,14 @@ PATH="/usr/sbin:${PATH}"
 PATH="/opt/X11/bin:${PATH}"
 PATH="/usr/local/bin:${PATH}"
 PATH="/usr/local/sbin:${PATH}"
+PATH="/nix/var/nix/profiles/default/bin:${PATH}"
+PATH="${HOME}/.nix-profile/bin:${PATH}"
 if [ -e "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]; then
     # shellcheck disable=SC1090
     . "${HOME}/.nix-profile/etc/profile.d/nix.sh"
+elif [ -e "/etc/profile.d/nix.sh" ]; then
+    # shellcheck disable=SC1090
+    . "/etc/profile.d/nix.sh"
 fi
 PATH="${HOME}/local/bin:${PATH}"
 PATH="${HOME}/.local/bin:${PATH}"
@@ -29,6 +34,13 @@ MANPATH="/usr/share/man:${MANPATH}"
 MANPATH="${HOME}/.nix-profile/share/man:${MANPATH}"
 MANPATH="${XDG_DATA_HOME}/man:${MANPATH}"
 export MANPATH
+
+# https://stackoverflow.com/a/53825858
+_preload=/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0
+if [ -e "${_preload}" ]; then
+    export LD_PRELOAD=${_preload}:${LD_PRELOAD}
+fi
+
 # This path is sourced by interactive POSIX shells
 export ENV="${XDG_CONFIG_HOME}/sh/interactive"
 export BASH_ENV="${XDG_CONFIG_HOME}/bash/environment"
