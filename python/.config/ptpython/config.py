@@ -68,7 +68,7 @@ def configure(repl):
     repl.enable_dictionary_completion = False
 
     # Vi mode.
-    repl.vi_mode = False
+    repl.vi_mode = True
 
     # Paste mode. (When True, don't insert whitespace after new line.)
     repl.paste_mode = False
