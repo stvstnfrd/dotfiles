@@ -9,7 +9,7 @@ if command -v fortune >/dev/null 2>&1; then
     echo
 fi
 # Configure common interactive shells
-export HISTFILE="${XDG_CACHE_HOME}/sh/history"
+export HISTFILE="${XDG_DATA_HOME}/sh/history"
 export HISTSIZE=10000
 export HISTFILESIZE=1000000
 # for OSX
