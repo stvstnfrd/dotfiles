@@ -12,35 +12,35 @@ set visible-stats On
 
 ## Emacs Standard bindings
 Control-@: set-mark
-Control-a: beginning-of-line
-Control-b: backward-char
+Control-a: beginning-of-line  # zle=beginning-of-line
+Control-b: backward-char  # zle=backward-char
 # Don't override Control-C
 Control-d: delete-char
-Control-e: end-of-line
-Control-f: forward-char
+Control-e: end-of-line  # zle=end-of-line
+Control-f: forward-char  # zle=forward-char
 Control-g: abort
-Control-h: backward-delete-char
+Control-h: backward-delete-char  # zle=backward-delete-char
 Control-i: complete
 Control-j: accept-line
 Control-k: kill-line
 Control-l: clear-screen
 Control-m: accept-line
-Control-n: next-history
+Control-n: next-history  # zle=down-history
 # Control-o: ???
-Control-p: previous-history
+Control-p: previous-history  # zle=up-history
 Control-q: quoted-insert
-Control-r: reverse-search-history
+Control-r: reverse-search-history  # zle=history-incremental-search-backward
 Control-s: forward-search-history
 Control-t: transpose-chars
 Control-u: unix-line-discard
 Control-v: quoted-insert
-Control-w: unix-word-rubout
+Control-w: unix-word-rubout  # zle=backward-kill-word
 # Control-x: Don't override: used by emacs mode
 Control-y: yank
 # Control-z: Don't override, used to suspend process
 Control-]: character-search
 Control-_: undo
-Control-?: backward-delete-char
+Control-?: backward-delete-char  # zle=backward-delete-char
 # " " to "/"  self-insert
 # "0"  to "9"  self-insert
 # ":"  to "~"  self-insert
@@ -203,3 +203,5 @@ Control-_: vi-undo
 # "|"  vi-column
 # "~"  vi-change-case
 $endif
+
+set editing-mode vi
