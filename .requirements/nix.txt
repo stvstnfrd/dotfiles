@@ -5,6 +5,7 @@ nixpkgs.bash-completion
 nixpkgs.coreutils-full
 nixpkgs.curl
 nixpkgs.dash
+nixpkgs.dialog
 nixpkgs.exa
 nixpkgs.figlet
 nixpkgs.findutils
