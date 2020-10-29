@@ -8,10 +8,10 @@
 # offered as choices.
 #
 # (An example:)
-binlist=(
-  '/bin/bash --login'              # or just execute your shell,
-  'startx xfce4-session'
-)
+# binlist=(
+#   '/bin/bash --login'              # or just execute your shell,
+#   'startx xfce4-session'
+# )
 #   '~/.xsession'                    # Launch your X session,
 #   '/usr/bin/fbterm'                # or start a frame buffer console,
 #   '/usr/bin/cdm ~/.submenu.cdmrc'  # or go to a submenu :)
@@ -20,22 +20,17 @@ binlist=(
 # Names with whitespaces should be quoted or escaped.
 #
 # (Continued example:)
-namelist=(
-  'bash'
-  'xfce'
-)
+# namelist=(
+#   'bash'
+#   'xfce'
+# )
 
 # Type of the programs, one-by-one matched with $binlist.
 # `C' for *C*onsole programs, which would be `exec'ed.
 # `X' for *X* programs, which would be run with cdm-xlaunch(1).
 #
 # (Continued example:)
-flaglist=(C C)
-
-# Style for the cdm dialog, which is printed with dialog(1).
-# Default to unset, causing dialog(1) to use the system wide default.
-# See /usr/share/doc/cdm/themes for some nice choices.
-dialogrc=
+# flaglist=(C C)
 
 # Index of the first item in the menu.
 countfrom=0
@@ -48,13 +43,7 @@ display=0
 xtty=keep
 
 # Should cdm(1) stick to the specified display?
-locktty=no
-
-# Use ConsoleKit for X session?
-consolekit=false
-
-# Timeout for waiting for X session to register with ConsoleKit.
-cktimeout=30
+locktty=false
 
 # Additional arguments to pass to X server, which is usually called as:
 #   /usr/bin/X :$display "${serverargs[@]}" vt$((xtty+display))
