@@ -63,4 +63,4 @@
 	url = https://github.com/vim-syntastic/syntastic.git
 [submodule "display-manager/src/cdm"]
 	path = display-manager/src/cdm
-	url = https://github.com/evertiro/cdm.git
+	url = https://github.com/stvstnfrd/cdm.git
