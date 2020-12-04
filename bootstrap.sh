@@ -8,7 +8,7 @@ fi
 cd "${HOME}/.config/dotfiles"
 export PATH="${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:${PATH}"
 make update
-make system
+make system NIX_DAEMON=--daemon
 make backup
 make install
 
