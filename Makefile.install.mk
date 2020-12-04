@@ -15,7 +15,7 @@ backup:  ## Backup common configuration files
 install:  ## Stow/symlinked packages into your ${HOME} directory
 	@for package in $(PACKAGES); do \
 		filename=$$(echo $$package | sed 's/\/$$//; s/^.*\///'); \
-		$(STOW) --restow $$filename; \
+		$(STOW) --restow $$filename || exit 1; \
 	done
 	@make install.user-dirs
 
