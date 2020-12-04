@@ -27,6 +27,7 @@ nixpkgs.newsboat
 nixpkgs.nodejs
 nixpkgs.pass
 nixpkgs.python38Full
+nixpkgs.python38Packages.pip
 nixpkgs.ranger
 nixpkgs.rsync
 nixpkgs.sbcl
