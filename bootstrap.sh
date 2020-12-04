@@ -6,10 +6,11 @@ if [ ! -d "${HOME}/.config/dotfiles" ]; then
         "${HOME}/.config/dotfiles"
 fi
 cd "${HOME}/.config/dotfiles"
+export PATH="${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:${PATH}"
 make update
 make system
 make backup
-PATH="${HOME}/.nix-profile/bin:${PATH}" make install
+make install
 
 echo; echo
 echo "Bootstrap complete."
