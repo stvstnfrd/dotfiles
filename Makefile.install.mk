@@ -5,11 +5,12 @@ PACKAGES=$(shell grep -v '^\#' .requirements/stow.txt)
 VERBOSITY=1
 STOW=stow --verbose=$(VERBOSITY) --target=$(PREFIX)
 _install_xdg_paths=XDG_DESKTOP_DIR XDG_DOWNLOAD_DIR XDG_TEMPLATES_DIR XDG_PUBLICSHARE_DIR XDG_DOCUMENTS_DIR XDG_MUSIC_DIR XDG_PICTURES_DIR XDG_VIDEOS_DIR
+BACKUP_PATHS=$(HOME)/.config/user-dirs.dirs $(HOME)/.config/user-dirs.locale
 
 .PHONY: backup
 backup:  ## Backup common configuration files
 	mkdir $(HOME)/.config/backup
-	mv -f $(HOME)/.bashrc $(HOME)/.bash_profile $(HOME)/.bash_history $(HOME)/.bash_logout $(HOME)/.profile $(HOME)/.config/backup/ || true
+	mv -f $(BACKUP_PATHS) $(HOME)/.bashrc $(HOME)/.bash_profile $(HOME)/.bash_history $(HOME)/.bash_logout $(HOME)/.profile $(HOME)/.config/backup/ || true
 
 .PHONY: install
 install:  ## Stow/symlinked packages into your ${HOME} directory
