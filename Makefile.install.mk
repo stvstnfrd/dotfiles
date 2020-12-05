@@ -9,7 +9,7 @@ BACKUP_PATHS=$(HOME)/.config/user-dirs.dirs $(HOME)/.config/user-dirs.locale
 
 .PHONY: backup
 backup:  ## Backup common configuration files
-	mkdir $(HOME)/.config/backup
+	mkdir $(HOME)/.config/backup || true
 	mv -f $(BACKUP_PATHS) $(HOME)/.bashrc $(HOME)/.bash_profile $(HOME)/.bash_history $(HOME)/.bash_logout $(HOME)/.profile $(HOME)/.config/backup/ || true
 
 .PHONY: install
