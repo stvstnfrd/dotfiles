@@ -5,6 +5,7 @@ ifeq ($(APT_EXISTS),1)
 APT_INSTALL ?= 1
 APT_PACKAGES=$(shell grep -v '^\#' .requirements/apt.txt)
 APT_UPDATE ?= 0
+DOCKER_EXISTS=$(shell command -v docker 2>&1 >/dev/null && echo 1 || echo 0)
 EUID ?= $(shell id -u)
 ifneq ($(EUID),0)
 SUDO=sudo
@@ -21,6 +22,14 @@ ifeq ($(APT_UPDATE),1)
 endif
 ifeq ($(APT_INSTALL),1)
 	$(SUDO) apt-get install --yes $(APT_PACKAGES)
+	make system.apt.docker
 	$(SUDO) apt-get autoremove --yes
 endif
+
+system.apt.docker:  # Install docker apt packages
+ifeq ($(DOCKER_EXISTS),0)
+	curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
+	$(SUDO) sh /tmp/get-docker.sh
+endif
+	$(SUDO) usermod -aG docker "${USER}"
 endif

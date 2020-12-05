@@ -12,7 +12,6 @@ mnemonic
 neofetch
 nix
 nvm
-pass
 pip
 python
 screen
