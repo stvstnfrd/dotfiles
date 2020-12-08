@@ -11,7 +11,9 @@ export XDG_DESKTOP_DIR XDG_DOWNLOAD_DIR XDG_TEMPLATES_DIR XDG_PUBLICSHARE_DIR XD
 export AUTOENV_AUTH_FILE="${XDG_CACHE_HOME}/autoenv_authorized"
 export GIMP2_DIRECTORY="${XDG_CONFIG_HOME}/gimp"
 export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
-# export ICEAUTHORITY="${XDG_CACHE_HOME}/.ICEauthority"
+if [ ! -e "${HOME}/.ICEauthority" ]; then
+    export ICEAUTHORITY="${XDG_CACHE_HOME}/.ICEauthority"
+fi
 export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
 export NETRC="${XDG_CONFIG_HOME}/dotsecrets/netrc/.netrc"
 export NODE_REPL_HISTORY="${XDG_CACHE_HOME}/node.repl.history"
@@ -34,7 +36,9 @@ else
     export VIMINIT=''
 fi
 export WORKON_HOME="${XDG_DATA_HOME}/virtualenvs"
-# export XAUTHORITY="${XDG_CACHE_HOME}/.Xauthority"
+if [ ! -e "${HOME}/.Xauthority" ]; then
+    export XAUTHORITY="${XDG_CACHE_HOME}/.Xauthority"
+fi
 export ZSH_PIP_CACHE_FILE="${XDG_CACHE_HOME}/pip/zsh"
 export _Z_DATA="${XDG_CACHE_HOME}/z"
 sbcl () {
