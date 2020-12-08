@@ -31,8 +31,6 @@ mkvirtualenv() {
         # shellcheck disable=SC2086
         python3 -m venv ${VIRTUALENVWRAPPER_VIRTUALENV_ARGS} "${venv_path}"
     fi
-    # shellcheck disable=SC1090
-    . "${venv_path}/bin/activate"
 }
 
 rmvirtualenv() {
