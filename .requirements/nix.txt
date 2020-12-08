@@ -40,5 +40,6 @@ nixpkgs.tree
 nixpkgs.unixtools.watch
 nixpkgs.vagrant
 nixpkgs.vim
+nixpkgs.vlc
 nixpkgs.wget
 nixpkgs.zsh
