@@ -23,8 +23,8 @@ if [ -e "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]; then
     # shellcheck disable=SC1090
     . "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 elif [ -e "/etc/profile.d/nix.sh" ]; then
-    # shellcheck disable=SC1090
-    . "/etc/profile.d/nix.sh"
+    # shellcheck disable=SC1090,SC1091
+    . '/etc/profile.d/nix.sh'
 fi
 PATH="${HOME}/local/bin:${PATH}"
 PATH="${HOME}/.local/bin:${PATH}"
