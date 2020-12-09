@@ -26,7 +26,7 @@ if [ -d "${__dir_dotfiles_startup}" ]; then
 fi
 unset __dir_dotfiles_startup
 
-if [ -s "${HOME}/.config/bash/completion.bash" ]; then
-    # shellcheck source=shells/.config/bash/completion.bash
-    . "${HOME}/.config/bash/completion.bash"
+if [ -s "${HOME}/.nix-profile/share/bash-completion/bash_completion" ]; then
+    # shellcheck disable=SC1090
+    . "${HOME}/.nix-profile/share/bash-completion/bash_completion"
 fi
