@@ -2,4 +2,4 @@ Include ~/.local/share/ssh/config
 
 Host *
     IdentityFile ~/.local/share/ssh/keys/id_rsa
-    UserKnownHostsFile ~/.local/share/ssh/known_hosts
+    UserKnownHostsFile ~/.cache/ssh_known_hosts
