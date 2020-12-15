@@ -6,7 +6,7 @@ NIX_DAEMON=--no-daemon  # default to off/single-user
 
 .PHONY: system.nix
 system.nix: system.nix.bootstrap  ## Install nix packages
-	nix-env -iA $(NIX_PACKAGES)
+	NIXPKGS_ALLOW_UNFREE=1 nix-env -iA $(NIX_PACKAGES)
 
 .PHONY: system.nix.bootstrap
 system.nix.bootstrap:  ## Bootstrap nix packages

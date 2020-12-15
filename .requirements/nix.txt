@@ -33,11 +33,13 @@ nixpkgs.rsync
 nixpkgs.sbcl
 nixpkgs.screen
 nixpkgs.shellcheck
+nixpkgs.slack
 nixpkgs.sqlite
 nixpkgs.stow
 nixpkgs.tree
 nixpkgs.unixtools.watch
 nixpkgs.vagrant
 nixpkgs.vim
+nixpkgs.vlc
 nixpkgs.wget
 nixpkgs.zsh

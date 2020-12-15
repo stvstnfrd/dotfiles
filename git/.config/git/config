@@ -105,7 +105,7 @@
 	pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
 
 [include]
-	path = ~/.config/git/config.local
+	path = ~/.local/share/git/config
 
 [url "git@github.com"]
 	insteadOf = "hub"

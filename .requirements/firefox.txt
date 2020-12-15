@@ -1,0 +1,2 @@
+https://s3.amazonaws.com/onelogin-downloads/extensions/firefox/onelogin.xpi
+https://addons.mozilla.org/firefox/downloads/file/3657084/lastpass_password_manager-4.58.0.4-an+fx.xpi
