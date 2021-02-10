@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Screen
+Comment=Run a screen instance
+Type=Application
+Terminal=true
+Exec=screen -m
