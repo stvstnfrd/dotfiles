@@ -1,0 +1,15 @@
+#!/bin/sh
+# To avoid potential situation where cdm(1) crashes on every TTY, only run if:
+# we're on one of the first 3 terminals
+if [ "${XDG_VTNR:-100}" -le 3 ]; then
+	# X11 hasn't started
+	if [ -z "${DISPLAY}${SSH_TTY}" ]; then
+		# the script is installed
+		if command -v cdm >/dev/null 2>&1; then
+			# and not already running
+			if [ -z "${CDM_SPAWN}" ]; then
+				exec cdm
+			fi
+		fi
+	fi
+fi

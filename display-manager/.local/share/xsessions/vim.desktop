@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=VIM
+Comment=Run a VIM editor instance
+Type=Application
+Terminal=true
+Exec=vim

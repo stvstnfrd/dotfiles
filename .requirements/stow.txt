@@ -1,6 +1,7 @@
 autoenv
 cd
 curl
+display-manager
 diff-so-fancy
 git
 git-hub

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Bash
+Comment=Run a bash login shell
+Type=Application
+Terminal=true
+Exec=bash --login
