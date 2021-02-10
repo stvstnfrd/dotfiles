@@ -1,2 +1,14 @@
 https://s3.amazonaws.com/onelogin-downloads/extensions/firefox/onelogin.xpi
 https://addons.mozilla.org/firefox/downloads/file/3657084/lastpass_password_manager-4.58.0.4-an+fx.xpi
+# https://addons.mozilla.org/firefox/downloads/file/3492484/tree_style_tab_-3.3.5-fx.xpi
+# https://addons.mozilla.org/firefox/downloads/file/3484647/privacy_badger-2020.1.13-an+fx.xpi
+# https://addons.mozilla.org/firefox/downloads/file/3474268/ghostery_privacy_ad_blocker-8.4.6-an+fx.xpi
+# https://addons.mozilla.org/firefox/downloads/file/3498086/ublock_origin-1.24.4-an+fx.xpi
+# https://addons.mozilla.org/firefox/downloads/file/3054598/video_downloadhelper-7.3.7-fx.xpi
+# https://addons.mozilla.org/firefox/downloads/file/3442258/https_everywhere-2019.11.7-an+fx.xpi
+# https://addons.mozilla.org/firefox/downloads/file/3500160/dark_reader-4.8.9-an+fx.xpi
+# https://addons.mozilla.org/firefox/downloads/file/3401561/stylus-1.5.6-fx.xpi
+# https://addons.mozilla.org/firefox/downloads/file/3495605/noscript_security_suite-11.0.13-an+fx.xpi
+# https://addons.mozilla.org/firefox/downloads/file/3502765/vimium_ff-1.65.1-fx.xpi
+# https://addons.mozilla.org/firefox/downloads/file/3401561/stylus-1.5.6-fx.xpi
+# https://addons.mozilla.org/firefox/downloads/file/3384741/remove_fbclid_and_utm-1.0-fx.xpi
