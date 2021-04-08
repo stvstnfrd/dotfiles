@@ -12,6 +12,7 @@
 	ca = commit --amend
 	cm = commit-message
 	cms = commit -m 'TODO: squash'
+	commit-message = "!f() { git commit -m \"$(echo $@)\"; }; f"
 	d = diff
 	da = apply
 	dc = diff --cached
