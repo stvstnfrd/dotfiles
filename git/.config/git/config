@@ -9,7 +9,6 @@
 	bm = branch --merged
 	br = branch --move
 	# Refer to c/commit aliases in ./config.commit
-	cms = commit -m 'TODO: squash'
 	d = diff
 	da = apply
 	dc = diff --cached
