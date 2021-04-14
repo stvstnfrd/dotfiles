@@ -1,0 +1,40 @@
+[alias]
+	c = commit
+	# Commit Messages
+	commit-message = "!f() { git commit -m \"$(echo $@)\"; }; f"
+	cm = commit-message
+	cm-build = commit-message build:
+	cm-build-breaking = commit-message 'build!:'
+	cm-chore = commit-message chore:
+	cm-chore-breaking = commit-message 'chore!:'
+	cm-docs = commit-message docs:
+	cm-docs-breaking = commit-message 'docs!:'
+	cm-feat = commit-message feat:
+	cm-feat-breaking = commit-message 'feat!:'
+	cm-fix = commit-message fix:
+	cm-fix-breaking = commit-message 'fix!:'
+	cm-perf = commit-message perf:
+	cm-perf-breaking = commit-message 'perf!:'
+	cm-refactor = commit-message refactor:
+	cm-refactor-breaking = commit-message 'refactor!:'
+	cm-revert = commit-message revert:
+	cm-revert-breaking = commit-message 'revert!:'
+	cm-style = commit-message style:
+	cm-style-breaking = commit-message 'style!:'
+	cm-test = commit-message test:
+	cm-test-breaking = commit-message 'test!:'
+	cm-temp = commit-message temp:
+	cm-temp-breaking = commit-message 'temp!:'
+	# Commit Workflow
+	ca = commit --amend
+	cf = commit-fixup
+	cs = commit-squash
+	rs = rebase-squash
+	rsm = rebase-squash master
+	rsom = rebase-squash origin/master
+	rsum = rebase-squash upstream/master
+	# Commit Helpers
+	commit-fixup = "!f() { if [ $# -eq 0 ]; then git commit --fixup $(git rev-parse HEAD); else git commit --fixup \"$@\"; fi }; f"
+	commit-squash = "!f() { if [ $# -eq 0 ]; then git commit --squash $(git rev-parse HEAD); else git commit --fixup \"$@\"; fi }; f"
+	rebase-squash = rebase --autosquash --interactive
+# vim: filetype=gitconfig

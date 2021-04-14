@@ -8,11 +8,8 @@
 	bd = branch --delete
 	bm = branch --merged
 	br = branch --move
-	c = commit
-	ca = commit --amend
-	cm = commit-message
+	# Refer to c/commit aliases in ./config.commit
 	cms = commit -m 'TODO: squash'
-	commit-message = "!f() { git commit -m \"$(echo $@)\"; }; f"
 	d = diff
 	da = apply
 	dc = diff --cached
@@ -107,6 +104,7 @@
 
 [include]
 	path = ~/.local/share/git/config
+	path = ~/.config/git/config.commit
 
 [url "git@github.com"]
 	insteadOf = "hub"
