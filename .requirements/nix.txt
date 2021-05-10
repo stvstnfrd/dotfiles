@@ -16,6 +16,7 @@ nixpkgs.gnupg1
 nixpkgs.gnused
 nixpkgs.graphviz
 nixpkgs.gron
+nixpkgs.htop
 nixpkgs.jq
 nixpkgs.less
 nixpkgs.libqrencode
@@ -42,4 +43,7 @@ nixpkgs.vagrant
 nixpkgs.vim
 nixpkgs.vlc
 nixpkgs.wget
+nixpkgs.whois
+nixpkgs.xclip
+# nixpkgs.xpdf
 nixpkgs.zsh
