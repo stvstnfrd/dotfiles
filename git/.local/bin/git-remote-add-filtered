@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+new_remote_name=${1}
+old_remote_name=${2:-origin}
+old_remote_url=${3:-$(git remote get-url "${old_remote_name}")}
+git remote add "${new_remote_name}" "${old_remote_url}"
+git remote set-url --push "${new_remote_name}" 'READ-ONLY'
+git config --local \
+    "remote.${new_remote_name}.fetch" \
+    "+refs/heads/${new_remote_name}/*:refs/remotes/${new_remote_name}/*" \
+;
+git fetch "${new_remote_name}"
+git remote show "${new_remote_name}"
