@@ -159,3 +159,8 @@ if filereadable(expand("$XDG_CONFIG_HOME/vim/bundle/pathogen/autoload/pathogen.v
 endif
 
 autocmd BufNewFile,BufRead *.html set syntax=mako
+augroup templates
+    au!
+    " read in templates files
+    autocmd BufNewFile *.* silent! execute '0r $XDG_CONFIG_HOME/vim/templates/skeleton.'.expand("<afile>:e")
+augroup END
