@@ -12,8 +12,6 @@
 	d = diff
 	da = apply
 	dc = diff --cached
-	df = diff upstream/open-release/ficus.master -- 
-	dg = diff upstream/open-release/ginkgo.master -- 
 	dh = diff upstream/open-release/hawthorn.master -- 
 	dm = diff master
 	dom = diff origin/master
