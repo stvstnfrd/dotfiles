@@ -43,3 +43,8 @@ nixpkgs.vim
 nixpkgs.vlc
 nixpkgs.wget
 nixpkgs.zsh
+# i3 stuff
+nixpkgs.dmenu
+nixpkgs.i3
+nixpkgs.i3lock
+nixpkgs.i3status
