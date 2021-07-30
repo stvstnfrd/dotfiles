@@ -46,5 +46,6 @@ nixpkgs.zsh
 # i3 stuff
 nixpkgs.dmenu
 nixpkgs.i3
-nixpkgs.i3lock
+# nixpkgs.i3lock
+# Install i3lock via apt due to permissions issues
 nixpkgs.i3status
