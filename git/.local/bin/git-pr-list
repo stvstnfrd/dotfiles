@@ -1,0 +1,19 @@
+#!/bin/sh
+set -e
+REPO_NAMES=${*}
+if [ ${#} -eq 0 ]
+then
+    REPO_NAMES=$(
+        git remote get-url --all origin \
+        | sed 's@.*:@@; s/\.git$//; s@.*/\([^/]\+/[^/]\+\)@\1@' \
+    )
+fi
+for REPO_NAME in ${REPO_NAMES}
+do
+    output=$(gh pr list --repo "${REPO_NAME}")
+    if [ -n "${output}" ] && ! printf '%s' "${output}" | grep 'There are no open pull requests'
+    then
+        echo "https://github.com/${REPO_NAME}/pulls"
+        printf '%s\n\n' "${output}"
+    fi
+done
