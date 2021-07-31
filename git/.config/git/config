@@ -45,11 +45,10 @@
 	mum = merge-pr -r upstream
 	o = clone
 	p = push
-	pd = push downstream
-	pdu = push -u downstream
 	pdm = push downstream master
-	po = push origin
+	po = "!f(){ if [ ${#} -eq 0 ]; then  git push origin --set-upstream $(git branch --show-current); else git push origin ${@}; fi }; f"
 	pom = push origin master
+	pu = "!f(){ if [ ${#} -eq 0 ]; then  git push upstream --set-upstream; else git push upstream ${@}; fi }; f"
 	q = blame
 	r = rebase
 	ra = rebase --abort
