@@ -33,7 +33,7 @@ uninstall:  ## Remove symlinked packages from your ${HOME} and ${DFC} directorie
 
 .PHONY: update
 update:  ## Update the core code and all submodules
-	git fetch origin --prune
+	git fetch origin --prune || true
 	git rebase origin/master
 	git submodule init
 	git submodule update --recursive
