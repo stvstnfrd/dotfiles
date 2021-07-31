@@ -42,15 +42,18 @@ internal_errormsg () {
 }
 
 # initialize variables for use by all session scripts
-
+# shellcheck disable=SC2034
 OPTIONFILE=/etc/X11/Xsession.options
-
+# shellcheck disable=SC2034
 SYSRESOURCES=/etc/X11/Xresources
+# shellcheck disable=SC2034
 USRRESOURCES=${HOME}/.config/X11/Xresources
-
 SYSSESSIONDIR=/etc/X11/Xsession.d
+# shellcheck disable=SC2034
 USERXSESSION=${HOME}/.config/X11/xsessions
+# shellcheck disable=SC2034
 USERXSESSIONRC=${HOME}/.config/X11/xsessionrc
+# shellcheck disable=SC2034
 ALTUSERXSESSION=${HOME}/.config/X11/XSESSION
 ERRFILE=$HOME/.cache/xsession-errors
 
@@ -109,5 +112,4 @@ if [ -n "$SESSIONFILES" ]; then
 fi
 
 exit 0
-
 # vim:set ai et sts=2 sw=2 tw=80:
