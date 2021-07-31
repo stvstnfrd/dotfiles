@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
-FIND_ARGS_EXCLUDE = ! -path '*/src/*' ! -path './git-hub/.local/*' !  -path '*/.cache/*' ! -path './nvm/.config/nvm/*' ! -path '*/.git/*' !  -path '*/completion.d/*'
+FIND_ARGS_EXCLUDE = ! -path '*/src/*' ! -path './git-hub/.local/*' !  -path '*/.cache/*' ! -path './nvm/.config/nvm/*' ! -path '*/.git/*' !  -path '*/completion.d/*' ! -path '*/completion/*'
 ## FIND_ARGS_INCLUDE = \( -name '*.sh' -o -name '*.bash' \)
-SH_FILES_DIFF = git diff --name-only -z --diff-filter=AMd $(TRAVIS_BRANCH) HEAD | grep --null --null-data '\.\(ba\)\?sh$$\|\(^shells\/\.config\/sh\/\)'
+SH_FILES_DIFF = git diff --name-only -z --diff-filter=AMd $(TRAVIS_BRANCH) HEAD | grep --null --null-data '\.\(ba\)\?sh$$\|\(^shells\/\.config\/sh\/\)' | grep --null --null-data -v '^completion/'
 ## SH_FILES_EXTENSION = find . -type f $(FIND_ARGS_EXCLUDE) $(FIND_ARGS_INCLUDE) -print0
 SH_FILES_SHEBANG = find . -type f $(FIND_ARGS_EXCLUDE) -print0 | xargs -0 grep -l --null --null-data '^\#!/bin/\(ba\)\?sh'
 XARGS_SHELLCHECK = xargs -0 --no-run-if-empty shellcheck --external-sources
