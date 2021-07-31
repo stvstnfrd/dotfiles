@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Screens
+Comment=Run a new or existing screen instance
+Type=Application
+Terminal=true
+Exec=screens
