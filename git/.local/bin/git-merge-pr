@@ -1,0 +1,98 @@
+#!/bin/sh
+#h NAME:
+#h     git-merge-pr - merge a github pull request
+#h
+#h SYNOPSIS:
+#h     git-merge-pr -h
+#h     git-merge-pr [-b BRANCH-NAME] [-r UPSTREAM-REMOTE] PULL-REQUEST-NUBMER
+#h
+#h DESCRIPTION:
+#h     merge a github pull request
+#h
+#h EXAMPLES:
+#h     git-merge-pr -h
+#h         display help text and exit
+#h
+#h     git-merge-pr -r origin 42
+#h         merge current branch as PR#42
+#h
+#h     git-merge-pr -b fix/some-thing 42
+#h         merge fix/some-thing branch as PR#42
+#h
+#h OVERVIEW:
+#h     TODO: Explain this in further detail.
+#h
+#h OPTIONS:
+#h     -b BRANCH-NAME
+#h         default to current branch
+#h
+#h     -r UPSTREAM-REMOTE
+#h         default to origin
+#h
+#h DEFAULTS:
+#h     n/a
+#h
+#h EXIT STATUS:
+#h     0      Successful program execution.
+#h
+#h     1      Usage, syntax or configuration file error.
+#h
+#h     >1     Some other error.
+#h
+#h ENVIRONMENT:
+#h     n/a
+#h
+#h FILES:
+#h     n/a
+#h
+#h SEE ALSO:
+#h     git, rm, cat, getopts
+#h
+#h HISTORY:
+#h     TODO: link to CHANGELOG upon creation
+#h
+#h BUGS:
+#h     TODO: link to Github issues upon publish
+set -e
+BRANCH=$(git branch --show-current)
+UPSTREAM_REMOTE=origin
+UPSTREAM_BRANCH=master
+while getopts ":bhnr" option
+do
+    case ${option} in
+    b)
+        BRANCH=${2}; shift; shift;
+        ;;
+    h)
+        grep '^#h' "${0}" | sed 's/^#h \?//g';
+        exit;
+        ;;
+    r)
+        UPSTREAM_REMOTE=${2}; shift; shift;
+        ;;
+    *)
+        ;;
+    esac
+done
+NUMBER=${1}
+if [ -n "${NUMBER}" ]
+then
+    NUMBER_CONTEXT="(#${NUMBER})"
+else
+    NUMBER_CONTEXT=""
+fi
+
+git fetch "${UPSTREAM_REMOTE}" --prune
+message_file=$(mktemp)
+cat > "${message_file}" << EOF
+merge${NUMBER_CONTEXT}: ${BRANCH}
+
+commits
+=======
+$(git log "${UPSTREAM_REMOTE}/${UPSTREAM_BRANCH}..HEAD" --pretty='format:- %<(80,trunc)%s')
+EOF
+
+git checkout "${UPSTREAM_BRANCH}"
+git reset --hard "${UPSTREAM_REMOTE}/${UPSTREAM_BRANCH}"
+git merge --no-ff --file="${message_file}" "${BRANCH}"
+rm "${message_file}"

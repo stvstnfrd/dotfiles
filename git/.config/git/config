@@ -42,11 +42,11 @@
 	last = !git log -1 | cat
 	m = merge
 	ma = merge --abort
-	mn = merge --no-ff
-	mnl = merge --no-ff --log=30000
-	mom = merge origin/master
+	mnl = merge --no-ff --log 3000
+	mpr = merge-pr
+	mom = merge-pr -r origin
 	ms = merge --squash
-	mum = merge upstream/master
+	mum = merge-pr -r upstream
 	o = clone
 	p = push
 	pd = push downstream
