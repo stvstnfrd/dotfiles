@@ -5,6 +5,8 @@
 	cm = commit-message
 	cm-build = commit-message build:
 	cm-build-breaking = commit-message 'build!:'
+	cm-build-ci = commit-message build(ci):
+	cm-build-renovate = commit-message build(renovate):
 	cm-chore = commit-message chore:
 	cm-chore-breaking = commit-message 'chore!:'
 	cm-docs = commit-message docs:
