@@ -79,6 +79,7 @@
 	yx = cherry-pick -x
 	z = remote -vvvv
 	za = remote add
+	zau = remote add upstream
 	zn = remote rename
 	zr = remote remove
 
