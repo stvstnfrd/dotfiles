@@ -4,17 +4,18 @@
 # $_Z_EXCLUDE_DIRS to an array of directory trees to exclude.
 # $_Z_OWNER to allow usage when in 'sudo -s' mode.
 if [ -e "${HOME}/src/z/z.sh" ]; then
+    # shellcheck source=cd/src/z/z.sh
     . "${HOME}/src/z/z.sh"
-    function j(){
+    j(){
         if [ ${#} -gt 0 ]; then
-            _z ${@} 2>&1
+            _z "${@}" 2>&1
         else
             _z "$(_z -lt 2>&1 | awk '{print $2}' | tail -2 | head -1)" 2>&1
         fi
     }
-    function jj(){
+    jj(){
         if [ ${#} -gt 0 ]; then
-            _z -r ${@} 2>&1
+            _z -r "${@}" 2>&1
         else
             recent="$(_z -l 2>&1 | awk '{print $2}' | tail -1)"
             if [ "${recent}" = "$(pwd)" ]; then
