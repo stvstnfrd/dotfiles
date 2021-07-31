@@ -90,6 +90,9 @@
 [diff]
 	algorithm = patience
 
+[rebase]
+	autostash = true
+
 [core]
 	editor = vim
 	excludesfile = ~/.config/git/ignore
