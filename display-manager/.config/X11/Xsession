@@ -57,6 +57,15 @@ USERXSESSIONRC=${HOME}/.config/X11/xsessionrc
 ALTUSERXSESSION=${HOME}/.config/X11/XSESSION
 ERRFILE=$HOME/.cache/xsession-errors
 
+if [ -n "${1}" ]
+then
+    if command -v "${1}" >/dev/null 2>&1
+    then
+        # shellcheck disable=SC2034
+        USERXSESSION="${1}"
+    fi
+fi
+
 # attempt to create an error file; abort if we cannot
 if (umask 077 && touch "$ERRFILE") 2> /dev/null && [ -w "$ERRFILE" ] &&
   [ ! -L "$ERRFILE" ]; then
