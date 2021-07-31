@@ -47,14 +47,14 @@ OPTIONFILE=/etc/X11/Xsession.options
 # shellcheck disable=SC2034
 SYSRESOURCES=/etc/X11/Xresources
 # shellcheck disable=SC2034
-USRRESOURCES=${HOME}/.config/X11/Xresources
+USRRESOURCES=${HOME}/.config/x11/resources
 SYSSESSIONDIR=/etc/X11/Xsession.d
 # shellcheck disable=SC2034
-USERXSESSION=${HOME}/.config/X11/xsessions
+USERXSESSION=
 # shellcheck disable=SC2034
-USERXSESSIONRC=${HOME}/.config/X11/xsessionrc
+USERXSESSIONRC=${HOME}/.config/x11/sessionrc
 # shellcheck disable=SC2034
-ALTUSERXSESSION=${HOME}/.config/X11/XSESSION
+ALTUSERXSESSION=${HOME}/.config/x11/SESSION
 ERRFILE=$HOME/.cache/xsession-errors
 
 if [ -n "${1}" ]

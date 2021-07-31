@@ -1,0 +1,6 @@
+#!/bin/sh
+# /etc/X11/xinit/xinitrc
+xrandr --auto
+export LANG=
+# shellcheck source=display-manager/.config/x11/session
+. "${HOME}/.config/x11/session"

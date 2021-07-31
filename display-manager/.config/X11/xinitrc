@@ -1,5 +1,0 @@
-#!/bin/sh
-# /etc/X11/xinit/xinitrc
-xrandr --auto
-export LANG=
-. ${HOME}/.config/X11/Xsession

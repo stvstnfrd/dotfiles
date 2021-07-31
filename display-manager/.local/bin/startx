@@ -10,9 +10,9 @@
 
 unset DBUS_SESSION_BUS_ADDRESS
 unset SESSION_MANAGER
-userclientrc=$HOME/.config/X11/xinitrc
+userclientrc=$HOME/.config/x11/client
 sysclientrc=/etc/X11/xinit/xinitrc
-userserverrc=$HOME/.config/X11/xserverrc
+userserverrc=$HOME/.config/x11/server
 sysserverrc=/etc/X11/xinit/xserverrc
 defaultclient=default
 defaultserver=/usr/bin/X
