@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
-# gfortran ## needed for scipy
+# gfortran needed for scipy
 APT_EXISTS=$(shell command -v apt 2>&1 >/dev/null && echo 1 || echo 0)
 ifeq ($(APT_EXISTS),1)
 APT_INSTALL ?= 1
