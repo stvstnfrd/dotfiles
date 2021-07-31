@@ -25,7 +25,7 @@
 	fu = fetch upstream
 	fup = fetch upstream --prune
 	g = grep
-	i = !test ! -d "${GIT_DIR:-./.git}" && git init && git commit --allow-empty -m 'Initialize empty directory'
+	i = !test -d "${GIT_DIR:-./.git}" || git init && git commit --allow-empty -m 'chore: initialize empty repository'
 	k = checkout
 	k- = checkout --
 	kb = checkout -b
