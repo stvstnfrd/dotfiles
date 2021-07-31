@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=i3
+Comment=Use this session to run i3 as your desktop environment
+Exec=startx i3
+TryExec=i3
+Icon=
+Type=Application
+DesktopNames=i3
