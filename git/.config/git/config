@@ -19,7 +19,7 @@
 	e = format-patch
 	ea = am
 	es = send-email
-	f = fetch
+	f = "!f(){ if [ ${#} -eq 0 ]; then  git fetch --all --prune; else git fetch ${@}; fi }; f"
 	fo = fetch origin
 	fop = fetch origin --prune
 	fu = fetch upstream
