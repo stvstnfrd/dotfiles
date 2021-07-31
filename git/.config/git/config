@@ -25,10 +25,6 @@
 	fu = fetch upstream
 	fup = fetch upstream --prune
 	g = grep
-	h = hub
-	hh = hub help
-	hi = hub issue
-	his = hub issues
 	i = !test ! -d "${GIT_DIR:-./.git}" && git init && git commit --allow-empty -m 'Initialize empty directory'
 	k = checkout
 	k- = checkout --
