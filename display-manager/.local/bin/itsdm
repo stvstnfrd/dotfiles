@@ -1,0 +1,199 @@
+#!/bin/sh
+#h NAME:
+#h 	itsdm
+#h
+#h SYNOPSIS:
+#h 	it's the simple display manager
+#h
+#h DESCRIPTION:
+#h 	Display a list of available desktop sessions,
+#h 	allow the user to select one,
+#h 	and start it up for them.
+#h
+#h EXAMPLES:
+#h 	In your ~/.bashrc:
+#h 		itsdm
+#h
+#h OVERVIEW:
+#h 	TODO: Describe graceful degradation between fzf and sh
+#h
+#h OPTIONS:
+#h 	-h, --help
+#h 		Print this message and exit.
+#h
+#h 	-m, --man
+#h 		View this message in a PAGER and exit.
+#h
+#h DEFAULTS:
+#h 	none
+#h
+#h EXIT STATUS:
+#h 	 0 - success
+#h 	>0 - failure
+#h
+#h ENVIRONMENT:
+#h 	XDG_CACHE_HOME
+#h 		The base location for logs, default is ${HOME}/.cache.
+#h
+#h 	PAGER
+#h 		The pager to be used when invoked with -m, --manual,
+#h 		defaults to `less`.
+#h
+#h FILES:
+#h 	If they exist, the list of available options will be pulled from
+#h 	.desktop files in the following directories:
+#h
+#h 		${XDG_CACHE_HOME}/itsdm/log
+#h 			Errors and information messages are logged here.
+#h
+#h 		~/.local/share/xsessions/
+#h 			User sessions are stored here
+#h
+#h 		~/.nix-profile/share/xsessions/
+#h 			Nix-installed sessions are stored here
+#h
+#h 		/usr/share/xsessions/
+#h 			System sessions are stored here
+#h
+#h SEE ALSO:
+#h 	fzf(1), startx(1)
+#h
+#h HISTORY:
+#h 	Created 2021-07-30
+#h
+#h BUGS:
+#h 	https://github.com/stvstnfrd/dotfiles/issues
+#h
+#h USAGE:
+#h 	Invoke from an interactive shell startup file,
+#h 	like ~/.bashrc or ~/.zshrc
+# shellcheck disable=SC2003
+set -e
+while getopts ":hm" option; do case ${option} in
+    h) grep '^#h' "${0}" | sed 's/^#h \?//g'; exit;;
+    m) "${0}" --help | ${PAGER:-less}; exit;;
+    *) ;;
+esac; done
+
+log() {
+    level=${1}
+    message=${2}
+    logfile=${XDG_CACHE_HOME}/itsdm/log
+    test -e "${logfile}" || mkdir -p "$(dirname "${logfile}")"
+    datestamp=$(date +'%Y-%m-%d %H:%M:%S')
+    echo "${datestamp}	${level}	${message}" >>"${logfile}"
+}
+gather_choices() {
+    find \
+        ~/.local/share/xsessions/ \
+        ~/.nix-profile/share/xsessions/ \
+        /usr/share/xsessions/ \
+        -name '*.desktop' \
+    | sort \
+    ;
+}
+display_choices_sh() {
+    i=1
+    for line in "${@}"
+    do
+        echo "${i} ${line}" >&2
+        i=$(expr ${i} + 1)
+    done
+    printf 'Select an application: ' >&2
+    read -r choice
+    if [ -z "${choice}" ]
+    then
+        log ERROR "womp!" >&2
+        return 1
+    fi
+    log INFO "YOU SELECTED: ${choice}" >&2
+    i=1
+    for line in "${@}"
+    do
+        if [ "${i}" -eq "${choice}" ]
+        then
+            echo "${line}"
+            return 0
+        fi
+        i=$(expr ${i} + 1)
+    done
+    echo "INVALID: ${choice}" >&2
+    return 1
+}
+display_choices_fzf() {
+    fzf \
+        --preview="grep \
+        '^\(Name\|Exec\|Comment\)=' \
+        {} \
+        2>/dev/null \
+        " \
+        --select-1 \
+        --no-unicode \
+    ;
+}
+parse_key_from_desktop_file() {
+    key="${1}"
+    file="${2}"
+    value=$(sed -n -e 's/^'"${key}"'=//p' <"${file}")
+    echo "${value}"
+}
+is_terminal_app() {
+    app=${1}
+    grep '^Terminal=true' "${app}" >/dev/null 2>&1
+}
+execute_app() {
+    choice=${1}
+    exec_key=$(parse_key_from_desktop_file Exec "${choice}")
+    if is_terminal_app "${choice}" || [ "${exec_key}" = 'sh' ]
+    then
+        log INFO "Starting terminal app: ${exec_key}"
+        exec_cmd='exec'
+    else
+        log INFO "Starting X11 app: ${exec_key}"
+        exec_cmd='startx'
+    fi
+    # shellcheck disable=SC2086
+    ITSDM_PID=$$ "${exec_cmd}" ${exec_key}
+}
+check_exec() {
+    choice=${1}
+    exec_key=$(parse_key_from_desktop_file Exec "${choice}")
+    try_key=$(parse_key_from_desktop_file TryExec "${choice}")
+    for key in ${try_key} ${exec_key}
+    do
+        if command -v "${key}" >/dev/null 2>&1
+        then
+            log INFO "Selected choice is executable: ${key}"
+            return
+        fi
+    done
+    log ERROR "Selected choice is not executable: ${key}"
+    return 1
+}
+check_choice() {
+    choice=${1}
+    if [ -z "${choice}" ]
+    then
+        return 1
+    fi
+    return 0
+}
+handle_choice() {
+    choice=${1}
+    check_choice "${choice}" || return ${?}
+    check_exec "${choice}" || return ${?}
+    execute_app "${choice}"
+}
+main() {
+    if command -v fzf >/dev/null 2>&1
+    then
+        choice=$(gather_choices | display_choices_fzf)
+    else
+        # shellcheck disable=SC2046
+        choice=$(display_choices_sh $(gather_choices))
+    fi
+    echo; echo
+    handle_choice "${choice}"
+}
+
+main "${@}"
