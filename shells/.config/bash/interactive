@@ -30,3 +30,7 @@ if [ -s "${HOME}/.nix-profile/share/bash-completion/bash_completion" ]; then
     # shellcheck disable=SC1090
     . "${HOME}/.nix-profile/share/bash-completion/bash_completion"
 fi
+for alias_file in ${XDG_CONFIG_HOME}/bash/completion.d/*
+do
+    . "${alias_file}"
+done
