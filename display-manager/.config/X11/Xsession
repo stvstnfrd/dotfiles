@@ -1,11 +1,5 @@
 #!/bin/sh
-#
 # /etc/X11/Xsession
-#
-# global Xsession file -- used by display managers and xinit (startx)
-
-# $Id: Xsession 967 2005-12-27 07:20:55Z dnusinow $
-
 set -e
 
 PROGNAME=Xsession

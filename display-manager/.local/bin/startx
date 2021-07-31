@@ -1,6 +1,4 @@
 #!/bin/sh
-
-#
 # This is just a sample implementation of a slightly less primitive
 # interface than xinit. It looks for user .xinitrc and .xserverrc
 # files, then system xinitrc and xserverrc files, else lets xinit choose
@@ -9,7 +7,6 @@
 # and pop a clock and several xterms.
 #
 # Site administrators are STRONGLY urged to write nicer versions.
-#
 
 unset DBUS_SESSION_BUS_ADDRESS
 unset SESSION_MANAGER
@@ -100,7 +97,6 @@ fi
 if [ x"$server" = x ]; then
     server=$defaultserver
 
-
     # When starting the defaultserver start X on the current tty to avoid
     # the startx session being seen as inactive:
     # "https://bugzilla.redhat.com/show_bug.cgi?id=806491"
@@ -109,7 +105,6 @@ if [ x"$server" = x ]; then
         tty_num=$(echo "$tty" | grep -oE '[0-9]+$')
         vtarg="vt$tty_num -keeptty"
     fi
-
 
     # For compatibility reasons, only use xserverrc if there were no server command line arguments
     if [ x"$serverargs" = x -a x"$display" = x ]; then
@@ -167,12 +162,6 @@ if [ x"$enable_xauth" = x1 ] ; then
 
     mcookie=`/usr/bin/mcookie`
 
-
-
-
-
-
-
     if test x"$mcookie" = x; then
         echo "Couldn't create cookie"
         exit 1
@@ -186,11 +175,7 @@ if [ x"$enable_xauth" = x1 ] ; then
 add :$dummy . $mcookie
 EOF
 
-
-
-
     serverargs=${serverargs}" -auth "${xserverauthfile}
-
 
     # now add the same credentials to the client authority file
     # if '$displayname' already exists do not overwrite it as another
@@ -212,9 +197,6 @@ EOF
     done
 fi
 
-
-
-
 xinit "$client" $clientargs -- "$server" $display $serverargs
 
 retval=$?
@@ -228,17 +210,8 @@ if [ x"$enable_xauth" = x1 ] ; then
     fi
 fi
 
-
-
-
-
 if command -v deallocvt > /dev/null 2>&1; then
     deallocvt
 fi
-
-
-
-
-
 
 exit $retval
