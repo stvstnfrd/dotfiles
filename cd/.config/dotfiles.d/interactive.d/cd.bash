@@ -25,6 +25,29 @@ if [ -e "${HOME}/src/z/z.sh" ]; then
             fi
         fi
     }
+    if command -v fzf >/dev/null 2>&1
+    then
+        unalias z 2> /dev/null
+        z() {
+            [ $# -gt 0 ] && _z "$*" && return
+            if selection="$(
+                _z -l 2>&1 \
+                | fzf \
+                    --height 40% \
+                    --nth 2.. \
+                    --reverse \
+                    --inline-info +s \
+                    --tac \
+                    --query "${*##-* }" \
+                | sed 's/^[0-9,.]* *//' \
+            )" && [ -n "${selection}" ]
+            then
+                cd "${selection}" || return 2
+            else
+                return 2
+            fi
+        }
+    fi
     alias jl=z
     alias c=j
     alias cc=jj

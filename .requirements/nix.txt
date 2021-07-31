@@ -9,6 +9,7 @@ nixpkgs.exa
 nixpkgs.figlet
 nixpkgs.findutils
 nixpkgs.fortune
+nixpkgs.fzf
 nixpkgs.gitAndTools.gitFull
 nixpkgs.gnugrep
 nixpkgs.gnumake
