@@ -28,9 +28,25 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 bindsym $mod+x exec i3lock --color=000000
 bindsym $mod+Shift+x exec i3lock --color=000000 && systemctl suspend
 
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
+# Startup background services
 exec --no-startup-id nm-applet
+exec --no-startup-id xfce4-power-manager
+exec --no-startup-id syndaemon -d -i 0.6s
+exec --no-startup-id ssh-agent
+exec --no-startup-id ssh-add ~/.local/share/ssh/keys/id_rsa
+
+# Startup default windows
+exec --no-startup-id slack
+exec --no-startup-id thunderbird
+exec --no-startup-id i3-msg 'workspace 2; exec xfce4-terminal'
+exec --no-startup-id firefox
+
+# Assign windows to workspaces
+assign [class="Slack"] 1
+assign [class="Thunderbird"] 1
+assign [class="Firefox"] 2
+# assign [class="Xfce4-terminal"] 2
+assign [class="Chrome"] 3
 
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace next
