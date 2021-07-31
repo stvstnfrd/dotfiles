@@ -72,7 +72,8 @@
 	v = revert
 	w = show
 	x = reset
-	xh = reset --hard
+	xH = reset --hard
+	xh = reset HEAD^
 	y = cherry-pick
 	ya = cherry-pick --abort
 	yn = cherry-pick --no-commit
