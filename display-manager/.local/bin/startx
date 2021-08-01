@@ -32,18 +32,20 @@
 #h
 #h 	To determine the client to run, startx looks for the following files, in order:
 #h
-#h 		$(HOME)/.startxrc
-#h 		/usr/lib/x86_64-linux-gnu/sys.startxrc
+#h 		$(XINITRC}
+#h 		$(XDG_CONFIG_HOME)/x11/client
 #h 		$(HOME)/.xinitrc
 #h 		/etc/X11/xinit/xinitrc
 #h
-#h 	If command line client options are given, they override this behavior and
-#h 	revert to the xinit(1) behavior. To determine the server to run, startx first
-#h 	looks for a file called .xserverrc in the user's home directory. If that is not
-#h 	found, it uses the file xserverrc in the xinit library directory. If command
-#h 	line server options are given, they override this behavior and revert to the
-#h 	xinit(1) behavior. Users rarely need to provide a .xserverrc file. See the
-#h 	xinit(1) manual page for more details on the arguments.
+#h 	To determine the server to run, startx looks for the following files, in order:
+#h
+#h 		$(XSERVER}
+#h 		$(XDG_CONFIG_HOME)/x11/server
+#h 		$(HOME)/.xserverrc
+#h 		/etc/X11/xinit/xserverrc
+#h
+#h 	Users rarely need to provide a .xserverrc file.
+#h 	See the xinit(1) manual page for more details on the arguments.
 #h
 #h 	The system-wide xinitrc and xserverrc files are found in the
 #h 	/etc/X11/xinit directory.
@@ -69,8 +71,29 @@
 #h
 #h OVERVIEW:
 #h 	This is a (mostly) drop-in replacement for Ubuntu's /usr/bin/startx.
+#h 	Notable differences include:
+#h 		XDG Compliance
+#h
+#h 		${XINITRC} and ${XSERVERRC} are respected.
+#h 		xinit _does_ fall back to ${XINITRC}, but only if no client script
+#h 		is passed on the command line. Since the default startx always
+#h 		does this (it falls back to xterm), we can't rely on it, without
+#h 		calling xinit directly. And startx is otherwise capable (sets up
+#h 		xauth, etc.), so it's nice to have this wrapper.
+#h
+#h 		XAUTHORITY is saved in ${XDG_CACHE_HOME}.
+#h 		This is one less dotfile littering ${HOME}.
+#h 		Admittedly, this was one of the original motivations for
+#h 		authoring this script.
+#h
+#h 		BREAKING: You can not specify the client/server scripts
+#h 		via command arguments. Instead, we rely on ${XINITRC} AND ${XSERVERRC}
+#h 		if we need to customize this beyond the default lookup.
+#h
+#h 		General code cleanup and refactoring.
 #h
 #h OPTIONS:
+#h
 #h 	-h, --help
 #h 		Print this message and exit.
 #h
@@ -102,7 +125,7 @@
 #h 	Returns the result from `xinit`.
 #h
 #h ENVIRONMENT:
-#h 	XINPUTRC
+#h 	XINITRC
 #h 		Client to run, default is ~/.config/x11/client .
 #h
 #h 	XSERVERRC
@@ -129,7 +152,7 @@
 #h 		Server to run, default is X.
 #h
 #h 	/etc/X11/xinit/xinitrc
-#h 		Client to run if the user has no ${XINPUTRC} file.
+#h 		Client to run if the user has no ${XINITRC} file.
 #h
 #h 	/etc/X11/xinit/xserverrc
 #h 		Server to run if the user has no ${XSERVERRC} file.
