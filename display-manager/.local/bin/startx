@@ -23,15 +23,21 @@ serverargs=""
 vtarg=""
 enable_xauth=1
 
-
-# Automatically determine an unused $DISPLAY
-d=0
-while true ; do
-    [ -e "/tmp/.X$d-lock" -o -S "/tmp/.X11-unix/X$d" ] || break
-    d=$(($d + 1))
-done
-defaultdisplay=":$d"
-unset d
+detect_unused_display() {
+    d=0
+    while true
+    do
+        if [ -e "/tmp/.X${d}-lock" ] || [ -S "/tmp/.X11-unix/X${d}" ]
+        then
+            d=$(expr "${d}" + 1)
+        else
+            break
+        fi
+    done
+    echo ":${d}"
+    unset d
+}
+defaultdisplay=$(detect_unused_display)
 
 whoseargs="client"
 while [ x"$1" != x ]; do
