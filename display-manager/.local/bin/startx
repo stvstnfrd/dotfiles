@@ -106,7 +106,7 @@ if [ x"$server" = x ]; then
     fi
 
     # For compatibility reasons, only use xserverrc if there were no server command line arguments
-    if [ x"$serverargs" = x -a x"$display" = x ]; then
+    if [ x"${serverargs}" = x ] && [ x"${display}" = x ]; then
  if [ -f "$userserverrc" ]; then
      server=$userserverrc
  elif [ -f "$sysserverrc" ]; then
@@ -148,18 +148,19 @@ if [ x"$enable_xauth" = x1 ] ; then
 
     # check for GNU hostname
     if hostname --version > /dev/null 2>&1; then
-        if [ -z "`hostname --version 2>&1 | grep GNU`" ]; then
-            hostname=`hostname -f`
+        if hostname --version 2>&1 | grep -q GNU
+        then
+            hostname=$(hostname -f)
         fi
     fi
 
     if [ -z "$hostname" ]; then
-        hostname=`hostname`
+        hostname=$(hostname)
     fi
 
     authdisplay=${display:-:0}
 
-    mcookie=`/usr/bin/mcookie`
+    mcookie=$(/usr/bin/mcookie)
 
     if test x"$mcookie" = x; then
         echo "Couldn't create cookie"
@@ -168,8 +169,9 @@ if [ x"$enable_xauth" = x1 ] ; then
     dummy=0
 
     # create a file with auth information for the server. ':0' is a dummy.
-    xserverauthfile=`mktemp --tmpdir serverauth.XXXXXXXXXX`
-    trap "rm -f '$xserverauthfile'" HUP INT QUIT ILL TRAP KILL BUS TERM
+    xserverauthfile=$(mktemp --tmpdir serverauth.XXXXXXXXXX)
+    # shellcheck disable=SC2064
+    trap "rm -f '${xserverauthfile}'" HUP INT QUIT ILL TRAP BUS TERM
     xauth -q -f "$xserverauthfile" << EOF
 add :$dummy . $mcookie
 EOF
@@ -180,15 +182,15 @@ EOF
     # if '$displayname' already exists do not overwrite it as another
     # server may need it. Add them to the '$xserverauthfile' instead.
     for displayname in $authdisplay $hostname$authdisplay; do
-        authcookie=`xauth list "$displayname" \
-        | sed -n "s/.*$displayname[[:space:]*].*[[:space:]*]//p"` 2>/dev/null;
+        authcookie=$(xauth list "${displayname}" \
+        | sed -n "s/.*${displayname}[[:space:]*].*[[:space:]*]//p") 2>/dev/null;
         if [ "z${authcookie}" = "z" ] ; then
             xauth -q << EOF
 add $displayname . $mcookie
 EOF
         removelist="$displayname $removelist"
         else
-            dummy=$(($dummy+1));
+            dummy=$(expr "${dummy}" + 1)
             xauth -q -f "$xserverauthfile" << EOF
 add :$dummy . $authcookie
 EOF
@@ -196,12 +198,14 @@ EOF
     done
 fi
 
-xinit "$client" $clientargs -- "$server" $display $serverargs
+# shellcheck disable=SC2086
+xinit "${client}" ${clientargs} -- "${server}" ${display} ${serverargs}
 
 retval=$?
 
 if [ x"$enable_xauth" = x1 ] ; then
     if [ x"$removelist" != x ]; then
+        # shellcheck disable=SC2086
         xauth remove $removelist
     fi
     if [ x"$xserverauthfile" != x ]; then
