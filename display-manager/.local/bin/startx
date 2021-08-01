@@ -23,13 +23,6 @@
 #h 		startx -- -dpi 100
 #h 		startx -- -layout Multihead
 #h
-#h 	Note that in the Debian system, what many people traditionally put in the
-#h 	.xinitrc file should go in .xsession instead; this permits the same X
-#h 	environment to be presented whether startx, xdm, or xinit is used to start the
-#h 	X session. All discussion of the .xinitrc file in the xinit(1) manual page
-#h 	applies equally well to .xsession. Keep in mind that .xinitrc is used only by
-#h 	xinit(1) and completely ignored by xdm(1).
-#h
 #h 	To determine the client to run, startx looks for the following files, in order:
 #h
 #h 		$(XINITRC}
@@ -70,6 +63,10 @@
 #h 		startx -- :3
 #h
 #h OVERVIEW:
+#h 	From the default Debian startx script:
+#h
+#h 		> Site administrators are STRONGLY urged to write nicer versions.
+#h
 #h 	This is a (mostly) drop-in replacement for Ubuntu's /usr/bin/startx.
 #h 	Notable differences include:
 #h 		XDG Compliance
@@ -168,10 +165,9 @@
 #h
 #h USAGE:
 #h 	startx
+#h
 #h VERSION:
 #h 	0.0
-#
-# > Site administrators are STRONGLY urged to write nicer versions.
 while getopts ":hm" option; do case ${option} in
     h) grep '^#h' "${0}" | sed 's/^#h \?//g'; exit;;
     m) "${0}" --help | ${PAGER:-less}; exit;;
