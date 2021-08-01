@@ -1,27 +1,57 @@
 #!/bin/sh
-# This is just a sample implementation of a slightly less primitive
-# interface than xinit. It looks for user .xinitrc and .xserverrc
-# files, then system xinitrc and xserverrc files, else lets xinit choose
-# its default. The system xinitrc should probably do things like check
-# for .Xresources files and merge them in, start up a window manager,
-# and pop a clock and several xterms.
-#
-# Site administrators are STRONGLY urged to write nicer versions.
-
-unset DBUS_SESSION_BUS_ADDRESS
-unset SESSION_MANAGER
-userclientrc=$HOME/.config/x11/client
-sysclientrc=/etc/X11/xinit/xinitrc
-userserverrc=$HOME/.config/x11/server
-sysserverrc=/etc/X11/xinit/xserverrc
-defaultclient=default
-defaultserver=/usr/bin/X
-defaultserverargs=""
-defaultdisplay=""
-clientargs=""
-serverargs=""
-vtarg=""
-enable_xauth=1
+#h NAME:
+#h 	startx
+#h SYNOPSIS:
+#h 	startx -h
+#h 	startx [clientarg ...] [-- [display] [serverarg] ...]
+#h DESCRIPTION:
+#h 	This is a replacement for the default/system /usr/bin/startx.
+#h EXAMPLES:
+#h 	Start X with system defaults.
+#h 		startx
+#h 	Start X with system defaults, explicitly.
+#h 		startx default
+#h 	Start X with with a failsafe terminal.
+#h 		startx failsafe
+#h 	Start X with the i3 window manager.
+#h 		startx i3
+#h 	Start X with the XFCE desktop environment.
+#h 		startx xfce4-session
+#h 	Start X on Display 3.
+#h 		startx -- :3
+#h OVERVIEW:
+#h 	TODO: Describe the overview and key differences from /usr/bin/startx .
+#h OPTIONS:
+#h 	-h, --help	Print this message and exit.
+#h DEFAULTS:
+#h 	The client script exec'ed by xinit,
+#h 	if ${XINITRC} is not set, is the first found from:
+#h 		${XDG_CONFIG_HOME}/x11/client
+#h 		/etc/X11/xinit/xinitrc
+#h 	The server script for the client to connect to,
+#h 	if ${XSERVERRC} is not set, is the first found from:
+#h 		${XDG_CONFIG_HOME}/x11/server
+#h 		/etc/X11/xinit/xserverrc
+#h EXIT STATUS:
+#h 	Returns the result from `xinit`.
+#h ENVIRONMENT:
+#h 	XINPUTRC
+#h 		If XINPUTRC is set, it will be exec'ed by `xinit`, instead of
+#h 		${XDG_CONFIG_HOME}/x11/client or /etc/X11/xinit/xinitrc .
+#h 	XSERVERRC
+#h 		If XSERVERRC is set, it will be passed as the X server, instead of
+#h 		${XDG_CONFIG_HOME}/x11/server or /etc/X11/xinit/xserverrc .
+#h FILES:
+#h 	/usr/bin/startx
+#h 	/etc/X11/xinit/xinitrc
+#h 	/etc/X11/xinit/xserverrc
+#h SEE ALSO:
+#h 	startx
+#h HISTORY:
+#h BUGS:
+#h USAGE:
+# > Site administrators are STRONGLY urged to write nicer versions.
+while getopts ":h" option; do case ${option} in h) grep '^#h' "${0}" | sed 's/^#h \?//g'; exit;; *) ;; esac; done
 
 detect_unused_display() {
     d=0
