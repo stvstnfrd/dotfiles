@@ -1,57 +1,159 @@
 #!/bin/sh
 #h NAME:
 #h 	startx
+#h
 #h SYNOPSIS:
 #h 	startx -h
+#h 	startx -m
 #h 	startx [clientarg ...] [-- [display] [serverarg] ...]
+#h
 #h DESCRIPTION:
-#h 	This is a replacement for the default/system /usr/bin/startx.
+#h 	The startx script is a front end to xinit(1) that provides a somewhat nicer
+#h 	user interface for running a single session of the X Window System.
+#h 	It is often run with no arguments.
+#h
+#h 	Arguments immediately following the startx command are used to start a client
+#h 	in the same manner as xinit(1). The special argument '--' marks the end of
+#h 	client arguments and the beginning of server options. It may be convenient to
+#h 	specify server options with startx to change them on a per-session basis. Some
+#h 	examples of specifying server arguments follow; consult the manual page for
+#h 	your X server to determine which arguments are legal.
+#h
+#h 		startx -- -depth 16
+#h 		startx -- -dpi 100
+#h 		startx -- -layout Multihead
+#h
+#h 	Note that in the Debian system, what many people traditionally put in the
+#h 	.xinitrc file should go in .xsession instead; this permits the same X
+#h 	environment to be presented whether startx, xdm, or xinit is used to start the
+#h 	X session. All discussion of the .xinitrc file in the xinit(1) manual page
+#h 	applies equally well to .xsession. Keep in mind that .xinitrc is used only by
+#h 	xinit(1) and completely ignored by xdm(1).
+#h
+#h 	To determine the client to run, startx looks for the following files, in order:
+#h
+#h 		$(HOME)/.startxrc
+#h 		/usr/lib/x86_64-linux-gnu/sys.startxrc
+#h 		$(HOME)/.xinitrc
+#h 		/etc/X11/xinit/xinitrc
+#h
+#h 	If command line client options are given, they override this behavior and
+#h 	revert to the xinit(1) behavior. To determine the server to run, startx first
+#h 	looks for a file called .xserverrc in the user's home directory. If that is not
+#h 	found, it uses the file xserverrc in the xinit library directory. If command
+#h 	line server options are given, they override this behavior and revert to the
+#h 	xinit(1) behavior. Users rarely need to provide a .xserverrc file. See the
+#h 	xinit(1) manual page for more details on the arguments.
+#h
+#h 	The system-wide xinitrc and xserverrc files are found in the
+#h 	/etc/X11/xinit directory.
+#h
 #h EXAMPLES:
 #h 	Start X with system defaults.
 #h 		startx
+#h
 #h 	Start X with system defaults, explicitly.
 #h 		startx default
+#h
 #h 	Start X with with a failsafe terminal.
 #h 		startx failsafe
+#h
 #h 	Start X with the i3 window manager.
 #h 		startx i3
+#h
 #h 	Start X with the XFCE desktop environment.
 #h 		startx xfce4-session
+#h
 #h 	Start X on Display 3.
 #h 		startx -- :3
+#h
 #h OVERVIEW:
-#h 	TODO: Describe the overview and key differences from /usr/bin/startx .
+#h 	This is a (mostly) drop-in replacement for Ubuntu's /usr/bin/startx.
+#h
 #h OPTIONS:
-#h 	-h, --help	Print this message and exit.
+#h 	-h, --help
+#h 		Print this message and exit.
+#h
+#h 	-m, --man
+#h 		View this message in a PAGER and exit.
+#h
+#h 	clientarg ...
+#h 	clientarg ...
+#h 		These options are passed to the XINITRC script.
+#h
+#h 	display
+#h 		This is the target display to start on, colon-prefixed (":0").
+#h
+#h 	serverarg ...
+#h 		These options are passed to the XSERVERRC script.
+#h
 #h DEFAULTS:
 #h 	The client script exec'ed by xinit,
 #h 	if ${XINITRC} is not set, is the first found from:
 #h 		${XDG_CONFIG_HOME}/x11/client
 #h 		/etc/X11/xinit/xinitrc
+#h
 #h 	The server script for the client to connect to,
 #h 	if ${XSERVERRC} is not set, is the first found from:
 #h 		${XDG_CONFIG_HOME}/x11/server
 #h 		/etc/X11/xinit/xserverrc
+#h
 #h EXIT STATUS:
 #h 	Returns the result from `xinit`.
+#h
 #h ENVIRONMENT:
 #h 	XINPUTRC
-#h 		If XINPUTRC is set, it will be exec'ed by `xinit`, instead of
-#h 		${XDG_CONFIG_HOME}/x11/client or /etc/X11/xinit/xinitrc .
+#h 		Client to run, default is ~/.config/x11/client .
+#h
 #h 	XSERVERRC
-#h 		If XSERVERRC is set, it will be passed as the X server, instead of
-#h 		${XDG_CONFIG_HOME}/x11/server or /etc/X11/xinit/xserverrc .
+#h 		Server to run, default is ~/.config/x11/server .
+#h
+#h 	DISPLAY
+#h 		This variable gets set to the name of the display
+#h 		to which clients should connect. Note that this gets set, not read.
+#h
+#h 	XAUTHORITY
+#h 		This variable, if not already defined,
+#h 		gets set to $(XDG_CACHE_HOME})/.Xauthority.
+#h 		This is to prevent the X server, if not given the -auth argument,
+#h 		from automatically setting up insecure host-based authentication
+#h 		for the local host.
+#h 		See the Xserver(1) and Xsecurity(7) manual pages for more information
+#h 		on X client/server authentication.
+#h
 #h FILES:
-#h 	/usr/bin/startx
+#h 	$(XDG_CONFIG_HOME)/x11/client
+#h 		Client to run. Typically a shell script which runs many programs in the background.
+#h
+#h 	$(XDG_CONFIG_HOME)/x11/server
+#h 		Server to run, default is X.
+#h
 #h 	/etc/X11/xinit/xinitrc
+#h 		Client to run if the user has no ${XINPUTRC} file.
+#h
 #h 	/etc/X11/xinit/xserverrc
+#h 		Server to run if the user has no ${XSERVERRC} file.
+#h
 #h SEE ALSO:
-#h 	startx
+#h 	xinit(1), X(7), Xserver(1), Xorg(1), xorg.conf(5)
+#h
 #h HISTORY:
+#h 	stvstnfrd, 2021
+#h
 #h BUGS:
+#h 	https://github.com/stvstnfrd/dotfiles/issues
+#h
 #h USAGE:
+#h 	startx
+#h VERSION:
+#h 	0.0
+#
 # > Site administrators are STRONGLY urged to write nicer versions.
-while getopts ":h" option; do case ${option} in h) grep '^#h' "${0}" | sed 's/^#h \?//g'; exit;; *) ;; esac; done
+while getopts ":hm" option; do case ${option} in
+    h) grep '^#h' "${0}" | sed 's/^#h \?//g'; exit;;
+    m) "${0}" --help | ${PAGER:-less}; exit;;
+    *) ;;
+esac; done
 
 detect_unused_display() {
     d=0
