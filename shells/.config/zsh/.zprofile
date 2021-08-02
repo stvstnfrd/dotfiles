@@ -5,11 +5,11 @@ if [ -n "${debug}" ]; then
 fi
 # Pull in the default sh/posix login script
 if [ -s "${HOME}/.profile" ]; then
-	old_cdm_spawn="${CDM_SPAWN}"
-	export CDM_SPAWN=no
+    dm_pid=${ITSDM_PID}
+    ITSDM_PID=dummy
 	# shellcheck source=shells/.profile
 	. "${HOME}/.profile"
-	export CDM_SPAWN="${old_cdm_spawn}"
+    ITSDM_PID=${dm_pid}
 fi
 # Perform any zsh-only login tasks here
 if [ -e "${HOME}/.config/sh/display" ]; then
