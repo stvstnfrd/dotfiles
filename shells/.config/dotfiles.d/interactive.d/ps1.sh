@@ -14,6 +14,7 @@ else
 	if ! command -v __git_ps1 >/dev/null 2>&1; then
 		if [ -e "${HOME}/.config/bash/git-sh-prompt" ]; then
 			# shellcheck source=shells/.config/bash/git-sh-prompt
+			# shellcheck disable=SC1091
 			. "${HOME}/.config/bash/git-sh-prompt"
 		fi
 	fi
