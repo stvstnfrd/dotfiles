@@ -1,4 +1,5 @@
 #!/bin/bash
 if [ -e "../sh/logout" ]; then
+    # shellcheck source=shells/.config/sh/logout
     . "../sh/logout"
 fi
