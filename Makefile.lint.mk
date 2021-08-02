@@ -1,17 +1,60 @@
 #!/usr/bin/make -f
-FIND_ARGS_EXCLUDE = ! -path '*/src/*' ! -path './git-hub/.local/*' !  -path '*/.cache/*' ! -path './nvm/.config/nvm/*' ! -path '*/.git/*' !  -path '*/completion.d/*' ! -path '*/completion/*'
-## FIND_ARGS_INCLUDE = \( -name '*.sh' -o -name '*.bash' \)
-SH_FILES_DIFF = git diff --name-only -z --diff-filter=AMd $(TRAVIS_BRANCH) HEAD | grep --null --null-data '\.\(ba\)\?sh$$\|\(^shells\/\.config\/sh\/\)' | grep --null --null-data -v '^completion/'
-## SH_FILES_EXTENSION = find . -type f $(FIND_ARGS_EXCLUDE) $(FIND_ARGS_INCLUDE) -print0
-SH_FILES_SHEBANG = find . -type f $(FIND_ARGS_EXCLUDE) -print0 | xargs -0 grep -l --null --null-data '^\#!/bin/\(ba\)\?sh'
+FIND_FILES=( \
+	find . -type f \
+		! -path './.git/*' \
+		! -path './mozilla/*' \
+		! -path './autoenv/src/*' \
+		! -path './cd/src/*' \
+		! -path './diff-so-fancy/.config/diff-so-fancy/test/*' \
+		! -path './git-hub/src/*' \
+		! -path './git-hub/.local/*' \
+		! -path './nvm/.config/*' \
+		! -path './completion/*' \
+		! -path '*/completion.d/*' \
+		-print0 \
+	| sed --null-data 's/^\.\///' \
+)
+FIND_FILES_SHEBANG=( \
+	$(FIND_FILES) \
+	| xargs -0 \
+		grep \
+			-l \
+			--null \
+			'^\#!/bin/\(ba\)\?sh' \
+)
+FIND_FILES_EXTENSION=( \
+	$(FIND_FILES) \
+	| grep \
+		--null-data \
+		--null \
+		'.*\.\(ba\)\?sh$$' \
+)
+FIND_FILES_ALL=( \
+	( \
+		$(FIND_FILES_SHEBANG); \
+		$(FIND_FILES_EXTENSION); \
+	) \
+	| sort --zero-terminated --uniq \
+)
+FIND_FILES_DIFF_UNFILTERED=( \
+	git diff --name-only -z --diff-filter=AMd $(TRAVIS_BRANCH) HEAD \
+	| sort --zero-terminated --uniq \
+)
+FIND_FILES_DIFF=( \
+	( \
+		$(FIND_FILES_ALL); \
+		$(FIND_FILES_DIFF_UNFILTERED); \
+	) \
+	| sort --zero-terminated \
+	| uniq --zero-terminated --repeated \
+)
+LINT_SH_DIFF = $(FIND_FILES_DIFF) | $(XARGS_SHELLCHECK) --exclude=SC1091
+LINT_SH_ALL=$(FIND_FILES_ALL) | $(XARGS_SHELLCHECK)
 XARGS_SHELLCHECK = xargs -0 --no-run-if-empty shellcheck --external-sources
-LINT_SH_DIFF = $(SH_FILES_DIFF) | $(XARGS_SHELLCHECK)
-## LINT_SH_EXTENSION = $(SH_FILES_EXTENSION) | $(XARGS_SHELLCHECK)
-LINT_SH_SHEBANG = $(SH_FILES_SHEBANG) | $(XARGS_SHELLCHECK)
 
 .PHONY: lint
 lint:  ## Run the linter against all files
-	$(LINT_SH_SHEBANG)
+	$(LINT_SH_ALL)
 
 TRAVIS_BRANCH ?= origin/master
 .PHONY: lint.diff
