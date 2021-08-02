@@ -25,4 +25,10 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Run the linter
+      run: make lint
+  lint-diff:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run the linter against changed files only
       run: make lint.diff

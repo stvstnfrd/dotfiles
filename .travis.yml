@@ -8,6 +8,7 @@ before_install:
 install:
 - sudo apt install -y shellcheck
 env:
+- TARGET=lint
 - TARGET=lint.diff
 - TARGET=docker.build
 - TARGET=from-scratch
