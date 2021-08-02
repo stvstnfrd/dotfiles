@@ -410,8 +410,7 @@ main() {
     display=$(printf '%s' "${args}" | head -n 5 | tail -n 1)
     remove_list=$(printf '%s' "${args}" | head -n 6 | tail -n 1)
     # shellcheck disable=SC2086
-    echo xinit "${client}" ${client_arguments} -- "${server}" ${display} ${server_arguments}
-    exit 1
+    xinit "${client}" ${client_arguments} -- "${server}" ${display} ${server_arguments}
     retval=${?}
     # shellcheck disable=SC2086
     tear_down "${enable_xauth}" "${xserver_auth_file}" ${remove_list}
