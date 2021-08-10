@@ -1,9 +1,9 @@
 #!/bin/sh
 #h NAME:
-#h 	x11/session
+#h 	itsdm/x11/session
 #h
 #h SYNOPSIS:
-#h 	x11/session [executable [arguments ...]]
+#h 	itsdm/x11/session [executable [arguments ...]]
 #h
 #h DESCRIPTION:
 #h 	An XDG-compliant Xsession replacement.
@@ -11,7 +11,7 @@
 #h 	See `man Xsession` for a complete overview.
 #h
 #h EXAMPLES:
-#h 	. "${XDG_CONFIG_HOME}/x11/session"
+#h 	. "${HOME}/.local/etc/itsdm/x11/session"
 #h
 #h OVERVIEW:
 #h 	This is a near-copy of /etc/X11/Xsession.
@@ -72,7 +72,7 @@
 #h 			for over ten years at the time of this writing. .Xresources
 #h 			should be used instead.
 #h
-#h 		${XDG_CONFIG_HOME}/x11/session
+#h 		${HOME}/.local/etc/itsdm/session
 #h 			is a sequence of commands invoking X clients (or a session manager
 #h 			such as xsm(1)). See the manual page for xinit for tips on writing
 #h 			an .xsession file.
@@ -89,7 +89,7 @@
 #h USAGE:
 #h 	This is expected to be sourced from an XINITRC file.
 #h
-#h 		. "${XDG_CONFIG_HOME}/x11/session"
+#h 		. "${HOME}/.local/etc/itsdm/x11/session"
 #h
 #h VERSION:
 #h 	0.0

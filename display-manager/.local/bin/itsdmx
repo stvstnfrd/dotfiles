@@ -1,11 +1,11 @@
 #!/bin/sh
 #h NAME:
-#h 	startx
+#h 	itsdmx
 #h
 #h SYNOPSIS:
-#h 	startx -h
-#h 	startx -m
-#h 	startx [clientarg ...] [-- [display] [serverarg] ...]
+#h 	itsdmx -h
+#h 	itsdmx -m
+#h 	itsdmx [clientarg ...] [-- [display] [serverarg] ...]
 #h
 #h DESCRIPTION:
 #h 	The startx script is a front end to xinit(1) that provides a somewhat nicer
@@ -26,14 +26,14 @@
 #h 	To determine the client to run, startx looks for the following files, in order:
 #h
 #h 		$(XINITRC}
-#h 		$(XDG_CONFIG_HOME)/x11/client
+#h 		$(HOME)/.local/etc/itsdm/x11/client
 #h 		$(HOME)/.xinitrc
 #h 		/etc/X11/xinit/xinitrc
 #h
 #h 	To determine the server to run, startx looks for the following files, in order:
 #h
 #h 		$(XSERVER}
-#h 		$(XDG_CONFIG_HOME)/x11/server
+#h 		$(HOME)/.local/etc/itsdm/x11/server
 #h 		$(HOME)/.xserverrc
 #h 		/etc/X11/xinit/xserverrc
 #h
@@ -110,12 +110,12 @@
 #h DEFAULTS:
 #h 	The client script exec'ed by xinit,
 #h 	if ${XINITRC} is not set, is the first found from:
-#h 		${XDG_CONFIG_HOME}/x11/client
+#h 		${HOME}/.local/etc/itsdm/x11/client
 #h 		/etc/X11/xinit/xinitrc
 #h
 #h 	The server script for the client to connect to,
 #h 	if ${XSERVERRC} is not set, is the first found from:
-#h 		${XDG_CONFIG_HOME}/x11/server
+#h 		${HOME}/.local/etc/itsdm/x11/server
 #h 		/etc/X11/xinit/xserverrc
 #h
 #h EXIT STATUS:
@@ -123,10 +123,10 @@
 #h
 #h ENVIRONMENT:
 #h 	XINITRC
-#h 		Client to run, default is ~/.config/x11/client .
+#h 		Client to run, default is ${HOME}/.local/etc/itsdm/x11/client .
 #h
 #h 	XSERVERRC
-#h 		Server to run, default is ~/.config/x11/server .
+#h 		Server to run, default is ${HOME}/.local/etc/itsdm/x11/server .
 #h
 #h 	DISPLAY
 #h 		This variable gets set to the name of the display
@@ -142,10 +142,10 @@
 #h 		on X client/server authentication.
 #h
 #h FILES:
-#h 	$(XDG_CONFIG_HOME)/x11/client
+#h 	$(HOME)/.local/etc/itsdm/x11/client
 #h 		Client to run. Typically a shell script which runs many programs in the background.
 #h
-#h 	$(XDG_CONFIG_HOME)/x11/server
+#h 	$(HOME)/.local/etc/itsdm/x11/server
 #h 		Server to run, default is X.
 #h
 #h 	/etc/X11/xinit/xinitrc
@@ -155,7 +155,7 @@
 #h 		Server to run if the user has no ${XSERVERRC} file.
 #h
 #h SEE ALSO:
-#h 	xinit(1), X(7), Xserver(1), Xorg(1), xorg.conf(5)
+#h 	startx(1), xinit(1), X(7), Xserver(1), Xorg(1), xorg.conf(5)
 #h
 #h HISTORY:
 #h 	stvstnfrd, 2021
@@ -164,7 +164,7 @@
 #h 	https://github.com/stvstnfrd/dotfiles/issues
 #h
 #h USAGE:
-#h 	startx
+#h 	itsdmx
 #h
 #h VERSION:
 #h 	0.0
@@ -211,9 +211,8 @@ tear_down() {
     fi
 }
 
-parse_args() {
-    current_tty=${1}
-    shift;
+process_args() {
+    current_tty=$(tty)
     is_client='client'
     client_arguments=''
     server_arguments=''
@@ -241,16 +240,6 @@ parse_args() {
         esac
         shift
     done
-    printf '%s\n%s\n%s\n%s\n%s\n%s\n' "${client:- }" "${client_arguments:- }" "${server:- }" "${server_arguments:- }" "${display:- }" "${current_tty:- }"
-}
-
-process_args() {
-    read -r client
-    read -r client_arguments
-    read -r server
-    read -r server_arguments
-    read -r display
-    read -r current_tty
     active_client=
     active_client_arguments=$(echo "${client_arguments}" | sed 's/^ *//')
     active_server=
@@ -263,9 +252,9 @@ process_args() {
     environment_server="${XSERVERRC}"
     system_client=/etc/X11/xinit/xinitrc
     system_server=/etc/X11/xinit/xserverrc
-    user_client=${XDG_CONFIG_HOME:-${HOME}/.config}/x11/client
+    user_client=${HOME}/.local/etc/itsdm/x11/client
     user_client_legacy=${HOME}/.xinitrc
-    user_server=${XDG_CONFIG_HOME:-${HOME}/.config}/x11/server
+    user_server=${HOME}/.local/etc/itsdm/x11/server
     user_server_legacy=${HOME}/.xserverrc
 
     for file in "${environment_client}" "${user_client}" "${user_client_legacy}" "${system_client}"
@@ -399,9 +388,9 @@ main() {
     current_tty=$(tty)
     if [ -n "${enable_xauth}" ]
     then
-        args=$(parse_args "${current_tty}" "${@}" | process_args | enable_xauth)
+        args=$(process_args "${@}" | enable_xauth)
     else
-        args=$(parse_args "${current_tty}" "${@}" | process_args)
+        args=$(process_args "${@}")
     fi
     client=$(printf '%s' "${args}" | head -n 1 | tail -n 1)
     client_arguments=$(printf '%s' "${args}" | head -n 2 | tail -n 1)

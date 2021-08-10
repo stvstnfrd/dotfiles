@@ -56,7 +56,7 @@
 #h 			System sessions are stored here
 #h
 #h SEE ALSO:
-#h 	fzf(1), startx(1)
+#h 	itsdmx --help, fzf(1), startx(1)
 #h
 #h HISTORY:
 #h 	Created 2021-07-30
@@ -150,7 +150,7 @@ execute_app() {
         exec_cmd='exec'
     else
         log INFO "Starting X11 app: ${exec_key}"
-        exec_cmd='startx'
+        exec_cmd='itsdmx'
     fi
     # shellcheck disable=SC2086
     ITSDM_PID=$$ "${exec_cmd}" ${exec_key}

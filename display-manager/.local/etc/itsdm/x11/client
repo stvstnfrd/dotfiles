@@ -32,7 +32,7 @@
 #h
 #h OPTIONS:
 #h 	arguments
-#h 		These arguments are passed along to x11/session.
+#h 		These arguments are passed along to itsdm/x11/session.
 #h
 #h 	-h, --help
 #h 		Print this message and exit.
@@ -41,7 +41,7 @@
 #h 		View this message in a PAGER and exit.
 #h
 #h EXIT STATUS:
-#h 	The same as x11/session, as this is just a wrapper.
+#h 	The same as itsdm/x11/session, as this is just a wrapper.
 #h
 #h ENVIRONMENT:
 #h 	HOME
@@ -63,7 +63,7 @@
 #h 		The default system location for this script
 #h 		This file must be executable.
 #h
-#h 	${HOME}/.config/x11/session
+#h 	${HOME}/.local/etc/itsdm/x11/session
 #h 		The location for the Xsession script,
 #h 		for which this script is a wrapper.
 #h 		This file should be executable.
@@ -80,7 +80,7 @@
 #h
 #h USAGE:
 #h 	This should be passed as the first argument to `xinit`
-#h 	(either manually or via `startx`)
+#h 	(either manually or via `itsdmx`)
 #h 	or set via the ${XINITRC} variable.
 #h
 #h VERSION:
@@ -93,5 +93,5 @@ esac; done
 
 xrandr --auto
 export LANG=
-# shellcheck source=display-manager/.config/x11/session
-. "${HOME}/.config/x11/session"
+# shellcheck source=display-manager/.local/etc/itsdm/x11/session
+. "${HOME}/.local/etc/itsdm/x11/session"
