@@ -12,7 +12,7 @@ if [ -s "${HOME}/.profile" ]; then
     ITSDM_PID=${dm_pid}
 fi
 # Perform any zsh-only login tasks here
-if [ -e "${HOME}/.config/sh/display" ]; then
-	# shellcheck source=shells/.config/sh/display
-	. "${HOME}/.config/sh/display"
+if [ -e "${HOME}/.local/etc/itsdm/startup" ]; then
+	# shellcheck source=display-manager/.local/etc/itsdm/startup
+	. "${HOME}/.local/etc/itsdm/startup"
 fi

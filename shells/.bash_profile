@@ -16,7 +16,7 @@ if [ -n "${PS1}" ]; then
         . "${HOME}/.config/bash/interactive"
     fi
 fi
-if [ -e "${HOME}/.config/sh/display" ]; then
-	# shellcheck source=shells/.config/sh/display
-	. "${HOME}/.config/sh/display"
+if [ -e "${HOME}/.local/etc/itsdm/startup" ]; then
+	# shellcheck source=display-manager/.local/etc/itsdm/startup
+	. "${HOME}/.local/etc/itsdm/startup"
 fi
