@@ -28,10 +28,12 @@ ifeq ($(APT_UPDATE),1)
 endif
 ifeq ($(APT_INSTALL),1)
 	$(SUDO) apt-get install --yes $(APT_PACKAGES)
+	make system.apt.docker
+endif
 ifeq ($(APT_INSTALL_GUI),1)
 	$(SUDO) apt-get install --yes $(APT_PACKAGES_GUI)
 endif
-	make system.apt.docker
+ifeq ($(APT_INSTALL),1)
 	$(SUDO) apt-get autoremove --yes
 endif
 
