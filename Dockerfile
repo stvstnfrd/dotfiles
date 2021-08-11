@@ -30,9 +30,9 @@ COPY --chown=dev .requirements/nix.txt .requirements/nix.txt
 RUN make -f Makefile.system.nix.mk system.nix
 
 # Install python packages
-COPY --chown=dev Makefile.system.pip.mk ./
-COPY --chown=dev .requirements/pip.txt .requirements/pip.txt
-RUN make -f Makefile.system.pip.mk system.pip
+COPY --chown=dev .requirements/pip.mk .requirements/
+COPY --chown=dev .requirements/pip.txt .requirements/
+RUN make -f .requirements/pip.mk system.pip
 
 # Backup existing configuration
 COPY --chown=dev Makefile.install.mk ./
