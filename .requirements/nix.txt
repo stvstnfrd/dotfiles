@@ -22,6 +22,7 @@ nixpkgs.htop
 nixpkgs.jq
 nixpkgs.less
 nixpkgs.libqrencode
+nixpkgs.lynx
 nixpkgs.man
 nixpkgs.mutt
 nixpkgs.neofetch
