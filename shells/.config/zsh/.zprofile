@@ -5,11 +5,8 @@ if [ -n "${debug}" ]; then
 fi
 # Pull in the default sh/posix login script
 if [ -s "${HOME}/.profile" ]; then
-    dm_pid=${ITSDM_PID}
-    ITSDM_PID=dummy
 	# shellcheck source=shells/.profile
-	. "${HOME}/.profile"
-    ITSDM_PID=${dm_pid}
+	ITSDM_PID=dummy . "${HOME}/.profile"
 fi
 # Perform any zsh-only login tasks here
 if [ -e "${HOME}/.local/etc/itsdm/startup" ]; then

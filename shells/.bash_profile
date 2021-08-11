@@ -1,10 +1,7 @@
 #!/bin/bash
 if [ -s "${HOME}/.profile" ]; then
-    dm_pid=${ITSDM_PID}
-    ITSDM_PID=dummy
     # shellcheck source=shells/.profile
-    . "${HOME}/.profile"
-    ITSDM_PID=${dm_pid}
+    ITSDM_PID=dummy . "${HOME}/.profile"
 fi
 if [ -s "${HOME}/.config/bash/environment" ]; then
     # shellcheck source=shells/.config/bash/environment
