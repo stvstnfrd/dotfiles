@@ -38,6 +38,7 @@ venv() {
 
 lsvirtualenv() {
     find "${WORKON_HOME}" -maxdepth 1 -mindepth 1 -type d -print0 \
+    2>/dev/null \
     | xargs -0 -n1 --no-run-if-empty basename \
     | sort \
     ;
