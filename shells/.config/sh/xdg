@@ -48,6 +48,8 @@ if [ ! -e "${HOME}/.Xauthority" ]; then
 fi
 export ZSH_PIP_CACHE_FILE="${XDG_CACHE_HOME}/pip/zsh"
 export _Z_DATA="${XDG_CACHE_HOME}/z"
+test -f "${_Z_DATA}" || touch "${_Z_DATA}" || true
+
 curl() {
     _flags=
     if [ -e "${NETRC}" ]; then
