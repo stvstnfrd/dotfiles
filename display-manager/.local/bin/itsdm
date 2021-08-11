@@ -84,11 +84,20 @@ log() {
     echo "${datestamp}	${level}	${message}" >>"${logfile}"
 }
 gather_choices() {
+    grep_args=
+    if [ -n "${DISPLAY}${SSH_TTY}" ]
+    then
+        grep_args='^Terminal=true$'
+    fi
     find \
         ~/.local/share/xsessions/ \
         ~/.nix-profile/share/xsessions/ \
         /usr/share/xsessions/ \
         -name '*.desktop' \
+        -print0 \
+    | xargs \
+        -0 \
+        grep --files-with-matches "${grep_args}" \
     | sort \
     ;
 }
