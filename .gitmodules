@@ -1,5 +1,5 @@
-[submodule "diff-so-fancy/.config/diff-so-fancy"]
-	path = diff-so-fancy/.config/diff-so-fancy
+[submodule "git/.config/diff-so-fancy"]
+	path = git/.config/diff-so-fancy
 	url = https://github.com/so-fancy/diff-so-fancy.git
 [submodule "vim-fugitive/.config/vim/bundle/fugitive"]
 	path = vim-plugins/.config/vim/bundle/fugitive
