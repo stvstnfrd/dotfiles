@@ -1,5 +1,7 @@
 build-essential
 curl
-i3lock
+exfat-fuse
+exfat-utils
 sudo
 xz-utils
+zsh
