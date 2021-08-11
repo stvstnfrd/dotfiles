@@ -48,6 +48,14 @@ if [ ! -e "${HOME}/.Xauthority" ]; then
 fi
 export ZSH_PIP_CACHE_FILE="${XDG_CACHE_HOME}/pip/zsh"
 export _Z_DATA="${XDG_CACHE_HOME}/z"
+curl() {
+    _flags=
+    if [ -e "${NETRC}" ]; then
+        _flags="--netrc-file ${NETRC}"
+    fi
+    # shellcheck disable=SC2086
+    command curl ${_flags} "${@}"
+}
 sbcl () {
     command sbcl --userinit "${XDG_CONFIG_HOME}/sbcl/rc" "${@}"
 }
