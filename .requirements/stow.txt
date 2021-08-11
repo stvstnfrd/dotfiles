@@ -1,14 +1,8 @@
 autoenv
-cd
 display-manager
-diff-so-fancy
 git
 git-hub
-grep
 keyboard
-less
-ls
-mnemonic
 neofetch
 nix
 nvm
@@ -18,4 +12,3 @@ shells
 vagrant
 vim
 vim-plugins
-virtualenv
