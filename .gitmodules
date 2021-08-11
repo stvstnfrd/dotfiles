@@ -34,8 +34,8 @@
 [submodule "vim-orgmode/.config/vim/bundle/orgmode"]
 	path = vim-plugins/.config/vim/bundle/orgmode
 	url = https://github.com/jceb/vim-orgmode.git
-[submodule "cd/src/z"]
-	path = cd/src/z
+[submodule "shells/src/z"]
+	path = shells/src/z
 	url = https://github.com/rupa/z.git
 [submodule "neofetch/src/neofetch"]
 	path = neofetch/src/neofetch
