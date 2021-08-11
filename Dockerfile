@@ -35,8 +35,8 @@ COPY --chown=dev .requirements/pip.txt .requirements/
 RUN make -f .requirements/pip.mk system.pip
 
 # Backup existing configuration
-COPY --chown=dev Makefile.install.mk ./
-RUN make -f Makefile.install.mk backup
+COPY --chown=dev .requirements/install.mk .requirements/
+RUN make -f .requirements/install.mk backup
 
 # Install stow packages
 COPY --chown=dev . .
