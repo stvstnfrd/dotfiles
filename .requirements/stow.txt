@@ -2,10 +2,10 @@ autoenv
 display-manager
 git
 git-hub
+javascript
 keyboard
 neofetch
 nix
-nvm
 python
 screen
 shells
