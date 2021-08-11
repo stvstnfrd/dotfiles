@@ -4,6 +4,12 @@ APT_EXISTS=$(shell command -v apt 2>&1 >/dev/null && echo 1 || echo 0)
 ifeq ($(APT_EXISTS),1)
 APT_INSTALL ?= 1
 APT_PACKAGES=$(shell grep -v '^\#' .requirements/apt.txt)
+APT_PACKAGES_GUI=$(shell grep -v '^\#' .requirements/apt.gui.txt)
+ifneq ($(DISPLAY),)
+APT_INSTALL_GUI ?= 1
+else
+APT_INSTALL_GUI ?= 0
+endif
 APT_UPDATE ?= 0
 DOCKER_EXISTS=$(shell command -v docker 2>&1 >/dev/null && echo 1 || echo 0)
 EUID ?= $(shell id -u)
@@ -22,6 +28,9 @@ ifeq ($(APT_UPDATE),1)
 endif
 ifeq ($(APT_INSTALL),1)
 	$(SUDO) apt-get install --yes $(APT_PACKAGES)
+ifeq ($(APT_INSTALL_GUI),1)
+	$(SUDO) apt-get install --yes $(APT_PACKAGES_GUI)
+endif
 	make system.apt.docker
 	$(SUDO) apt-get autoremove --yes
 endif
