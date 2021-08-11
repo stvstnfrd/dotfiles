@@ -1,7 +1,6 @@
 #!/bin/sh
 CDPATH="${HOME}/src"
 CDPATH="${HOME}/src/edx:${CDPATH}"
-CDPATH="${HOME}/src/edx/xblocks:${CDPATH}"
 CDPATH="${HOME}/projects:${CDPATH}"
 CDPATH=".:${CDPATH}"
 export CDPATH
