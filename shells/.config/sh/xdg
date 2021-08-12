@@ -68,3 +68,7 @@ sqlite3 () {
 ssh () {
     command ssh -F "${XDG_CONFIG_HOME}/ssh/config" "${@}"
 }
+wget() {
+    command wget --hsts-file "${XDG_CACHE_HOME}/wget-hsts" "${@}"
+}
+
