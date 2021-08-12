@@ -49,7 +49,7 @@
 #h 		~/.local/share/xsessions/
 #h 			User sessions are stored here
 #h
-#h 		~/.nix-profile/share/xsessions/
+#h 		${NIX_PROFILE}/share/xsessions/
 #h 			Nix-installed sessions are stored here
 #h
 #h 		/usr/share/xsessions/
@@ -90,8 +90,8 @@ gather_choices() {
         grep_args='^Terminal=true$'
     fi
     find \
-        ~/.local/share/xsessions/ \
-        ~/.nix-profile/share/xsessions/ \
+        "${HOME}/.local/share/xsessions/" \
+        "${NIX_PROFILE:-${HOME}/.nix-profile}/share/xsessions/" \
         /usr/share/xsessions/ \
         -name '*.desktop' \
         -print0 \
