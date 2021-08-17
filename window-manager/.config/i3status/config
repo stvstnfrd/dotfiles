@@ -43,7 +43,7 @@ battery all {
 }
 
 disk "/" {
-        format = "DISK: %avail"
+        format = "DISK: %percentage_avail"
 }
 
 load {
