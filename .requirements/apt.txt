@@ -2,6 +2,7 @@ build-essential
 curl
 exfat-fuse
 exfat-utils
+obs-studio
 sudo
 xz-utils
 zsh
