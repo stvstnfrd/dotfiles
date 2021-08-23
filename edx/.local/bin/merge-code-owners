@@ -1,0 +1,64 @@
+#!/bin/sh
+#h NAME:
+#h     merge-code-owners
+#h
+#h SYNOPSIS:
+#h DESCRIPTION:
+#h EXAMPLES:
+#h OVERVIEW:
+#h OPTIONS:
+#h DEFAULTS:
+#h EXIT STATUS:
+#h ENVIRONMENT:
+#h FILES:
+#h SEE ALSO:
+#h HISTORY:
+#h BUGS:
+#h USAGE:
+#h 	merge-code-owners
+#h 		[-h]	print help text and exit
+set -e
+DO_OR_DEBUG='echo'
+while getopts ":dh" option;
+do
+	case ${option} in
+		h) grep '^#h' "${0}" | sed 's/^#h \?//g';
+		   exit
+		   ;;
+		d) DO_OR_DEBUG=
+		   ;;
+		*) ;;
+	esac
+done
+if [ -z "${DO_OR_DEBUG}" ] && [ -z "${GITHUB_TOKEN}" ]
+then
+    echo "GITHUB_TOKEN (env var) must be set"
+    exit 1
+fi
+temp=$(mktemp --directory)
+echo 'merge: stvn/own/code' > "${temp}/message.txt"
+# shellcheck disable=SC2002
+cat \
+| grep -v edx-platform \
+| grep -v '^$' \
+| grep -v '^#' \
+| while read -r CHECKOUT_URL
+do
+	CHECKOUT_URL_SSH=$(echo "${CHECKOUT_URL}" | sed 's@https://github.com/@git\@github.com:@')
+	REPO="$(basename "${CHECKOUT_URL}")"
+	CHECKOUT_DIRECTORY="${temp}/${REPO}"
+	BRANCH=stvn/own/code
+	DESTINATION_REMOTE=origin
+	DESTINATION_BRANCH=${BRANCH}
+	${DO_OR_DEBUG} git clone "${CHECKOUT_URL_SSH}" "${CHECKOUT_DIRECTORY}"
+	${DO_OR_DEBUG} cd "${CHECKOUT_DIRECTORY}" || exit 1
+	${DO_OR_DEBUG} git merge \
+		--no-ff \
+		--file="${temp}/message.txt" \
+		"${DESTINATION_REMOTE}/${DESTINATION_BRANCH}" \
+	;
+	${DO_OR_DEBUG} git push -u "${DESTINATION_REMOTE}"
+	${DO_OR_DEBUG} git push "${DESTINATION_REMOTE}" :${BRANCH} || true
+done
+# TODO: trap this
+rm -rf "${temp:?}/"

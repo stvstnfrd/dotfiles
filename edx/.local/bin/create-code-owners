@@ -1,0 +1,158 @@
+#!/bin/sh
+#h NAME:
+#h     create-code-owners
+#h
+#h SYNOPSIS:
+#h DESCRIPTION:
+#h EXAMPLES:
+#h OVERVIEW:
+#h OPTIONS:
+#h DEFAULTS:
+#h EXIT STATUS:
+#h ENVIRONMENT:
+#h FILES:
+#h SEE ALSO:
+#h HISTORY:
+#h BUGS:
+#h USAGE:
+#h 	create-code-owners
+#h 		[-h]	print help text and exit
+set -e
+DO_OR_DEBUG='echo'
+while getopts ":dh" option;
+do
+	case ${option} in
+		h) grep '^#h' "${0}" | sed 's/^#h \?//g';
+		   exit
+		   ;;
+		d) DO_OR_DEBUG=
+		   ;;
+		*) ;;
+	esac
+done
+if [ -z "${DO_OR_DEBUG}" ] && [ -z "${GITHUB_TOKEN}" ]
+then
+    echo "GITHUB_TOKEN (env var) must be set"
+    exit 1
+fi
+do_it() {
+	DO_OR_DEBUG=${1}
+	CHECKOUT_DIRECTORY=${2}
+	TEAM_NAME=${3}
+	owner_dir="${CHECKOUT_DIRECTORY}/.github"
+	owner_file="${owner_dir}/CODEOWNERS"
+	TITLE="build: add CODEOWNERS; ${TEAM_NAME}"
+	BODY="\
+Background
+==========
+As part of our Squad-based ownership, we should stay on top of what
+happens in these repositories. However, due to the number of
+repositories (and subsequently pull requests) across the edX ecosystem,
+it is challenging to stay on top of notifications, separating the
+'signal' from the 'noise'. Email filters can go a long way to taming
+Inbox notifications, but this is manual and requires maintenance as
+Squad ownership changes. It also fails to account for Github-specific behavior.
+
+Proposal
+========
+By leveraging Github support for \`CODEOWNERS\` files [1],
+we can ensure that our team is at least CCed explicitly, here,
+in the form a requested review. This request is just that, a request,
+not a requirement; we are not enacting any new merge requirements
+at this time.
+
+- [1] https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
+"
+	if [ -n "${DO_OR_DEBUG}" ]
+	then
+		BODY='[...truncated...]'
+	fi
+	${DO_OR_DEBUG} test -d "${owner_dir}" || mkdir "${owner_dir}"
+	if [ -e "${owner_file}" ]
+	then
+		echo "CODEOWNERS already exists!!!"
+	    exit 1
+	fi
+	test -n "${DO_OR_DEBUG}" || echo "* @${TEAM_NAME}" > "${owner_file}"
+	${DO_OR_DEBUG} git add "${owner_file}"
+	${DO_OR_DEBUG} git commit -m "${TITLE}
+
+${BODY}"
+}
+temp=$(mktemp --directory)
+# shellcheck disable=SC2209
+if [ -n "${DO_OR_DEBUG}" ]
+then
+	PR_RESPONSE_FILE=/dev/null
+else
+	PR_RESPONSE_FILE=/tmp/pr.json
+fi
+# shellcheck disable=SC2002
+cat \
+| grep -v edx-platform \
+| grep -v '^$' \
+| grep -v '^#' \
+| while read -r CHECKOUT_URL
+do
+	CHECKOUT_URL_SSH=$(echo "${CHECKOUT_URL}" | sed 's@https://github.com/@git\@github.com:@')
+	REPO="$(basename "${CHECKOUT_URL}")"
+	OWNER="$(basename "$(dirname "${CHECKOUT_URL}")")"
+	CHECKOUT_DIRECTORY="${temp}/${REPO}"
+	URL="repos/${OWNER}/${REPO}/pulls"
+	TEAM_NAME='edx/community-engineering'
+	BRANCH=stvn/own/code
+	DESTINATION_REMOTE=origin
+	DESTINATION_BRANCH=gh-pages
+	${DO_OR_DEBUG} git clone "${CHECKOUT_URL_SSH}" "${CHECKOUT_DIRECTORY}"
+	${DO_OR_DEBUG} cd "${CHECKOUT_DIRECTORY}" || exit 1
+	${DO_OR_DEBUG} git checkout -b \
+		"${BRANCH}" \
+		"${DESTINATION_REMOTE}/${DESTINATION_BRANCH}" \
+	;
+	do_it "${DO_OR_DEBUG}" "${CHECKOUT_DIRECTORY}" "${TEAM_NAME}"
+	${DO_OR_DEBUG} git push -u "${DESTINATION_REMOTE}" "${BRANCH}"
+	TITLE=$(git log -1 --pretty=format:%s)
+	BODY=$(git log -1 --pretty=format:%b)
+	DATA=$(cat << EOM
+	{ \
+		"base": "${DESTINATION_BRANCH}", \
+		"head": "${BRANCH}", \
+		"title": "${TITLE}", \
+		"body": "$(printf "%s\n" "${BODY}" \
+			| sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/\\n/g'
+		)" \
+	}
+EOM
+)
+	# shellcheck disable=SC2086
+	${DO_OR_DEBUG} curl \
+		-X POST \
+		-H "authorization: Bearer ${GITHUB_TOKEN}" \
+		-H "Accept: application/vnd.github.v3+json" \
+		"https://api.github.com/${URL}" \
+		-d "${DATA}" \
+	> "${PR_RESPONSE_FILE}" \
+	;
+	PR_NUMBER=$(jq '.number' "${PR_RESPONSE_FILE}" 2>/dev/null || echo null)
+	if [ "${PR_NUMBER}" = 'null' ] || [ "${PR_NUMBER}" = '' ]
+	then
+		if [ -z "${DO_OR_DEBUG}" ]
+		then
+			echo 'failed to create/parse pull request'
+			exit 1
+		else
+			PR_NUMBER=0
+		fi
+	fi
+	DATA="{\"team_reviewers\": [\"${TEAM_NAME}\"]}"
+	URL="repos/${OWNER}/${REPO}/pulls/${PR_NUMBER}/requested_reviewers"
+	${DO_OR_DEBUG} curl \
+		-X POST \
+		-H "authorization: Bearer ${GITHUB_TOKEN}" \
+		-H "Accept: application/vnd.github.v3+json" \
+		"https://api.github.com/${URL}" \
+		-d "${DATA}" \
+	;
+done
+# TODO: trap this
+rm -rf "${temp:?}/"
