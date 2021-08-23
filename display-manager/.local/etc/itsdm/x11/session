@@ -224,6 +224,28 @@ then
 fi
 rm -f "${WRITE_TEST}"
 
+set_gtk_theme() {
+    if command -v gsettings >/dev/null 2>&1
+    then
+        current_theme=$(gsettings get org.gnome.desktop.interface gtk-theme)
+        theme_name="${1:-${current_theme}}"
+        if find \
+            /usr/share/themes \
+            -mindepth 1 -maxdepth 1 -type d \
+            -print0 \
+        | xargs -0 -n1 basename \
+        | sort \
+        | grep -qw "${theme_name}" \
+        ; then
+            echo >/dev/null
+            if ! [ "${current_theme}" = "${theme_name}" ]
+            then
+                gsettings set org.gnome.desktop.interface gtk-theme "${theme_name}"
+            fi
+        fi
+    fi
+}
+set_gtk_theme 'Greybird-dark'
 # use run-parts to source every file in the session directory; we source
 # instead of executing so that the variables and functions defined above
 # are available to the scripts, and so that they can pass variables to each
