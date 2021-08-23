@@ -11,7 +11,7 @@ RUN apt update -y && \
 # Create a test user
 ENV USER=dev
 ENV HOME=/home/${USER}
-ENV PATH=${HOME}/.nix-profile/bin/:${PATH}
+ENV PATH=${HOME}/.local/nix/profile/bin:${PATH}
 ENV PATH=${HOME}/.local/bin:${PATH}
 RUN useradd -m --shell /bin/bash ${USER}
 # RUN adduser --disabled-password --gecos '' ${USER}
@@ -27,6 +27,8 @@ WORKDIR ${HOME}/.config/dotfiles
 # Install nix packages
 COPY --chown=dev .requirements/nix.mk .requirements/
 COPY --chown=dev .requirements/nix.txt .requirements/
+RUN mkdir -p ${HOME}/.local/nix
+ENV NIX_PROFILE=${HOME}/.local/nix/profile
 RUN make -f .requirements/nix.mk system.nix
 
 # Install python packages
@@ -41,6 +43,10 @@ RUN make -f .requirements/install.mk backup
 # Install stow packages
 COPY --chown=dev . .
 RUN make install
+RUN test -e ${HOME}/.local/nix/profile || ln -s /nix/var/nix/profiles/per-user/${USER}/profile ${HOME}/.local/nix/
+RUN test -e ${HOME}/.local/nix/channels || ln -s /nix/var/nix/profiles/per-user/${USER}/channels ${HOME}/.local/nix/
+RUN mkdir -p ${HOME}/.local/nix/defexpr
+RUN mv ${HOME}/.nix-defexpr/* ${HOME}/.local/nix/defexpr
 
 RUN sudo usermod --groups '' ${USER}
 CMD ["bash", "--login"]

@@ -12,7 +12,7 @@ if [ ! -d "${HOME}/.config/dotfiles" ]; then
         "${HOME}/.config/dotfiles"
 fi
 cd "${HOME}/.config/dotfiles"
-export PATH="${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:${PATH}"
+export PATH="${HOME}/.local/nix/profile/bin:/nix/var/nix/profiles/default/bin:${PATH}"
 make update
 make system NIX_DAEMON=--daemon
 make backup

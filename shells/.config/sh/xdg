@@ -7,7 +7,7 @@ export XDG_DATA_HOME="${HOME}/.local/share"
 XDG_DATA_DIRS="/usr/share"
 XDG_DATA_DIRS="/usr/local/share:${XDG_DATA_DIRS}"
 XDG_DATA_DIRS="/usr/share/xfce4:${XDG_DATA_DIRS}"
-XDG_DATA_DIRS="${HOME}/.nix-profile/share:${XDG_DATA_DIRS}"
+XDG_DATA_DIRS="${HOME}/.local/nix/profile/share:${XDG_DATA_DIRS}"
 XDG_DATA_DIRS="${XDG_DATA_HOME}:${XDG_DATA_DIRS}"
 export XDG_DATA_DIRS
 # shellcheck source=shells/.config/user-dirs.dirs

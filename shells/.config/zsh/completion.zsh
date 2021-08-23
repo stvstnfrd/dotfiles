@@ -1,7 +1,7 @@
 #!/bin/zsh
 fpath=(${HOME}/.config/zsh/completion.d $fpath)
-fpath=(${HOME}/.nix-profile/share/zsh/site-functions $fpath)
-fpath=(${HOME}/.nix-profile/share/zsh/5.8 $fpath)
+fpath=(${NIX_PROFILE:-${HOME}/.nix-profile}/share/zsh/site-functions $fpath)
+fpath=(${NIX_PROFILE:-${HOME}/.nix-profile}/share/zsh/5.8 $fpath)
 
 # Load and run compinit
 autoload -U compinit
