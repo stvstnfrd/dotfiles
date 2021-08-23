@@ -1,0 +1,56 @@
+#!/bin/sh
+#h NAME:
+#h 	screens
+#h SYNOPSIS:
+#h DESCRIPTION:
+#h EXAMPLES:
+#h OVERVIEW:
+#h OPTIONS:
+#h DEFAULTS:
+#h EXIT STATUS:
+#h ENVIRONMENT:
+#h FILES:
+#h SEE ALSO:
+#h HISTORY:
+#h BUGS:
+#h USAGE:
+#h VERSION:
+#h 	0.0
+_screens () {
+    while getopts ":h" option; do case ${option} in h) grep '^#h' "${0}" | sed 's/^#h \?//g'; exit;; *) ;; esac; done
+    if [ "${#}" -eq 0 ]
+    then
+        default_session_label='New Session'
+        default_session_name='scratchpad'
+        if ! command -v fzf >/dev/null 2>&1
+        then
+            screen -S "${default_session_name}"
+            return "${?}"
+        else
+            if selection="$(
+                (
+                    echo "${default_session_label}";
+                    screen -ls \
+                    | head --lines=-1 \
+                    | tail --lines=+2 \
+                    | cut -f2
+                ) \
+                | fzf --select-1
+            )" && [ -n "${selection}" ]
+            then
+                if [ "${selection}" = "${default_session_label}" ]
+                then
+                    screen -S "${default_session_name}"
+                else
+                    screen -D -R "${selection}"
+                fi
+                return "${?}"
+            else
+                return 1
+            fi
+        fi
+    fi
+    screen "${@}"
+    return "${?}"
+}
+_screens "${@}"

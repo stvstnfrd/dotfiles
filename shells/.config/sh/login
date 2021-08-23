@@ -1,1 +1,5 @@
 #!/bin/sh
+if [ -e "${HOME}/.local/etc/itsdm/startup" ]; then
+	# shellcheck source=display-manager/.local/etc/itsdm/startup
+	. "${HOME}/.local/etc/itsdm/startup"
+fi

@@ -1,5 +1,5 @@
-[submodule "diff-so-fancy/.config/diff-so-fancy"]
-	path = diff-so-fancy/.config/diff-so-fancy
+[submodule "git/.config/diff-so-fancy"]
+	path = git/.config/diff-so-fancy
 	url = https://github.com/so-fancy/diff-so-fancy.git
 [submodule "vim-fugitive/.config/vim/bundle/fugitive"]
 	path = vim-plugins/.config/vim/bundle/fugitive
@@ -34,8 +34,8 @@
 [submodule "vim-orgmode/.config/vim/bundle/orgmode"]
 	path = vim-plugins/.config/vim/bundle/orgmode
 	url = https://github.com/jceb/vim-orgmode.git
-[submodule "cd/src/z"]
-	path = cd/src/z
+[submodule "shells/src/z"]
+	path = shells/src/z
 	url = https://github.com/rupa/z.git
 [submodule "neofetch/src/neofetch"]
 	path = neofetch/src/neofetch
@@ -43,8 +43,8 @@
 [submodule "autoenv/src/autoenv"]
 	path = autoenv/src/autoenv
 	url = https://github.com/inishchith/autoenv.git
-[submodule "nvm/.config/nvm"]
-	path = nvm/.config/nvm
+[submodule "javascript/.config/nvm"]
+	path = javascript/.config/nvm
 	url = https://github.com/nvm-sh/nvm.git
 [submodule "git-hub/src/git-hub"]
 	path = git-hub/src/git-hub

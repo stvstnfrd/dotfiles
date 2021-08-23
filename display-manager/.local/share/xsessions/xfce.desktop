@@ -2,7 +2,7 @@
 Version=1.0
 Name=XFCE
 Comment=Use this session to run XFCE as your desktop environment
-Exec=startxfce4
+Exec=xfce4-session
 Icon=
 Type=Application
 DesktopNames=XFCE

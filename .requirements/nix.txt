@@ -1,6 +1,6 @@
 nixpkgs.ag
 nixpkgs.apg
-nixpkgs.bashInteractive
+nixpkgs.bashInteractive_5
 nixpkgs.bash-completion
 nixpkgs.coreutils-full
 nixpkgs.curl
@@ -9,6 +9,8 @@ nixpkgs.exa
 nixpkgs.figlet
 nixpkgs.findutils
 nixpkgs.fortune
+nixpkgs.fzf
+nixpkgs.gh
 nixpkgs.gitAndTools.gitFull
 nixpkgs.gnugrep
 nixpkgs.gnumake
@@ -16,9 +18,11 @@ nixpkgs.gnupg1
 nixpkgs.gnused
 nixpkgs.graphviz
 nixpkgs.gron
+nixpkgs.htop
 nixpkgs.jq
 nixpkgs.less
 nixpkgs.libqrencode
+nixpkgs.lynx
 nixpkgs.man
 nixpkgs.mutt
 nixpkgs.neofetch
@@ -34,6 +38,7 @@ nixpkgs.sbcl
 nixpkgs.screen
 nixpkgs.shellcheck
 nixpkgs.slack
+nixpkgs.so
 nixpkgs.sqlite
 nixpkgs.stow
 nixpkgs.tree
@@ -42,4 +47,13 @@ nixpkgs.vagrant
 nixpkgs.vim
 nixpkgs.vlc
 nixpkgs.wget
+nixpkgs.whois
+nixpkgs.xclip
+# nixpkgs.xpdf
 nixpkgs.zsh
+# i3 stuff
+nixpkgs.dmenu
+nixpkgs.i3
+# nixpkgs.i3lock
+# Install i3lock via apt due to permissions issues
+nixpkgs.i3status

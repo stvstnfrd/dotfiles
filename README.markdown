@@ -23,7 +23,7 @@ make install
 
 ```sh
 # TODO: update this?
-curl https://raw.githubusercontent.com/stvstnfrd/dotfiles/master/bootstrap.sh | sh
+curl https://raw.githubusercontent.com/stvstnfrd/dotfiles/master/.requirements/bootstrap.sh | sh
 ```
 
 ## Overview

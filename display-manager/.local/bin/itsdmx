@@ -1,0 +1,409 @@
+#!/bin/sh
+#h NAME:
+#h 	itsdmx
+#h
+#h SYNOPSIS:
+#h 	itsdmx -h
+#h 	itsdmx -m
+#h 	itsdmx [clientarg ...] [-- [display] [serverarg] ...]
+#h
+#h DESCRIPTION:
+#h 	The startx script is a front end to xinit(1) that provides a somewhat nicer
+#h 	user interface for running a single session of the X Window System.
+#h 	It is often run with no arguments.
+#h
+#h 	Arguments immediately following the startx command are used to start a client
+#h 	in the same manner as xinit(1). The special argument '--' marks the end of
+#h 	client arguments and the beginning of server options. It may be convenient to
+#h 	specify server options with startx to change them on a per-session basis. Some
+#h 	examples of specifying server arguments follow; consult the manual page for
+#h 	your X server to determine which arguments are legal.
+#h
+#h 		startx -- -depth 16
+#h 		startx -- -dpi 100
+#h 		startx -- -layout Multihead
+#h
+#h 	To determine the client to run, startx looks for the following files, in order:
+#h
+#h 		$(XINITRC}
+#h 		$(HOME)/.local/etc/itsdm/x11/client
+#h 		$(HOME)/.xinitrc
+#h 		/etc/X11/xinit/xinitrc
+#h
+#h 	To determine the server to run, startx looks for the following files, in order:
+#h
+#h 		$(XSERVER}
+#h 		$(HOME)/.local/etc/itsdm/x11/server
+#h 		$(HOME)/.xserverrc
+#h 		/etc/X11/xinit/xserverrc
+#h
+#h 	Users rarely need to provide a .xserverrc file.
+#h 	See the xinit(1) manual page for more details on the arguments.
+#h
+#h 	The system-wide xinitrc and xserverrc files are found in the
+#h 	/etc/X11/xinit directory.
+#h
+#h EXAMPLES:
+#h 	Start X with system defaults.
+#h 		startx
+#h
+#h 	Start X with system defaults, explicitly.
+#h 		startx default
+#h
+#h 	Start X with with a failsafe terminal.
+#h 		startx failsafe
+#h
+#h 	Start X with the i3 window manager.
+#h 		startx i3
+#h
+#h 	Start X with the XFCE desktop environment.
+#h 		startx xfce4-session
+#h
+#h 	Start X on Display 3.
+#h 		startx -- :3
+#h
+#h OVERVIEW:
+#h 	From the default Debian startx script:
+#h
+#h 		> Site administrators are STRONGLY urged to write nicer versions.
+#h
+#h 	This is a (mostly) drop-in replacement for Ubuntu's /usr/bin/startx.
+#h 	Notable differences include:
+#h 		XDG Compliance
+#h
+#h 		${XINITRC} and ${XSERVERRC} are respected.
+#h 		xinit _does_ fall back to ${XINITRC}, but only if no client script
+#h 		is passed on the command line. Since the default startx always
+#h 		does this (it falls back to xterm), we can't rely on it, without
+#h 		calling xinit directly. And startx is otherwise capable (sets up
+#h 		xauth, etc.), so it's nice to have this wrapper.
+#h
+#h 		XAUTHORITY is saved in ${XDG_CACHE_HOME}.
+#h 		This is one less dotfile littering ${HOME}.
+#h 		Admittedly, this was one of the original motivations for
+#h 		authoring this script.
+#h
+#h 		BREAKING: You can not specify the client/server scripts
+#h 		via command arguments. Instead, we rely on ${XINITRC} AND ${XSERVERRC}
+#h 		if we need to customize this beyond the default lookup.
+#h
+#h 		General code cleanup and refactoring.
+#h
+#h OPTIONS:
+#h
+#h 	-h, --help
+#h 		Print this message and exit.
+#h
+#h 	-m, --man
+#h 		View this message in a PAGER and exit.
+#h
+#h 	clientarg ...
+#h 	clientarg ...
+#h 		These options are passed to the XINITRC script.
+#h
+#h 	display
+#h 		This is the target display to start on, colon-prefixed (":0").
+#h
+#h 	serverarg ...
+#h 		These options are passed to the XSERVERRC script.
+#h
+#h DEFAULTS:
+#h 	The client script exec'ed by xinit,
+#h 	if ${XINITRC} is not set, is the first found from:
+#h 		${HOME}/.local/etc/itsdm/x11/client
+#h 		/etc/X11/xinit/xinitrc
+#h
+#h 	The server script for the client to connect to,
+#h 	if ${XSERVERRC} is not set, is the first found from:
+#h 		${HOME}/.local/etc/itsdm/x11/server
+#h 		/etc/X11/xinit/xserverrc
+#h
+#h EXIT STATUS:
+#h 	Returns the result from `xinit`.
+#h
+#h ENVIRONMENT:
+#h 	XINITRC
+#h 		Client to run, default is ${HOME}/.local/etc/itsdm/x11/client .
+#h
+#h 	XSERVERRC
+#h 		Server to run, default is ${HOME}/.local/etc/itsdm/x11/server .
+#h
+#h 	DISPLAY
+#h 		This variable gets set to the name of the display
+#h 		to which clients should connect. Note that this gets set, not read.
+#h
+#h 	XAUTHORITY
+#h 		This variable, if not already defined,
+#h 		gets set to $(XDG_CACHE_HOME})/.Xauthority.
+#h 		This is to prevent the X server, if not given the -auth argument,
+#h 		from automatically setting up insecure host-based authentication
+#h 		for the local host.
+#h 		See the Xserver(1) and Xsecurity(7) manual pages for more information
+#h 		on X client/server authentication.
+#h
+#h FILES:
+#h 	$(HOME)/.local/etc/itsdm/x11/client
+#h 		Client to run. Typically a shell script which runs many programs in the background.
+#h
+#h 	$(HOME)/.local/etc/itsdm/x11/server
+#h 		Server to run, default is X.
+#h
+#h 	/etc/X11/xinit/xinitrc
+#h 		Client to run if the user has no ${XINITRC} file.
+#h
+#h 	/etc/X11/xinit/xserverrc
+#h 		Server to run if the user has no ${XSERVERRC} file.
+#h
+#h SEE ALSO:
+#h 	startx(1), xinit(1), X(7), Xserver(1), Xorg(1), xorg.conf(5)
+#h
+#h HISTORY:
+#h 	stvstnfrd, 2021
+#h
+#h BUGS:
+#h 	https://github.com/stvstnfrd/dotfiles/issues
+#h
+#h USAGE:
+#h 	itsdmx
+#h
+#h VERSION:
+#h 	0.0
+while getopts ":hm" option; do case ${option} in
+    h) grep '^#h' "${0}" | sed 's/^#h \?//g'; exit;;
+    m) "${0}" --help | ${PAGER:-less}; exit;;
+    *) ;;
+esac; done
+
+detect_unused_display() {
+    i=0
+    while true
+    do
+        if [ -e "/tmp/.X${i}-lock" ] || [ -S "/tmp/.X11-unix/X${i}" ]
+        then
+            i=$(expr "${i}" + 1)
+        else
+            break
+        fi
+    done
+    echo ":${i}"
+    unset i
+}
+
+tear_down() {
+    enable_xauth=${1}
+    xserver_auth_file=${2}
+    shift; shift;
+    if [ -n "${enable_xauth}" ]
+    then
+        if [ -n "${*}" ]
+        then
+            # shellcheck disable=SC2086
+            xauth remove "${@}"
+        fi
+        if [ -n "${xserver_auth_file}" ]
+        then
+            rm -f "${xserver_auth_file}"
+        fi
+    fi
+    if command -v deallocvt > /dev/null 2>&1
+    then
+        deallocvt
+    fi
+}
+
+process_args() {
+    current_tty=$(tty)
+    is_client='client'
+    client_arguments=''
+    server_arguments=''
+    while [ -n "${1}" ]
+    do
+        case "${1}" in
+            --)
+                is_client=
+            ;;
+            *)
+                if [ -n "${is_client}" ]
+                then
+                    client_arguments="${client_arguments} ${1}"
+                else
+                    # display must be the FIRST server argument
+                    if [ -z "${server_arguments}" ] && \
+                            expr "${1}" : ':[0-9][0-9]*$' > /dev/null 2>&1
+                    then
+                        display="${1}"
+                    else
+                        server_arguments="${server_arguments} ${1}"
+                    fi
+                fi
+            ;;
+        esac
+        shift
+    done
+    active_client=
+    active_client_arguments=$(echo "${client_arguments}" | sed 's/^ *//')
+    active_server=
+    active_server_arguments=$(echo "${active_server_arguments}" | sed 's/^ *//')
+    default_client=/usr/bin/xterm
+    default_client_arguments=default
+    default_server=/usr/bin/X
+    default_server_arguments=''
+    environment_client="${XINITRC}"
+    environment_server="${XSERVERRC}"
+    system_client=/etc/X11/xinit/xinitrc
+    system_server=/etc/X11/xinit/xserverrc
+    user_client=${HOME}/.local/etc/itsdm/x11/client
+    user_client_legacy=${HOME}/.xinitrc
+    user_server=${HOME}/.local/etc/itsdm/x11/server
+    user_server_legacy=${HOME}/.xserverrc
+
+    for file in "${environment_client}" "${user_client}" "${user_client_legacy}" "${system_client}"
+    do
+        if [ -f "${file}" ]; then
+            active_client="${file}"
+            break
+        fi
+    done
+    for file in "${environment_server}" "${user_server}" "${user_server_legacy}" "${system_server}"
+    do
+        if [ -f "${file}" ]; then
+            active_server="${file}"
+            break
+        fi
+    done
+    if [ -z "${active_client}" ]
+    then
+        active_client=${default_client}
+        active_client_arguments=${default_client_arguments}
+    fi
+    if [ -z "${active_server}" ]
+    then
+        active_server=${default_server}
+        active_server_arguments=${default_server_arguments}
+    fi
+
+    # When starting the default_server start X on the current tty to avoid
+    # the startx session being seen as inactive:
+    # "https://bugzilla.redhat.com/show_bug.cgi?id=806491"
+    tty=${current_tty}
+    virtual_terminal_argument=''
+    if expr "$tty" : '/dev/tty[0-9][0-9]*$' > /dev/null
+    then
+        tty_number=$(echo "${tty}" | grep -oE '[0-9]+$')
+        virtual_terminal_argument="vt${tty_number} -keeptty"
+    fi
+
+    # if no vt is specified add virtual_terminal_argument (which may be empty)
+    have_virtual_terminal_argument=
+    for i in ${server_arguments}
+    do
+        if expr "${i}" : 'vt[0-9][0-9]*$' > /dev/null
+        then
+            have_virtual_terminal_argument='yes'
+        fi
+    done
+    if [ -z "${have_virtual_terminal_argument}" ]
+    then
+        server_arguments="${server_arguments} ${virtual_terminal_argument}"
+    fi
+
+    # if no display, use default
+    if [ -z "${display}" ]
+    then
+        display=$(detect_unused_display)
+    fi
+
+    printf '%s\n%s\n%s\n%s\n%s\n' "${active_client}" "${active_client_arguments:- }" "${active_server}" "${server_arguments:- }" "${display:- }"
+}
+
+enable_xauth() {
+    read -r client
+    read -r client_arguments
+    read -r server
+    read -r server_arguments
+    read -r display
+    if [ -z "${XAUTHORITY}" ]
+    then
+        XAUTHORITY=${XDG_CACHE_HOME:-${HOME}/.cache}/.Xauthority
+        export XAUTHORITY
+    fi
+
+    if hostname --version > /dev/null 2>&1; then
+        # check for GNU hostname
+        if hostname --version 2>&1 | grep -q GNU
+        then
+            hostname=$(hostname -f)
+        fi
+    fi
+    if [ -z "$hostname" ]; then
+        hostname=$(hostname)
+    fi
+
+    magic_cookie=$(/usr/bin/mcookie)
+    if [ -z "${magic_cookie}" ]
+    then
+        echo "Couldn't create magic_cookie"
+        exit 1
+    fi
+
+    # create a file with auth information for the server. ':0' is a dummy.
+    dummy=0
+    xserver_auth_file=$(mktemp --tmpdir serverauth.XXXXXXXXXX)
+    # shellcheck disable=SC2064
+    trap "rm -f '${xserver_auth_file}'" HUP INT QUIT ILL TRAP BUS TERM
+    xauth -q -f "${xserver_auth_file}" << EOF
+add :${dummy} . ${magic_cookie}
+EOF
+    server_arguments=${server_arguments}" -auth "${xserver_auth_file}
+
+    # now add the same credentials to the client authority file
+    # if '${display_name}' already exists do not overwrite it as another
+    # server may need it. Add them to the '${xserver_auth_file}' instead.
+    auth_display=${display:-:0}
+    remove_list=
+    for display_name in ${auth_display} ${hostname}${auth_display}; do
+        auth_cookie=$(
+            xauth list "${display_name}" \
+            | sed -n "s/.*${display_name}[[:space:]*].*[[:space:]*]//p"
+        ) 2>/dev/null;
+        if [ -z "${auth_cookie}" ] ; then
+            xauth -q << EOF
+add ${display_name} . ${magic_cookie}
+EOF
+            remove_list="${display_name} ${remove_list}"
+        else
+            dummy=$(expr "${dummy}" + 1)
+            xauth -q -f "${xserver_auth_file}" << EOF
+add :${dummy} . ${auth_cookie}
+EOF
+        fi
+    done
+    printf '%s\n%s\n%s\n%s\n%s\n%s\n' "${client}" "${client_arguments:- }" "${server}" "${server_arguments:- }" "${display:- }" "${remove_list:- }"
+}
+
+main() {
+    unset DBUS_SESSION_BUS_ADDRESS
+    unset SESSION_MANAGER
+    enable_xauth='true'
+    current_tty=$(tty)
+    if [ -n "${enable_xauth}" ]
+    then
+        args=$(process_args "${@}" | enable_xauth)
+    else
+        args=$(process_args "${@}")
+    fi
+    client=$(printf '%s' "${args}" | head -n 1 | tail -n 1)
+    client_arguments=$(printf '%s' "${args}" | head -n 2 | tail -n 1)
+    server=$(printf '%s' "${args}" | head -n 3 | tail -n 1)
+    server_arguments=$(printf '%s' "${args}" | head -n 4 | tail -n 1)
+    display=$(printf '%s' "${args}" | head -n 5 | tail -n 1)
+    remove_list=$(printf '%s' "${args}" | head -n 6 | tail -n 1)
+    # shellcheck disable=SC2086
+    xinit "${client}" ${client_arguments} -- "${server}" ${display} ${server_arguments}
+    retval=${?}
+    # shellcheck disable=SC2086
+    tear_down "${enable_xauth}" "${xserver_auth_file}" ${remove_list}
+    exit ${retval}
+}
+
+main "${@}"

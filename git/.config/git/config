@@ -12,8 +12,6 @@
 	d = diff
 	da = apply
 	dc = diff --cached
-	df = diff upstream/open-release/ficus.master -- 
-	dg = diff upstream/open-release/ginkgo.master -- 
 	dh = diff upstream/open-release/hawthorn.master -- 
 	dm = diff master
 	dom = diff origin/master
@@ -21,17 +19,13 @@
 	e = format-patch
 	ea = am
 	es = send-email
-	f = fetch
+	f = "!f(){ if [ ${#} -eq 0 ]; then  git fetch --all --prune; else git fetch ${@}; fi }; f"
 	fo = fetch origin
 	fop = fetch origin --prune
 	fu = fetch upstream
 	fup = fetch upstream --prune
 	g = grep
-	h = hub
-	hh = hub help
-	hi = hub issue
-	his = hub issues
-	i = !test ! -d "${GIT_DIR:-./.git}" && git init && git commit --allow-empty -m 'Initialize empty directory'
+	i = !test -d "${GIT_DIR:-./.git}" || git init && git commit --allow-empty -m 'chore: initialize empty repository'
 	k = checkout
 	k- = checkout --
 	kb = checkout -b
@@ -44,18 +38,17 @@
 	last = !git log -1 | cat
 	m = merge
 	ma = merge --abort
-	mn = merge --no-ff
-	mnl = merge --no-ff --log=30000
-	mom = merge origin/master
+	mnl = merge --no-ff --log 3000
+	mpr = merge-pr
+	mom = merge-pr -r origin
 	ms = merge --squash
-	mum = merge upstream/master
+	mum = merge-pr -r upstream
 	o = clone
 	p = push
-	pd = push downstream
-	pdu = push -u downstream
 	pdm = push downstream master
-	po = push origin
+	po = "!f(){ if [ ${#} -eq 0 ]; then  git push origin --set-upstream $(git branch --show-current); else git push origin ${@}; fi }; f"
 	pom = push origin master
+	pu = "!f(){ if [ ${#} -eq 0 ]; then  git push upstream --set-upstream; else git push upstream ${@}; fi }; f"
 	q = blame
 	r = rebase
 	ra = rebase --abort
@@ -79,23 +72,28 @@
 	v = revert
 	w = show
 	x = reset
-	xh = reset --hard
+	xH = reset --hard
+	xh = reset HEAD^
 	y = cherry-pick
 	ya = cherry-pick --abort
 	yn = cherry-pick --no-commit
 	yx = cherry-pick -x
 	z = remote -vvvv
 	za = remote add
+	zau = remote add upstream
 	zn = remote rename
 	zr = remote remove
 
 [diff]
 	algorithm = patience
 
+[rebase]
+	autostash = true
+
 [core]
 	editor = vim
 	excludesfile = ~/.config/git/ignore
-	pager = diff-so-fancy | less --tabs=4 -rFX
+	pager = diff-so-fancy | less --tabs=4 -RFX 2>/dev/null
 	sshCommand = "ssh $(test -e ~/.config/ssh/config && echo '-F' ~/.config/ssh/config || true)"
 
 [format]

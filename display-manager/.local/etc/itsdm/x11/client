@@ -1,0 +1,97 @@
+#!/bin/sh
+#h NAME:
+#h 	x11/client
+#h
+#h SYNOPSIS:
+#h 	x11/client [arguments ...]
+#h
+#h DESCRIPTION:
+#h 	An XDG-compliant ~/.xinitrc replacement.
+#h
+#h 	See `man Xsession` for a complete overview.
+#h
+#h EXAMPLES:
+#h 	x11/client
+#h 		Start an X client session with default settings
+#h
+#h 	x11/client i3
+#h 		Start an X client session with the i3 window manager.
+#h
+#h 	x11/client xfce4-session
+#h 		Start an X client session with the XFCE desktop session.
+#h
+#h OVERVIEW:
+#h 	Note that in the Debian system, what many people traditionally put in the
+#h 	.xinitrc file should go in .xsession instead; this permits the same X
+#h 	environment to be presented whether startx, xdm, or xinit is used to start the
+#h 	X session. All discussion of the .xinitrc file in the xinit(1) manual page
+#h 	applies equally well to .xsession. Keep in mind that .xinitrc is used only by
+#h 	xinit(1) and completely ignored by xdm(1).
+#h
+#h 	As such, this script should be a thin wrapper around .xsession.
+#h
+#h OPTIONS:
+#h 	arguments
+#h 		These arguments are passed along to itsdm/x11/session.
+#h
+#h 	-h, --help
+#h 		Print this message and exit.
+#h
+#h 	-m, --man
+#h 		View this message in a PAGER and exit.
+#h
+#h EXIT STATUS:
+#h 	The same as itsdm/x11/session, as this is just a wrapper.
+#h
+#h ENVIRONMENT:
+#h 	HOME
+#h
+#h FILES:
+#h ${XINITRC}
+#h 	The preferred location for this script.
+#h 		This file must be executable.
+#h
+#h 	${HOME}/.config/x11/client
+#h 		The default location for this script.
+#h 		This file must be executable.
+#h
+#h 	${HOME}/.xinitrc
+#h 		The default user location for this script.
+#h 		This file must be executable.
+#h
+#h 	/etc/X11/xinit/xinitrc
+#h 		The default system location for this script
+#h 		This file must be executable.
+#h
+#h 	${HOME}/.local/etc/itsdm/x11/session
+#h 		The location for the Xsession script,
+#h 		for which this script is a wrapper.
+#h 		This file should be executable.
+#h 		This is hard-coded.
+#h
+#h SEE ALSO:
+#h 	xinit(1), Xsession(5)
+#h
+#h HISTORY:
+#h 	stvstnfrd, 2021
+#h
+#h BUGS:
+#h 	https://github.com/stvstnfrd/dotfiles/issues
+#h
+#h USAGE:
+#h 	This should be passed as the first argument to `xinit`
+#h 	(either manually or via `itsdmx`)
+#h 	or set via the ${XINITRC} variable.
+#h
+#h VERSION:
+#h 	0.0
+while getopts ":hm" option; do case ${option} in
+    h) grep '^#h' "${0}" | sed 's/^#h \?//g'; exit;;
+    m) "${0}" --help | ${PAGER:-less}; exit;;
+    *) ;;
+esac; done
+
+xrandr --auto
+export LANG=
+# shellcheck source=display-manager/.local/etc/itsdm/x11/session
+. "${HOME}/.local/etc/itsdm/x11/session"

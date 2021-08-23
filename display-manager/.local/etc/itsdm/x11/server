@@ -1,0 +1,70 @@
+#!/bin/sh
+#h NAME:
+#h 	itsdm/x11/server
+#h
+#h SYNOPSIS:
+#h 	itsdm/x11/server [arguments ...]
+#h
+#h DESCRIPTION:
+#h 	An XDG-compliant .xserverrc replacement.
+#h
+#h 	See `man Xserver` for a complete overview.
+#h
+#h EXAMPLES:
+#h 	itsdm/x11/server
+#h 		Start an X server, with default settings
+#h
+#h 	itsdm/x11/server -listen tcp
+#h 		Start an X server, listening on TCP
+#h
+#h OVERVIEW:
+#h 	This is a simple wrapper around /usr/bin/X,
+#h 	to provide sensible overrides.
+#h
+#h OPTIONS:
+#h 	arguments ...
+#h 		These options are passed to the executable script.
+#h
+#h 	-h, --help
+#h 		Print this message and exit.
+#h
+#h 	-m, --man
+#h 		View this message in a PAGER and exit.
+#h
+#h DEFAULTS:
+#h 	-nolisten tcp
+#h 		Run X without TCP listening
+#h
+#h EXIT STATUS:
+#h 	The same as X, as this is just a wrapper.
+#h
+#h ENVIRONMENT:
+#h 	XSERVERRC
+#h 		Ideally, the location of this file, default is ~/.local/etc/itsdm/x11/server.
+#h
+#h FILES:
+#h 	/etc/X11/xinit/xserverrc
+#h 		The default system version of this file.
+#h
+#h SEE ALSO:
+#h 	Xserver(1)
+#h
+#h HISTORY:
+#h 	stvstnfrd, 2021
+#h
+#h BUGS:
+#h 	https://github.com/stvstnfrd/dotfiles/issues
+#h
+#h USAGE:
+#h 	This should usually be specified by itsdmx/xinit:
+#h 		xinit -- itsdm/x11/server
+#h
+#h VERSION:
+#h 	0.0
+while getopts ":hm" option; do case ${option} in
+    h) grep '^#h' "${0}" | sed 's/^#h \?//g'; exit;;
+    m) "${0}" --help | ${PAGER:-less}; exit;;
+    *) ;;
+esac; done
+
+exec /usr/bin/X -nolisten tcp "${@}"

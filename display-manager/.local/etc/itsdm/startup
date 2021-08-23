@@ -1,0 +1,86 @@
+#!/bin/sh
+#h NAME:
+#h 	display
+#h
+#h SYNOPSIS:
+#h 	. ${XDG_CONFIG_HOME}/sh/display
+#h
+#h DESCRIPTION:
+#h 	This script can be sourced to intergate your display manager with
+#h 	your startup ${SHELL}; `itsdm` is supported here.
+#h
+#h 	We take care to not run the display manager when we shouldn't, eg:
+#h 		- if we're _NOT_ running on one of the first 3 virtual terminals
+#h 		- if X is already running
+#h 		- if the display manager isn't installed
+#h 		- if the display manager is already running
+#h
+#h OVERVIEW:
+#h 	This file should be sourced at the very end of the configuration
+#h 	file for your interactive shell, eg: ~/.profile, ~/.bashrc, ~/.zshrc.
+#h
+#h EXIT STATUS:
+#h 	0 if display manager is not run
+#h
+#h 	If display manager _is_ run, we return its status,
+#h 	as we're just exec'ing it here.
+#h
+#h ENVIRONMENT:
+#h 	${ITSDM_PID}
+#h 		The process ID of the active itsdm session.
+#h 		Used to determine if its running or not.
+#h
+#h 	${DISPLAY}
+#h 		The active display.
+#h 		Used to determine if a display is running.
+#h
+#h 	${SSH_TTY}
+#h 		The active SSH TTY.
+#h 		Used to determine if running over SSH.
+#h
+#h 	${XDG_VTNR}
+#h 		The active virtual terminal.
+#h 		Used to determine if/which VT we're running in.
+#h
+#h 	${PAGER}
+#h 		The active pager utility.
+#h 		Used to view help text as a `man` page.
+#h
+#h SEE ALSO:
+#h 	itsdm --help
+#h
+#h HISTORY:
+#h 	stvstnfrd, 2021
+#h
+#h BUGS:
+#h 	https://github.com/stvstnfrd/dotfiles/issues
+#h
+#h USAGE:
+#h 	Add the following to the very end of your ~/.bashrc:
+#h
+#h 		if [ -e "${HOME}/.config/sh/display" ]; then
+#h 			. "${HOME}/.config/sh/display"
+#h 		fi
+#h
+#h VERSION:
+#h 	0.0
+while getopts ":hm" option; do case ${option} in
+    h) grep '^#h' "${0}" | sed 's/^#h \?//g'; exit;;
+    m) "${0}" --help | ${PAGER:-less}; exit;;
+    *) ;;
+esac; done
+
+# To avoid potential situations where itsdm(1) crashes on every TTY, only run if:
+# we're on one of the first 3 terminals
+if [ "${XDG_VTNR:-100}" -le 3 ]; then
+	# X11 hasn't started
+	if [ -z "${DISPLAY}${SSH_TTY}" ]; then
+		# the script is installed
+		if command -v itsdm >/dev/null 2>&1; then
+			# and not already running
+			if [ -z "${ITSDM_PID}" ]; then
+				exec itsdm
+			fi
+		fi
+	fi
+fi

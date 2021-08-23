@@ -131,7 +131,7 @@ function! MergeCommitMessages()
     nmap S GoSigned-off-by: <C-R>=printf("%s <%s>", g:git_ci_msg_user, g:git_ci_msg_email)<CR><ESC>
     nmap CO GoCo-authored-by: <C-R>=printf("%s <%s>", g:git_ci_msg_user, g:git_ci_msg_email)<CR><ESC>
     nmap R GoReviewed-by: <C-R>=printf("%s <%s>", g:git_ci_msg_user, g:git_ci_msg_email)<CR><ESC>
-    nmap PR gg0CMerge PR #<ESC>JJo<CR>* Commits:<ESC>gg$x2F ct 
+    nmap PR gg0Cmerge: PR #<ESC>JJo<CR>commits<CR>=======<ESC>gg$x2F ct 
 endf
 autocmd BufNewFile,BufRead COMMIT_EDITMSG,*.diff,*.patch,*.patches.txt,*.merge call MergeCommitMessages()
 autocmd BufWinEnter COMMIT_EDITMSG,*.diff,*.patch,*.patches.txt call MergeCommitMessages()
@@ -159,3 +159,8 @@ if filereadable(expand("$XDG_CONFIG_HOME/vim/bundle/pathogen/autoload/pathogen.v
 endif
 
 autocmd BufNewFile,BufRead *.html set syntax=mako
+augroup templates
+    au!
+    " read in templates files
+    autocmd BufNewFile *.* silent! execute '0r $XDG_CONFIG_HOME/vim/templates/skeleton.'.expand("<afile>:e")
+augroup END

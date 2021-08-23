@@ -5,6 +5,8 @@
 	cm = commit-message
 	cm-build = commit-message build:
 	cm-build-breaking = commit-message 'build!:'
+	cm-build-ci = commit-message build(ci):
+	cm-build-renovate = commit-message build(renovate):
 	cm-chore = commit-message chore:
 	cm-chore-breaking = commit-message 'chore!:'
 	cm-docs = commit-message docs:
@@ -37,4 +39,5 @@
 	commit-fixup = "!f() { if [ $# -eq 0 ]; then git commit --fixup $(git rev-parse HEAD); else git commit --fixup \"$@\"; fi }; f"
 	commit-squash = "!f() { if [ $# -eq 0 ]; then git commit --squash $(git rev-parse HEAD); else git commit --fixup \"$@\"; fi }; f"
 	rebase-squash = rebase --autosquash --interactive
+	rebase-no-autostash = rebase --no-autostash
 # vim: filetype=gitconfig
