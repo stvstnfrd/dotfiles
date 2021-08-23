@@ -1,4 +1,5 @@
 #!/bin/sh
+# test [ ! -e /etc/profile.d/vte-2.91.sh ] || . /etc/profile.d/vte-2.91.sh
 if [ -e "${HOME}/.local/etc/itsdm/startup" ]; then
 	# shellcheck source=display-manager/.local/etc/itsdm/startup
 	. "${HOME}/.local/etc/itsdm/startup"
