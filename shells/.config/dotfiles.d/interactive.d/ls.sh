@@ -1,9 +1,9 @@
 #!/bin/sh
 if command -v exa >/dev/null 2>&1; then
-    alias l='exa --group-directories-first --git -a --git-ignore --ignore-glob .git'
-    alias ll='exa --group-directories-first -l --time-style=long-iso --tree --level=1 --git -a --git-ignore --ignore-glob .git'
-    alias lll='exa --group-directories-first -l --time-style=long-iso --tree --level=2 --git -a --git-ignore --ignore-glob .git'
-    alias llll='exa --group-directories-first -l --time-style=long-iso --tree --level=3 --git -a --git-ignore --ignore-glob .git'
+    alias l='exa --group-directories-first --git -a --git-ignore --ignore-glob .git --color=always | less -rF'
+    alias ll='exa --group-directories-first -l --time-style=long-iso --tree --level=1 --git -a --git-ignore --ignore-glob .git --color=always | less -rF'
+    alias lll='exa --group-directories-first -l --time-style=long-iso --tree --level=2 --git -a --git-ignore --ignore-glob .git --color=always | less -rF'
+    alias llll='exa --group-directories-first -l --time-style=long-iso --tree --level=3 --git -a --git-ignore --ignore-glob .git --color=always | less -rF'
 else
     alias l='ls -A'
     alias ll='ls -Alh --group-directories-first --classify --time-style=long-iso'
