@@ -1,0 +1,29 @@
+#!/bin/sh
+git pr-list \
+    edx/ccx-keys \
+    edx/.github \
+    edx/api-doc-tools \
+    edx/conference-website \
+    edx/docs.edx.org \
+    edx/edx-developer-docs \
+    edx/edx-documentation \
+    edx/edx-sphinx-theme \
+    edx/mdrst \
+    edx/pr_watcher_configuration \
+    edx/repo-tools-data \
+    edx/repo-tools-data-schema \
+    edx/webhook-test-repo \
+    openedx/build-test-release-wg \
+    openedx/community-wg \
+    openedx/metrics-dashboard \
+    openedx/onboarding-course-introduction \
+    edx/openedx-census \
+    edx/openedx-conference-pages \
+    openedx/openedx-conference-website \
+    openedx/openedx-i18n \
+    openedx/openedx-slack-invite \
+    edx/openedx-webhooks \
+    edx/openedxstats \
+    openedx/oxct \
+    openedx/pr_watcher_notifier \
+;

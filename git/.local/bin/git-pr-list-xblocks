@@ -1,0 +1,23 @@
+#!/bin/sh
+git pr-list \
+    edx/RecommenderXBlock \
+    edx/xblock-lti-consumer \
+    edx/acclaimbadge-xblock \
+    edx/acid-block \
+    edx/AnimationXBlock \
+    edx/AudioXBlock \
+    edx/ConceptXBlock \
+    edx/crowdsourcehinter \
+    edx/DoneXBlock \
+    edx/RateXBlock \
+    edx/schoolyourself-xblock \
+    edx/staff_graded-xblock \
+    edx/ubcpi \
+    edx/xblock-free-text-response \
+    edx/xblock-image-modal \
+    edx/xblock-in-video-quiz \
+    edx/xblock-qualtrics-survey \
+    edx/xblock-sql-grader \
+    edx/xblock-submit-and-compare \
+    edx-solutions/xblock-drag-and-drop-v2 \
+;

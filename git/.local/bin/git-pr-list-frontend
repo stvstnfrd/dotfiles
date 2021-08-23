@@ -1,0 +1,22 @@
+#!/bin/sh
+git pr-list \
+    edx/edx-bootstrap \
+    edx/edx-ui-toolkit \
+    edx/frontend-app-account \
+    edx/frontend-app-profile \
+    edx/frontend-component-footer \
+    edx/frontend-component-footer-edx \
+    edx/frontend-component-header \
+    edx/frontend-component-header-edx \
+    edx/frontend-component-site-header \
+    edx/frontend-platform \
+    edx/frontend-template-application \
+    edx/stylelint-config-edx \
+    edx/sample-themes \
+    edx/eslint-config \
+    edx/eslint-config-edx \
+    edx/frontend-analytics \
+    edx/frontend-i18n \
+    edx/frontend-logging \
+    edx/html-webpack-new-relic-plugin \
+;
