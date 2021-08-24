@@ -1,0 +1,16 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure('2') do |config|
+  config.vm.box = 'ubuntu/focal64'
+  config.vm.synced_folder './bin', '/home/vagrant/bin'
+  config.vm.provision 'shell' do |s|
+    s.path = 'bin/ansible-bootstrap.sh'
+    s.privileged = true
+    s.env = {"OPENEDX_RELEASE" => "open-release/koa.master"}
+  end
+  config.vm.provision 'shell' do |s|
+    s.path = 'bin/native.sh'
+    s.privileged = false
+    s.env = {"OPENEDX_RELEASE" => "open-release/koa.master"}
+  end
+end
