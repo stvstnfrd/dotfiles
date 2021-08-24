@@ -1,0 +1,72 @@
+[submodule "src/edx/src/configuration"]
+	path = src/edx/src/configuration
+	url = git@github.com:stvstnfrd/configuration.git
+[submodule "src/edx/src/course-discovery"]
+	path = src/edx/src/course-discovery
+	url = git@github.com:edx/course-discovery.git
+[submodule "src/edx/src/credentials"]
+	path = src/edx/src/credentials
+	url = git@github.com:edx/credentials.git
+[submodule "src/edx/src/cs_comments_service"]
+	path = src/edx/src/cs_comments_service
+	url = git@github.com:stvstnfrd/cs_comments_service.git
+[submodule "src/edx/src/devstack"]
+	path = src/edx/src/devstack
+	url = git@github.com:edx/devstack.git
+[submodule "src/edx/src/edx-notes-api"]
+	path = src/edx/src/edx-notes-api
+	url = git@github.com:edx/edx-notes-api.git
+[submodule "src/edx/src/edx-platform"]
+	path = src/edx/src/edx-platform
+	url = git@github.com:stvstnfrd/edx-platform.git
+[submodule "src/edx/src/edx-proctoring"]
+	path = src/edx/src/edx-proctoring
+	url = git@github.com:edx/edx-proctoring.git
+[submodule "src/edx/src/edx-themes"]
+	path = src/edx/src/edx-themes
+	url = git@github.com:edx/edx-themes.git
+[submodule "src/edx/src/frontend-app-course-authoring"]
+	path = src/edx/src/frontend-app-course-authoring
+	url = git@github.com:stvstnfrd/frontend-app-course-authoring.git
+[submodule "src/edx/src/frontend-app-gradebook"]
+	path = src/edx/src/frontend-app-gradebook
+	url = git@github.com:edx/frontend-app-gradebook.git
+[submodule "src/edx/src/frontend-app-learning"]
+	path = src/edx/src/frontend-app-learning
+	url = git@github.com:stvstnfrd/frontend-app-learning.git
+[submodule "src/edx/src/frontend-app-program-console"]
+	path = src/edx/src/frontend-app-program-console
+	url = git@github.com:edx/frontend-app-program-console.git
+[submodule "src/edx/src/frontend-app-publisher"]
+	path = src/edx/src/frontend-app-publisher
+	url = git@github.com:edx/frontend-app-publisher.git
+[submodule "src/edx/src/frontend-build"]
+	path = src/edx/src/frontend-build
+	url = git@github.com:edx/frontend-build.git
+[submodule "src/edx/src/frontend-platform"]
+	path = src/edx/src/frontend-platform
+	url = git@github.com:stvstnfrd/frontend-platform.git
+[submodule "src/edx/src/frontend-template-application"]
+	path = src/edx/src/frontend-template-application
+	url = git@github.com:stvstnfrd/frontend-template-application.git
+[submodule "src/edx/src/xblock-free-text-response"]
+	path = src/edx/src/xblock-free-text-response
+	url = git@github.com:stvstnfrd/xblock-free-text-response.git
+[submodule "src/edx/src/xblock-image-modal"]
+	path = src/edx/src/xblock-image-modal
+	url = git@github.com:edx/xblock-image-modal.git
+[submodule "src/edx/src/xblock-in-video-quiz"]
+	path = src/edx/src/xblock-in-video-quiz
+	url = git@github.com:edx/xblock-in-video-quiz.git
+[submodule "src/edx/src/xblock-qualtrics-survey"]
+	path = src/edx/src/xblock-qualtrics-survey
+	url = git@github.com:edx/xblock-qualtrics-survey.git
+[submodule "src/edx/src/xblock-sdk"]
+	path = src/edx/src/xblock-sdk
+	url = git@github.com:stvstnfrd/xblock-sdk.git
+[submodule "src/edx/src/xblock-sql-grader"]
+	path = src/edx/src/xblock-sql-grader
+	url = git@github.com:stvstnfrd/xblock-sql-grader.git
+[submodule "src/edx/src/xblock-submit-and-compare"]
+	path = src/edx/src/xblock-submit-and-compare
+	url = git@github.com:stvstnfrd/xblock-submit-and-compare.git
