@@ -21,8 +21,8 @@ endif
 
 .PHONY: system.apt
 system.apt:  ## Install apt packages
-ifeq ($(APT_UPDATE),1)
 	$(SUDO) apt-get update --yes
+ifeq ($(APT_UPDATE),1)
 	$(SUDO) apt-get upgrade --yes
 	$(SUDO) apt-get dist-upgrade --yes
 endif
