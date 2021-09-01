@@ -1,0 +1,39 @@
+#!/bin/sh
+#h NAME: ${NAME}
+#h SYNOPSIS:
+#h DESCRIPTION:
+#h EXAMPLES:
+#h OVERVIEW:
+#h OPTIONS:
+#h DEFAULTS:
+#h EXIT STATUS:
+#h ENVIRONMENT:
+#h FILES:
+#h SEE ALSO:
+#h HISTORY:
+#h BUGS:
+#h USAGE:
+while getopts ":h" option; do case ${option} in h) grep '^#h' "${0}" | sed 's/^#h \?//g'; exit;; *) ;; esac; done
+
+NAME=$(basename "${1}")
+NAME=${NAME:-script}
+DIR=${HOME}/bin
+SCRIPT_PATH=${DIR}/${NAME}
+SKELETON=${XDG_CONFIG_HOME}/vim/templates/skeletons.sh
+if [ ! -e "${SCRIPT_PATH}" ]
+then
+	if [ -e "${SKELETON}" ]
+	then
+		cp "${SKELETON}" "${SCRIPT_PATH}"
+	else
+		echo '#!/bin/sh' > "${SCRIPT_PATH}"
+		grep '^#h' "${0}" \
+		| sed "s/^#h NAME:.*/#h NAME: ${NAME}/" \
+		>> "${SCRIPT_PATH}"
+		echo "while getopts \":h\" option; do case \${option} in h) grep '^#h' \"\${0}\" | sed 's/^#h \?//g'; exit;; *) ;; esac; done" \
+		>> "${SCRIPT_PATH}"
+	fi
+fi
+chmod +x "${SCRIPT_PATH}"
+${EDITOR:-vi} "${SCRIPT_PATH}"
+#m man grep '^#h' "${0}" | sed 's/^#h \?//g'

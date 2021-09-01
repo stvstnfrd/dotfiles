@@ -12,7 +12,7 @@ backup:  ## Backup common configuration files
 
 .PHONY: install
 install:  ## Stow/symlinked packages into your ${HOME} directory
-	@for package in $(PACKAGES); do \
+	for package in $(PACKAGES); do \
 		filename=$$(echo $$package | sed 's/\/$$//; s/^.*\///'); \
 		$(STOW) --restow $$filename || exit 1; \
 	done
@@ -26,7 +26,7 @@ install.update-requirements:  # Update the list of stowed packages to match dire
 uninstall:  ## Remove symlinked packages from your ${HOME} and ${DFC} directories
 	@for package in $(PACKAGES); do \
 		filename=$$(echo $$package | sed 's/\/$$//; s/^.*\///'); \
-		$(STOW) --delete $$filename; \
+		$(STOW) --delete $$filename 2>/dev/null; \
 	done
 
 .PHONY: update

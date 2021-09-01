@@ -71,4 +71,6 @@ ssh () {
 wget() {
     command wget --hsts-file "${XDG_CACHE_HOME}/wget-hsts" "${@}"
 }
+# firejail --name=xscreensaver --private=${HOME}/.config/xscreensaver --noprofile $(readlink $(which xscreensaver))
+# firejail --name=xscreensaver-demo --private=${HOME}/.config/xscreensaver --noprofile $(readlink $(which xscreensaver-demo))
 

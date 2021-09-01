@@ -59,9 +59,14 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+# bindsym XF86Display exec --no-startup-id xrandr --output eDP-1 --auto --output HDMI-1 --auto --rotate right --right-of eDP-1
 bindsym XF86Display exec --no-startup-id bash "${HOME}/.config/i3/display.sh"
 bindsym XF86Tools exec --no-startup-id firefox -new-tab 'about:config'
 bindsym XF86Favorites exec --no-startup-id firefox -new-tab 'about:home'
+bindcode 1 exec --no-startup-id dmenu_run
+# FN+b break
+# FN+k scrolllock
+# FN+p pause
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
