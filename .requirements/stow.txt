@@ -1,7 +1,6 @@
 autoenv
 display-manager
 git
-git-hub
 javascript
 keyboard
 neofetch

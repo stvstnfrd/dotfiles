@@ -46,8 +46,8 @@
 [submodule "javascript/.config/nvm"]
 	path = javascript/.config/nvm
 	url = https://github.com/nvm-sh/nvm.git
-[submodule "git-hub/src/git-hub"]
-	path = git-hub/src/git-hub
+[submodule "git/src/git-hub"]
+	path = git/src/git-hub
 	url = https://github.com/ingydotnet/git-hub.git
 [submodule "vim-javascript/.config/vim/bundle/javascript"]
 	path = vim-plugins/.config/vim/bundle/javascript
