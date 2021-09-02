@@ -2,7 +2,6 @@ containers
 display-manager
 javascript
 keyboard
-neofetch
 packages
 python
 shells

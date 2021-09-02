@@ -37,8 +37,8 @@
 [submodule "shells/src/z"]
 	path = shells/src/z
 	url = https://github.com/rupa/z.git
-[submodule "neofetch/src/neofetch"]
-	path = neofetch/src/neofetch
+[submodule "shells/src/neofetch"]
+	path = shells/src/neofetch
 	url = https://github.com/dylanaraps/neofetch.git
 [submodule "shells/src/autoenv"]
 	path = shells/src/autoenv
