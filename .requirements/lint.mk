@@ -3,19 +3,18 @@ FIND_FILES=( \
 	find . -type f \
 		! -path './.git/*' \
 		! -path './.requirements/preseed/*' \
-		! -path './mozilla/*' \
-		! -path './autoenv/src/*' \
-		! -path './cd/src/*' \
-		! -path './diff-so-fancy/.config/diff-so-fancy/test/*' \
-		! -path './git/.config/diff-so-fancy/test/*' \
-		! -path './git/.local/bin/bash+*' \
-		! -path './git/.local/bin/json*' \
-		! -path './git/.local/bin/git-hub*' \
-		! -path './git/src/*' \
-		! -path './javascript/.config/nvm/*' \
 		! -path './completion/*' \
 		! -path '*/completion.d/*' \
-		! -path '*/shells/src/z/*' \
+		! -path './languages/.config/nvm/*' \
+		! -path './mozilla/*' \
+		! -path './shells/src/z/*' \
+		! -path './shells/src/autoenv/*' \
+		! -path './shells/.config/dotfiles.d/interactive.d/fzf.*' \
+		! -path './version-control/.config/diff-so-fancy/test/*' \
+		! -path './version-control/.local/bin/bash+*' \
+		! -path './version-control/.local/bin/json*' \
+		! -path './version-control/.local/bin/git-hub*' \
+		! -path './version-control/src/*' \
 		-print0 \
 	| sed --null-data 's/^\.\///' \
 )
