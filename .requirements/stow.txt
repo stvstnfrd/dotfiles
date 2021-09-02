@@ -1,3 +1,4 @@
+containers
 display-manager
 git
 javascript
@@ -7,6 +8,5 @@ nix
 python
 screen
 shells
-vagrant
 vim
 vim-plugins
