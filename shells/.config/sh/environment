@@ -44,6 +44,9 @@ if [ -e "${_preload}" ]; then
     export LD_PRELOAD=${_preload}:${LD_PRELOAD}
 fi
 
+# MacOS-only
+export __CF_USER_TEXT_ENCODING='0x0:0x0'
+
 # This path is sourced by interactive POSIX shells
 export ENV="${XDG_CONFIG_HOME}/sh/interactive"
 export BASH_ENV="${XDG_CONFIG_HOME}/bash/environment"
