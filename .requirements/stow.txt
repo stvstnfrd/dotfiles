@@ -9,3 +9,4 @@ python
 shells
 terminals
 text-editor
+window-manager
