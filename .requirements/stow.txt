@@ -8,5 +8,4 @@ packages
 python
 shells
 terminals
-vim
-vim-plugins
+text-editor
