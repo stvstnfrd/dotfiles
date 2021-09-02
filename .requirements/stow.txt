@@ -1,9 +1,8 @@
 containers
 display-manager
-javascript
 keyboard
+languages
 packages
-python
 shells
 terminals
 text-editor

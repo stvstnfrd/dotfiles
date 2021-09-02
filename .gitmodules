@@ -43,8 +43,8 @@
 [submodule "shells/src/autoenv"]
 	path = shells/src/autoenv
 	url = https://github.com/inishchith/autoenv.git
-[submodule "javascript/.config/nvm"]
-	path = javascript/.config/nvm
+[submodule "languages/.config/nvm"]
+	path = languages/.config/nvm
 	url = https://github.com/nvm-sh/nvm.git
 [submodule "version-control/src/git-hub"]
 	path = version-control/src/git-hub
