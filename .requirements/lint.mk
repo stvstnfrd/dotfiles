@@ -2,15 +2,20 @@
 FIND_FILES=( \
 	find . -type f \
 		! -path './.git/*' \
+		! -path './.requirements/preseed/*' \
 		! -path './mozilla/*' \
 		! -path './autoenv/src/*' \
 		! -path './cd/src/*' \
 		! -path './diff-so-fancy/.config/diff-so-fancy/test/*' \
-		! -path './git-hub/src/*' \
-		! -path './git-hub/.local/*' \
-		! -path './nvm/.config/*' \
+		! -path './git/.config/diff-so-fancy/test/*' \
+		! -path './git/.local/bin/bash+*' \
+		! -path './git/.local/bin/json*' \
+		! -path './git/.local/bin/git-hub*' \
+		! -path './git/src/*' \
+		! -path './javascript/.config/nvm/*' \
 		! -path './completion/*' \
 		! -path '*/completion.d/*' \
+		! -path '*/shells/src/z/*' \
 		-print0 \
 	| sed --null-data 's/^\.\///' \
 )
