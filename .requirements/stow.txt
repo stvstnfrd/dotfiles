@@ -6,7 +6,7 @@ keyboard
 neofetch
 nix
 python
-screen
 shells
+terminals
 vim
 vim-plugins
