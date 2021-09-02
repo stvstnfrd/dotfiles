@@ -7,9 +7,9 @@ FIND_FILES=( \
 		! -path '*/completion.d/*' \
 		! -path './languages/.config/nvm/*' \
 		! -path './mozilla/*' \
-		! -path './shells/src/z/*' \
-		! -path './shells/src/autoenv/*' \
-		! -path './shells/.config/dotfiles.d/interactive.d/fzf.*' \
+		! -path './shell/src/z/*' \
+		! -path './shell/src/autoenv/*' \
+		! -path './shell/.config/dotfiles.d/interactive.d/fzf.*' \
 		! -path './version-control/.config/diff-so-fancy/test/*' \
 		! -path './version-control/.local/bin/bash+*' \
 		! -path './version-control/.local/bin/json*' \

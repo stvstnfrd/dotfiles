@@ -38,7 +38,7 @@ update:  ## Update the core code and all submodules
 
 .PHONY: install.user-dirs
 install.user-dirs:  ## Create untracked user directories
-	. shells/.config/sh/xdg \
+	. shell/.config/sh/xdg \
 	&& for path in $(_install_xdg_paths); do \
 		eval 'test -e $$'$${path} || eval 'mkdir -p $$'$${path}; \
 	done \

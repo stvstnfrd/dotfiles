@@ -3,7 +3,7 @@ display-manager
 keyboard
 languages
 packages
-shells
+shell
 terminal
 text-editor
 version-control

@@ -1,5 +1,5 @@
 #!/bin/bash
 if [ -e "../sh/login" ]; then
-    # shellcheck source=shells/.config/sh/login
+    # shellcheck source=shell/.config/sh/login
     . "../sh/login"
 fi

@@ -5,7 +5,7 @@
 # Other get nothing
 umask 0037
 # Then a few more basic paths
-# shellcheck source=shells/.config/sh/xdg
+# shellcheck source=shell/.config/sh/xdg
 . "${HOME}/.config/sh/xdg"
 export DFC="${XDG_CONFIG_HOME}/dotfiles.d"
 

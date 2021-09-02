@@ -1,15 +1,15 @@
 #!/bin/bash
 if [ -s "${HOME}/.profile" ]; then
-    # shellcheck source=shells/.profile
+    # shellcheck source=shell/.profile
     ITSDM_PID=dummy . "${HOME}/.profile"
 fi
 if [ -s "${HOME}/.config/bash/environment" ]; then
-    # shellcheck source=shells/.config/bash/environment
+    # shellcheck source=shell/.config/bash/environment
     . "${HOME}/.config/bash/environment"
 fi
 if [ -n "${PS1}" ]; then
     if [ -s "${HOME}/.config/bash/interactive" ]; then
-        # shellcheck source=shells/.config/bash/interactive
+        # shellcheck source=shell/.config/bash/interactive
         . "${HOME}/.config/bash/interactive"
     fi
 fi

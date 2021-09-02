@@ -34,14 +34,14 @@
 [submodule "text-editor/.config/vim/bundle/orgmode"]
 	path = text-editor/.config/vim/bundle/orgmode
 	url = https://github.com/jceb/vim-orgmode.git
-[submodule "shells/src/z"]
-	path = shells/src/z
+[submodule "shell/src/z"]
+	path = shell/src/z
 	url = https://github.com/rupa/z.git
-[submodule "shells/src/neofetch"]
-	path = shells/src/neofetch
+[submodule "shell/src/neofetch"]
+	path = shell/src/neofetch
 	url = https://github.com/dylanaraps/neofetch.git
-[submodule "shells/src/autoenv"]
-	path = shells/src/autoenv
+[submodule "shell/src/autoenv"]
+	path = shell/src/autoenv
 	url = https://github.com/inishchith/autoenv.git
 [submodule "languages/.config/nvm"]
 	path = languages/.config/nvm

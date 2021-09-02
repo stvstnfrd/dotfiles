@@ -1,11 +1,11 @@
 #!/bin/bash
 if [ -s "${HOME}/.config/sh/interactive" ]; then
-    # shellcheck source=shells/.config/sh/interactive
+    # shellcheck source=shell/.config/sh/interactive
     . "${HOME}/.config/sh/interactive"
 fi
 export HISTFILE="${XDG_DATA_HOME}/bash/history"
 if [ -s "${HOME}/.config/bash/options" ]; then
-    # shellcheck source=shells/.config/bash/options
+    # shellcheck source=shell/.config/bash/options
     . "${HOME}/.config/bash/options"
 fi
 
