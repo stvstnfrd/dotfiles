@@ -1,4 +1,3 @@
-autoenv
 display-manager
 git
 javascript
