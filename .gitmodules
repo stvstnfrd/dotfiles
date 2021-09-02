@@ -1,5 +1,5 @@
-[submodule "git/.config/diff-so-fancy"]
-	path = git/.config/diff-so-fancy
+[submodule "version-control/.config/diff-so-fancy"]
+	path = version-control/.config/diff-so-fancy
 	url = https://github.com/so-fancy/diff-so-fancy.git
 [submodule "text-editor/.config/vim/bundle/fugitive"]
 	path = text-editor/.config/vim/bundle/fugitive
@@ -46,8 +46,8 @@
 [submodule "javascript/.config/nvm"]
 	path = javascript/.config/nvm
 	url = https://github.com/nvm-sh/nvm.git
-[submodule "git/src/git-hub"]
-	path = git/src/git-hub
+[submodule "version-control/src/git-hub"]
+	path = version-control/src/git-hub
 	url = https://github.com/ingydotnet/git-hub.git
 [submodule "text-editor/.config/vim/bundle/javascript"]
 	path = text-editor/.config/vim/bundle/javascript

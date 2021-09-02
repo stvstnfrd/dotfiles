@@ -1,6 +1,5 @@
 containers
 display-manager
-git
 javascript
 keyboard
 neofetch
@@ -9,4 +8,5 @@ python
 shells
 terminals
 text-editor
+version-control
 window-manager
