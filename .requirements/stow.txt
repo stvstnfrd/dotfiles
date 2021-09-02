@@ -4,7 +4,7 @@ keyboard
 languages
 packages
 shells
-terminals
+terminal
 text-editor
 version-control
 window-manager
