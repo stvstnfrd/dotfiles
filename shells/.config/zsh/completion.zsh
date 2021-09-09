@@ -75,8 +75,5 @@ if [ "x$COMPLETION_WAITING_DOTS" = "xtrue" ]; then
   zle -N expand-or-complete-with-dots
   bindkey "^I" expand-or-complete-with-dots
 fi
-if [ -e "${ZDOTDIR}/completion.d/pass.zsh" ]; then
-    . "${ZDOTDIR}/completion.d/pass.zsh"
-fi
 compinit -i -d "${ZSH_COMPDUMP}"
 compinit -u -C -d "${ZSH_COMPDUMP}"
