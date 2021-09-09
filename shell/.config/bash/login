@@ -1,0 +1,5 @@
+#!/bin/bash
+if [ -e "../sh/login" ]; then
+    # shellcheck source=shell/.config/sh/login
+    . "../sh/login"
+fi

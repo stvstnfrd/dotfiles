@@ -1,0 +1,69 @@
+#!/bin/sh
+# Default permissions for new files
+# User has read + write
+# Group is readonly
+# Other get nothing
+umask 0037
+# Then a few more basic paths
+# shellcheck source=shell/.config/sh/xdg
+. "${HOME}/.config/sh/xdg"
+export DFC="${XDG_CONFIG_HOME}/dotfiles.d"
+
+PATH="/bin"
+PATH="/sbin:${PATH}"
+PATH="/usr/bin:${PATH}"
+PATH="/usr/sbin:${PATH}"
+PATH="/usr/games:${PATH}"
+PATH="/opt/X11/bin:${PATH}"
+PATH="/usr/local/bin:${PATH}"
+PATH="/usr/local/sbin:${PATH}"
+PATH="/nix/var/nix/profiles/default/bin:${PATH}"
+PATH="${HOME}/.nix-profile/bin:${PATH}"
+if [ -e "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]; then
+    # shellcheck disable=SC1090
+    . "${HOME}/.nix-profile/etc/profile.d/nix.sh"
+elif [ -e "/etc/profile.d/nix.sh" ]; then
+    # shellcheck disable=SC1090,SC1091
+    . '/etc/profile.d/nix.sh'
+fi
+PATH="${HOME}/local/bin:${PATH}"
+PATH="${HOME}/.local/bin:${PATH}"
+PATH="${HOME}/bin:${PATH}"
+export PATH
+
+MANPATH="/usr/local/man"
+MANPATH="/usr/local/share/man:${MANPATH}"
+MANPATH="/usr/share/man:${MANPATH}"
+MANPATH="${HOME}/.nix-profile/share/man:${MANPATH}"
+MANPATH="${XDG_DATA_HOME}/man:${MANPATH}"
+export MANPATH
+
+# https://stackoverflow.com/a/53825858
+_preload=/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0
+if [ -e "${_preload}" ]; then
+    export LD_PRELOAD=${_preload}:${LD_PRELOAD}
+fi
+
+# MacOS-only
+export __CF_USER_TEXT_ENCODING='0x0:0x0'
+
+# This path is sourced by interactive POSIX shells
+export ENV="${XDG_CONFIG_HOME}/sh/interactive"
+export BASH_ENV="${XDG_CONFIG_HOME}/bash/environment"
+export EDITOR=vim
+# Load all of the plugins
+__dir_dotfiles_startup="${DFC}/environment.d"
+if [ -d "${__dir_dotfiles_startup}" ]; then
+    __script_count=$(find "${__dir_dotfiles_startup}/" -name '*.sh' | wc -l | awk '{print $1}')
+    if [ "${__script_count}" -gt 0 ]; then
+        for plugin in "${__dir_dotfiles_startup}"/*.sh; do
+            if [ -r "${plugin}" ]; then
+                # shellcheck disable=SC1090
+                . "${plugin}"
+            fi
+        done
+        unset plugin
+    fi
+    unset __script_count
+fi
+unset __dir_dotfiles_startup

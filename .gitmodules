@@ -1,63 +1,63 @@
-[submodule "git/.config/diff-so-fancy"]
-	path = git/.config/diff-so-fancy
+[submodule "version-control/.config/diff-so-fancy"]
+	path = version-control/.config/diff-so-fancy
 	url = https://github.com/so-fancy/diff-so-fancy.git
-[submodule "vim-fugitive/.config/vim/bundle/fugitive"]
-	path = vim-plugins/.config/vim/bundle/fugitive
+[submodule "text-editor/.config/vim/bundle/fugitive"]
+	path = text-editor/.config/vim/bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
-[submodule "vim-gitgutter/.config/vim/bundle/gitgutter"]
-	path = vim-plugins/.config/vim/bundle/gitgutter
+[submodule "text-editor/.config/vim/bundle/gitgutter"]
+	path = text-editor/.config/vim/bundle/gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
-[submodule "vim-gnupg/.config/vim/bundle/gnupg"]
-	path = vim-plugins/.config/vim/bundle/gnupg
+[submodule "text-editor/.config/vim/bundle/gnupg"]
+	path = text-editor/.config/vim/bundle/gnupg
 	url = https://github.com/jamessan/vim-gnupg.git
-[submodule "vim-lightline/.config/vim/bundle/lightline"]
-	path = vim-plugins/.config/vim/bundle/lightline
+[submodule "text-editor/.config/vim/bundle/lightline"]
+	path = text-editor/.config/vim/bundle/lightline
 	url = https://github.com/itchyny/lightline.vim
-[submodule "vim-markdown/.config/vim/bundle/markdown"]
-	path = vim-plugins/.config/vim/bundle/markdown
+[submodule "text-editor/.config/vim/bundle/markdown"]
+	path = text-editor/.config/vim/bundle/markdown
 	url = https://github.com/plasticboy/vim-markdown.git
-[submodule "vim-nerdtree/.config/vim/bundle/nerdtree"]
-	path = vim-plugins/.config/vim/bundle/nerdtree
+[submodule "text-editor/.config/vim/bundle/nerdtree"]
+	path = text-editor/.config/vim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
-[submodule "vim-pathogen/.config/vim/bundle/pathogen"]
-	path = vim-plugins/.config/vim/bundle/pathogen
+[submodule "text-editor/.config/vim/bundle/pathogen"]
+	path = text-editor/.config/vim/bundle/pathogen
 	url = https://github.com/tpope/vim-pathogen.git
-[submodule "vim-supertab/.config/vim/bundle/supertab"]
-	path = vim-plugins/.config/vim/bundle/supertab
+[submodule "text-editor/.config/vim/bundle/supertab"]
+	path = text-editor/.config/vim/bundle/supertab
 	url = https://github.com/ervandew/supertab.git
-[submodule "vim-startify/.config/vim/bundle/startify"]
-	path = vim-plugins/.config/vim/bundle/startify
+[submodule "text-editor/.config/vim/bundle/startify"]
+	path = text-editor/.config/vim/bundle/startify
 	url = https://github.com/mhinz/vim-startify.git
-[submodule "vim-obsession/.config/vim/bundle/obsession"]
-	path = vim-plugins/.config/vim/bundle/obsession
+[submodule "text-editor/.config/vim/bundle/obsession"]
+	path = text-editor/.config/vim/bundle/obsession
 	url = git://github.com/tpope/vim-obsession.git
-[submodule "vim-orgmode/.config/vim/bundle/orgmode"]
-	path = vim-plugins/.config/vim/bundle/orgmode
+[submodule "text-editor/.config/vim/bundle/orgmode"]
+	path = text-editor/.config/vim/bundle/orgmode
 	url = https://github.com/jceb/vim-orgmode.git
-[submodule "shells/src/z"]
-	path = shells/src/z
+[submodule "shell/src/z"]
+	path = shell/src/z
 	url = https://github.com/rupa/z.git
-[submodule "neofetch/src/neofetch"]
-	path = neofetch/src/neofetch
+[submodule "shell/src/neofetch"]
+	path = shell/src/neofetch
 	url = https://github.com/dylanaraps/neofetch.git
-[submodule "autoenv/src/autoenv"]
-	path = autoenv/src/autoenv
+[submodule "shell/src/autoenv"]
+	path = shell/src/autoenv
 	url = https://github.com/inishchith/autoenv.git
-[submodule "javascript/.config/nvm"]
-	path = javascript/.config/nvm
+[submodule "languages/.config/nvm"]
+	path = languages/.config/nvm
 	url = https://github.com/nvm-sh/nvm.git
-[submodule "git/src/git-hub"]
-	path = git/src/git-hub
+[submodule "version-control/src/git-hub"]
+	path = version-control/src/git-hub
 	url = https://github.com/ingydotnet/git-hub.git
-[submodule "vim-javascript/.config/vim/bundle/javascript"]
-	path = vim-plugins/.config/vim/bundle/javascript
+[submodule "text-editor/.config/vim/bundle/javascript"]
+	path = text-editor/.config/vim/bundle/javascript
 	url = https://github.com/pangloss/vim-javascript.git
-[submodule "vim-plugins/.config/vim/bundle/surround"]
-	path = vim-plugins/.config/vim/bundle/surround
+[submodule "text-editor/.config/vim/bundle/surround"]
+	path = text-editor/.config/vim/bundle/surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "vim-plugins/.config/vim/bundle/nerdcommenter"]
-	path = vim-plugins/.config/vim/bundle/nerdcommenter
+[submodule "text-editor/.config/vim/bundle/nerdcommenter"]
+	path = text-editor/.config/vim/bundle/nerdcommenter
 	url = https://github.com/preservim/nerdcommenter.git
-[submodule "vim-plugins/.config/vim/bundle/syntastic"]
-	path = vim-plugins/.config/vim/bundle/syntastic
+[submodule "text-editor/.config/vim/bundle/syntastic"]
+	path = text-editor/.config/vim/bundle/syntastic
 	url = https://github.com/vim-syntastic/syntastic.git
