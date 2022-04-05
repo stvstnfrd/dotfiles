@@ -1,4 +1,9 @@
 #!/bin/sh
+# Resetting the PATH shouldn't be strictly necessary here;
+# we do it because root/OS startup for interactive shells prepends the
+# NIX paths, even though we've already added them ourselves :shrug:
+# shellcheck source=shells/.config/sh/path
+. "${HOME}/.config/sh/path"
 if command -v fortune >/dev/null 2>&1; then
     echo; echo
     if command -v cowsay >/dev/null 2>&1; then
