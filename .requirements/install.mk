@@ -47,4 +47,9 @@ install.user-dirs:  ## Create untracked user directories
 			mkdir -p $${XDG_DATA_HOME}/$${path}; \
 		fi \
 	done \
+	&& for path in less; do \
+		if [ ! -e $${XDG_CACHE_HOME}/$${path} ]; then \
+			mkdir -p $${XDG_CACHE_HOME}/$${path}; \
+		fi \
+	done \
 	;
