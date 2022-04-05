@@ -1,0 +1,5 @@
+#!/bin/sh
+command-shadowed "${0}" \
+    --userinit "${XDG_CONFIG_HOME}/sbcl/rc" \
+    "${@}" \
+;

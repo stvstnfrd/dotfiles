@@ -50,25 +50,3 @@ fi
 export ZSH_PIP_CACHE_FILE="${XDG_CACHE_HOME}/pip/zsh"
 export _Z_DATA="${XDG_CACHE_HOME}/z"
 test -f "${_Z_DATA}" || touch "${_Z_DATA}" || true
-
-curl() {
-    _flags=
-    if [ -e "${NETRC}" ]; then
-        _flags="--netrc-file ${NETRC}"
-    fi
-    # shellcheck disable=SC2086
-    command curl ${_flags} "${@}"
-}
-sbcl () {
-    command sbcl --userinit "${XDG_CONFIG_HOME}/sbcl/rc" "${@}"
-}
-sqlite3 () {
-    command sqlite3 -init "${XDG_CONFIG_HOME}/sqlite3/rc" "${@}"
-}
-ssh () {
-    command ssh -F "${XDG_CONFIG_HOME}/ssh/config" "${@}"
-}
-wget() {
-    command wget --hsts-file "${XDG_CACHE_HOME}/wget-hsts" "${@}"
-}
-
