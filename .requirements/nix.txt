@@ -1,4 +1,3 @@
-nixpkgs.ag
 nixpkgs.apg
 nixpkgs.bashInteractive_5
 nixpkgs.bash-completion
