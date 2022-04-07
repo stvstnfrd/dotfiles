@@ -1,0 +1,136 @@
+#!/bin/sh
+#h NAME:
+#h 	command-shadowed - like `command -p`, but with a little more control
+#h
+#h SYNOPSIS:
+#h 	command-shadowed -h
+#h 	command-shadowed -v {executable}
+#h 	command-shadowed {executable} [args ...]
+#h 	command-shadowed /path/to/executable [args ...]
+#h
+#h DESCRIPTION:
+#h 	Execute the specified command, but when searching, ignore the
+#h 	first-matching ${PATH} entry, as well as shell functions.
+#h
+#h 	This is useful when you have a wrapper script with the same name
+#h 	as an existing utility.
+#h
+#h EXAMPLES:
+#h 	command-shadowed -h
+#h 		Show this help text and exit.
+#h
+#h 	command-shadowed -v ssh
+#h 		Lookup and print the 2nd highest location of ssh.
+#h
+#h 	command-shadowed ssh
+#h 		Lookup and execute the 2nd highest location of ssh.
+#h
+#h 	command-shadowed ssh -F "${XDG_CONFIG_DIR}/ssh/config"
+#h 		Lookup and execute the 2nd highest location of ssh
+#h 		with a config file from a custom location.
+#h
+#h 	command-shadowed ${HOME}/.local/bin/ssh
+#h 		Lookup and execute the highest location of ssh
+#h 		_excluding_ ${HOME}/.local/bin/ssh itself.
+#h
+#h 	command-shadowed "${0}"
+#h 		Lookup and execute the next-highest location of executable
+#h 		with the same name as the current script.
+#h 		Meant to be included in a wrapper script.
+#h
+#h OVERVIEW:
+#h 	We sometimes want to lookup the _2nd_highest_priority_ location of
+#h 	executable within ${PATH} or to exclude a particular entry.
+#h 	Whereas running `command {executable}` will give the _1st_highest_priority_
+#h 	location of an executable and running `command -p {executable}` will give
+#h 	the _1st_highest_priority_ within "standard" system utility paths,
+#h 	this script attempts to look up the ${PATH} hierarchy one level
+#h 	and find the _next_ most appropriate location.
+#h
+#h 	This is useful in scripts that "shadow" or "wrap" another executable,
+#h 	using the same name, to perhaps provide default arguments transparently.
+#h
+#h 	Consider the example:
+#h 		Your ${PATH} variable looks:
+#h 			PATH=${HOME}/.local/bin:${HOME}/.nix-profile/bin:/usr/bin:/bin
+#h 		You have two separate versions of an executable, eg: `ssh`,
+#h 		each located in your ${PATH}.
+#h 			- ${HOME}/.nix-profile/bin/ssh
+#h 			- /usr/bin/ssh
+#h 		You want to create a wrapper script
+#h 			- ${HOME}/.local/bin/ssh
+#h 		that calls `ssh` with default arguments,
+#h 		eg: loading a custom config file
+#h 			`ssh -F ${XDG_CONFIG_DIR}/ssh/config`.
+#h 		If we execute it like
+#h 			command-shadowed ssh -F ${XDG_CONFIG_DIR}/ssh/config
+#h 		the copy will be executed from
+#h 			${HOME}/.nix-profile/bin
+#h 		whereas
+#h 			command -p ssh [...]
+#h 		would have executed from
+#h 			/usr/bin
+#h 		and
+#h 			command ssh [...]
+#h 		would have crashed in an infinite loop of self-recursion.
+#h
+#h OPTIONS:
+#h 	General Options
+#h 		-h
+#h 			Print this help message and exit.
+#h 		-v
+#h 			Do not execute the command but search for the command and
+#h 			print the absolute pathname of utilities, the name for builtins
+#h 			or the expansion of aliases.
+#h
+#h EXIT STATUS:
+#h 	Presumably, the same as if running `command [args...]`
+#h
+#h ENVIRONMENT:
+#h 	PATH
+#h 		Used to lookup paths with one or more entries excluded.
+#h
+#h SEE ALSO:
+#h 	man sh | grep 'command \[' --after-context=7
+#h
+#h HISTORY:
+#h 	Created: 2022-04-05
+#h
+#h BUGS:
+#h 	None known.
+verbose_flag=
+lookup=${HOME}/local/bin
+while getopts ":hv" option
+do
+    case ${option} in
+        h)
+            grep '^#h' "${0}" \
+            | sed 's/^#h \?//g'
+            exit
+        ;;
+        v)
+            verbose_flag=' -v'
+            shift
+        ;;
+        *)
+        ;;
+    esac
+done
+
+lookup=${1}
+shift
+filename=$(basename "${lookup}")
+if echo "${lookup}" | grep --silent '/'
+then
+    directory=$(dirname "${lookup}")
+else
+    directory=$(command -v "${filename}")
+    directory=$(dirname "${directory}")
+fi
+path=$(
+    echo "${PATH}" \
+    | sed "s@^${directory}:\?@@; s@:${directory}\$@@; s@:${directory}:@:@g" \
+    ;
+)
+# shellcheck disable=SC2086
+PATH=${path} command${verbose_flag} "${filename}" "${@}"

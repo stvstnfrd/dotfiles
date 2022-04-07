@@ -12,7 +12,7 @@ XDG_DATA_DIRS="${XDG_DATA_HOME}:${XDG_DATA_DIRS}"
 export XDG_DATA_DIRS
 # shellcheck source=shells/.config/user-dirs.dirs
 . "${XDG_CONFIG_HOME}/user-dirs.dirs"
-export XDG_DESKTOP_DIR XDG_DOWNLOAD_DIR XDG_TEMPLATES_DIR XDG_PUBLICSHARE_DIR XDG_DOCUMENTS_DIR XDG_MUSIC_DIR XDG_PICTURES_DIR XDG_VIDEOS_DIR
+export XDG_DESKTOP_DIR XDG_DOWNLOAD_DIR XDG_TEMPLATES_DIR XDG_PUBLICSHARE_DIR XDG_DOCUMENTS_DIR XDG_MUSIC_DIR XDG_PICTURES_DIR XDG_STATE_HOME XDG_VIDEOS_DIR
 
 export AUTOENV_AUTH_FILE="${XDG_CACHE_HOME}/autoenv_authorized"
 export GIMP2_DIRECTORY="${XDG_CONFIG_HOME}/gimp"
@@ -50,25 +50,3 @@ fi
 export ZSH_PIP_CACHE_FILE="${XDG_CACHE_HOME}/pip/zsh"
 export _Z_DATA="${XDG_CACHE_HOME}/z"
 test -f "${_Z_DATA}" || touch "${_Z_DATA}" || true
-
-curl() {
-    _flags=
-    if [ -e "${NETRC}" ]; then
-        _flags="--netrc-file ${NETRC}"
-    fi
-    # shellcheck disable=SC2086
-    command curl ${_flags} "${@}"
-}
-sbcl () {
-    command sbcl --userinit "${XDG_CONFIG_HOME}/sbcl/rc" "${@}"
-}
-sqlite3 () {
-    command sqlite3 -init "${XDG_CONFIG_HOME}/sqlite3/rc" "${@}"
-}
-ssh () {
-    command ssh -F "${XDG_CONFIG_HOME}/ssh/config" "${@}"
-}
-wget() {
-    command wget --hsts-file "${XDG_CACHE_HOME}/wget-hsts" "${@}"
-}
-

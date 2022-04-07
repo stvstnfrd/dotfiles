@@ -1,0 +1,5 @@
+#!/bin/sh
+if command-shadowed "${0}" "${@}"
+then
+    rm "${HOME}/.sudo_as_admin_successful" || true
+fi
