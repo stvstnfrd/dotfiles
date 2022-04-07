@@ -41,3 +41,4 @@ term screen-256color
 # term xterm-256color
 #   When using rxvt-unicode:
 # term rxvt-unicode-256color
+shell '/bin/zsh'

@@ -1,7 +1,7 @@
 *.bak
 *.log
 .netrwhist
-.zcomp
+.zcomp*
 autojump/.local/bin/pip*
 autojump/.local/lib/
 config.local

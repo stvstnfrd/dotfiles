@@ -1,4 +1,5 @@
 #!/bin/zsh
+export CASE_SENSITIVE=true
 export HISTFILE="${XDG_DATA_HOME}/zsh/history"
 export KEYTIMEOUT=1
 
