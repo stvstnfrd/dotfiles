@@ -132,4 +132,5 @@ path=$(
     | sed "s@^${directory}:\?@@; s@:${directory}\$@@; s@:${directory}:@:@g" \
     ;
 )
+# shellcheck disable=SC2086
 PATH=${path} command${verbose_flag} "${filename}" "${@}"
