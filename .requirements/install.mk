@@ -43,8 +43,8 @@ install.user-dirs:  ## Create untracked user directories
 		eval 'test -e $$'$${path} || eval 'mkdir -p $$'$${path}; \
 	done \
 	&& for path in sh bash zsh; do \
-		if [ ! -e $${XDG_DATA_HOME}/$${path} ]; then \
-			mkdir -p $${XDG_DATA_HOME}/$${path}; \
+		if [ ! -e $${XDG_STATE_HOME}/$${path} ]; then \
+			mkdir -p $${XDG_STATE_HOME}/$${path}; \
 		fi \
 	done \
 	&& for path in less; do \
