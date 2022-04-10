@@ -1,72 +1,77 @@
 #!/bin/sh
 #h NAME:
-#h 	itsdm
+#h 	itsdm - It's The Simple Desktop Manager
 #h
 #h SYNOPSIS:
-#h 	it's the simple display manager
+#h 	itsdm
+#h
+#h 	itsdm -h
 #h
 #h DESCRIPTION:
-#h 	Display a list of available desktop sessions,
-#h 	allow the user to select one,
-#h 	and start it up for them.
+#h 	 Display a list of available desktop sessions,
+#h 	 allow the user to select one,
+#h 	 and start it up for them.
 #h
 #h EXAMPLES:
-#h 	In your ~/.bashrc:
-#h 		itsdm
+#h 	itsdm
+#h 		Invoke from an interactive shell startup file,
+#h 		like *~/.bashrc* or *~/.zshrc*
 #h
 #h OVERVIEW:
-#h 	TODO: Describe graceful degradation between fzf and sh
+#h 	 TODO: Describe graceful degradation between **fzf** and **sh**
 #h
 #h OPTIONS:
 #h 	-h, --help
 #h 		Print this message and exit.
 #h
 #h 	-m, --man
-#h 		View this message in a PAGER and exit.
+#h 		View this message in a **PAGER** and exit.
 #h
-#h DEFAULTS:
-#h 	none
+#h 	-f INPUT-FILE, --file INPUT-FILE
+#h 		Load a file
 #h
 #h EXIT STATUS:
-#h 	 0 - success
-#h 	>0 - failure
+#h 	0
+#h 		success
+#h
+#h 	>0
+#h 		failure
 #h
 #h ENVIRONMENT:
 #h 	XDG_CACHE_HOME
-#h 		The base location for logs, default is ${HOME}/.cache.
+#h 		The base location for logs, default is *${HOME}/.cache*.
 #h
 #h 	PAGER
-#h 		The pager to be used when invoked with -m, --manual,
-#h 		defaults to `less`.
+#h 		The pager to be used when invoked with **-m**, **--manual**,
+#h 		defaults to **less**.
+#h
+# 	If they exist, the list of available options will be pulled from
+# 	*.desktop* files in the following directories:
 #h
 #h FILES:
-#h 	If they exist, the list of available options will be pulled from
-#h 	.desktop files in the following directories:
 #h
-#h 		${XDG_CACHE_HOME}/itsdm/log
-#h 			Errors and information messages are logged here.
+#h 	${XDG_CACHE_HOME}/itsdm/log
+#h 		Errors and information messages are logged here.
+#h 		Errors and information messages are logged here.
 #h
-#h 		~/.local/share/xsessions/
-#h 			User sessions are stored here
+#h 	~/.local/share/xsessions/
+#h 		User sessions are stored here
 #h
-#h 		${NIX_PROFILE}/share/xsessions/
-#h 			Nix-installed sessions are stored here
+#h 	${NIX_PROFILE}/share/xsessions/
+#h 		Nix-installed sessions are stored here
 #h
-#h 		/usr/share/xsessions/
-#h 			System sessions are stored here
+#h 	/usr/share/xsessions/
+#h 		System sessions are stored here
 #h
 #h SEE ALSO:
-#h 	itsdmx --help, fzf(1), startx(1)
+#h 	itsdmx(1), fzf(1), startx(1)
 #h
-#h HISTORY:
-#h 	Created 2021-07-30
-#h
+#h VERSIONS:
+#h 	1.0.0
+#h 		2021-07-30	created
+#
 #h BUGS:
 #h 	https://github.com/stvstnfrd/dotfiles/issues
-#h
-#h USAGE:
-#h 	Invoke from an interactive shell startup file,
-#h 	like ~/.bashrc or ~/.zshrc
 # shellcheck disable=SC2003
 set -e
 while getopts ":hm" option; do case ${option} in
