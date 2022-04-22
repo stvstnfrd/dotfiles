@@ -1,0 +1,12 @@
+#!/bin/sh
+main() {
+    grep-right \
+        --include='*.markdown' \
+        --include='*.md' \
+        --include='*.rst' \
+        --include='*.txt' \
+        "${@}" \
+    ;
+}
+
+main "${@}"

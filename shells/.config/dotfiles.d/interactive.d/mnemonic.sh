@@ -25,6 +25,14 @@ alias pir='pip install -r '
 alias psg='ps | grep '
 alias py='python '
 # q
+alias rg=grep-right
+alias rgl=grep-right-list-files
+alias rgl0=grep-right-list-files-null
+alias rg_edit=grep-right-edit
+alias rg_docs=grep-right-doc
+alias rgd='rg_docs stvstnfrd ~/.config/dotfiles'
+alias rg_py=grep-right-py
+alias rg_web=grep-right-www
 alias rs='rsync --progress -avh '
 alias rsn='rsync --progress -navh '
 alias s='ssh '
