@@ -1,0 +1,20 @@
+#!/bin/sh
+main() {
+    EDITOR=${EDITOR:-vim}
+    if ! command -v "${EDITOR}" >/dev/null 2>&1
+    then
+        EDITOR='vi'
+    fi
+    grep-right \
+        --files-with-matches \
+        --null \
+        --color=never \
+        "${@}" \
+    | xargs \
+        --null \
+        --open-tty \
+        "${EDITOR}" \
+    ;
+}
+
+main "${@}"

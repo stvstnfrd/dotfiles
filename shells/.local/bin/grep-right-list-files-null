@@ -1,0 +1,10 @@
+#!/bin/sh
+main() {
+    grep-right-list-files \
+        --null \
+        --color=never \
+        "${@}" \
+    ;
+}
+
+main "${@}"
