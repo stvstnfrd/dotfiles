@@ -1,7 +1,0 @@
-build-essential
-curl
-exfat-fuse
-exfat-utils
-sudo
-xz-utils
-zsh

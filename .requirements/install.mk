@@ -3,12 +3,12 @@ SHELL=sh
 PACKAGES=$(shell grep -v '^\#' .requirements/stow.txt)
 STOW=stow
 _install_xdg_paths=XDG_DESKTOP_DIR XDG_DOWNLOAD_DIR XDG_TEMPLATES_DIR XDG_PUBLICSHARE_DIR XDG_DOCUMENTS_DIR XDG_MUSIC_DIR XDG_PICTURES_DIR XDG_VIDEOS_DIR
-BACKUP_PATHS=$(HOME)/.config/user-dirs.dirs $(HOME)/.config/user-dirs.locale $(HOME)/Downloads $(HOME)/Desktop $(HOME)/Templates $(HOME)/Music $(HOME)/Videos $(HOME)/Pictures $(HOME)/Public $(HOME)/Documents $(HOME)/.dmrc $(HOME)/.wget-hsts $(HOME)/.bash_history $(HOME)/.sudo_as_admin_successful
+BACKUP_PATHS=$(HOME)/.config/user-dirs.dirs $(HOME)/.config/user-dirs.locale $(HOME)/Downloads $(HOME)/Desktop $(HOME)/Templates $(HOME)/Music $(HOME)/Videos $(HOME)/Pictures $(HOME)/Public $(HOME)/Documents $(HOME)/.dmrc $(HOME)/.wget-hsts $(HOME)/.bash_history $(HOME)/.sudo_as_admin_successful $(HOME)/.bashrc $(HOME)/.bash_profile $(HOME)/.bash_history $(HOME)/.bash_logout $(HOME)/.profile $(HOME)/.config/nixpkgs
 
 .PHONY: backup
 backup:  ## Backup common configuration files
 	mkdir $(HOME)/.config/backup || true
-	mv -f $(BACKUP_PATHS) $(HOME)/.bashrc $(HOME)/.bash_profile $(HOME)/.bash_history $(HOME)/.bash_logout $(HOME)/.profile $(HOME)/.config/backup/ || true
+	mv -f $(BACKUP_PATHS) $(HOME)/.config/backup/ || true
 
 .PHONY: install
 install:  ## Stow/symlinked packages into your ${HOME} directory

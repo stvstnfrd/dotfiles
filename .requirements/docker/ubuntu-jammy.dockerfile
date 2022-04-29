@@ -1,5 +1,6 @@
+# This file was created automatically by: .requirements/docker.mk
 # Create a base functioning system
-FROM debian:latest
+FROM ubuntu:jammy
 RUN apt-get update --yes \
 && apt-get install --yes make sudo
 

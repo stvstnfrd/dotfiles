@@ -1,0 +1,30 @@
+#!/usr/bin/awk -f
+BEGIN {
+    if (VERSION !~ /[0-9]+\.[0-9]+\.[0-9]+/) {
+        VERSION = "0.0.0"
+    }
+    split(VERSION, version, /\./)
+    MAJOR=version[1]
+    MINOR=version[2]
+    PATCH=version[3]
+}
+$2 ~ /^(chore|temp)(\([^)]+\))?:/ {
+    next
+}
+# $2 ~ /^.+(\([^)]+\))?:/ {
+{
+    PATCH++
+}
+$2 ~ /^feat(\([^)]+\))?:/ {
+    MINOR++
+    PATCH=0
+}
+$2 ~ /^[a-z]+(\([^)]+\))?!:/ {
+    MAJOR++
+    MINOR=0
+    PATCH=0
+}
+# $2 ~ /^[Mm]erge/ {
+{
+    printf "%s.%s.%s	%s\n",MAJOR,MINOR,PATCH,$0
+}

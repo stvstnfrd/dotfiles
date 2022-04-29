@@ -1,0 +1,86 @@
+SHALL	apg	apg	nixpkgs.apg
+SHALL	bash	bash	nixpkgs.bashInteractive_5
+SHALL	bash-completion	bash-completion	nixpkgs.bash-completion
+SHALL	bc	bc	nixpkgs.bc
+SHALL	build-essential	build-essential	nixpkgs.gnumake
+SHALL	coreutils	coreutils	nixpkgs.coreutils-full
+SHALL	cowsay	cowsay	nixpkgs.cowsay
+SHALL	curl	curl	nixpkgs.curl
+SHALL	dash	dash	nixpkgs.dash
+# Note: Ubuntu (21.10) builds exa *without* git support
+SHALL	 	exa	nixpkgs.exa
+SHALL	figlet	figlet	nixpkgs.figlet
+SHALL	findutils	findutils	nixpkgs.findutils
+SHALL	fortune	fortune	nixpkgs.fortune
+SHALL	 	fzf	nixpkgs.fzf
+SHALL	git	git	nixpkgs.gitAndTools.gitFull
+SHALL	gnupg	gnupg	nixpkgs.gnupg1
+SHALL	graphviz	graphviz	nixpkgs.graphviz
+SHALL	grep	grep	nixpkgs.gnugrep
+SHALL	 	gron	nixpkgs.gron
+SHALL	htop	htop	nixpkgs.htop
+SHALL	jq	jq	nixpkgs.jq
+SHALL	less	less	nixpkgs.less
+SHALL	lsb-core	lsb-core	nixpkgs.lsb-release
+SHALL	lynx	lynx	nixpkgs.lynx
+SHALL	man	man	nixpkgs.man
+SHALL	mutt	mutt	nixpkgs.mutt
+SHALL	neofetch	neofetch	nixpkgs.neofetch
+SHALL	netcat	netcat	nixpkgs.netcat
+SHALL	newsboat	newsboat	nixpkgs.newsboat
+SHALL	nodejs	nodejs	nixpkgs.nodejs
+SHALL	pandoc	pandoc	nixpkgs.pandoc
+SHALL	pass	pass	nixpkgs.pass
+SHALL	 	 	nixpkgs.python38Packages.pip
+SHALL	 	playerctl	nixpkgs.playerctl
+SHALL	python3.8	python3.10	nixpkgs.python38Full
+SHALL	qrencode	qrencode	nixpkgs.qrencode
+SHALL	ranger	ranger	nixpkgs.ranger
+SHALL	sbcl	sbcl	nixpkgs.sbcl
+SHALL	sed	sed	nixpkgs.gnused
+SHALL	screen	screen	nixpkgs.screen
+SHALL	shellcheck	shellcheck	nixpkgs.shellcheck
+SHALL	sqlite	sqlite	nixpkgs.sqlite
+SHALL	stow	stow	nixpkgs.stow
+SHALL	sudo	sudo	 
+SHALL	tmux	tmux	nixpkgs.tmux
+SHALL	tree	tree	nixpkgs.tree
+SHALL	vim	vim	nixpkgs.vim
+SHALL	watch	watch	nixpkgs.unixtools.watch
+SHALL	wget	wget	nixpkgs.wget
+SHALL	whois	whois	nixpkgs.whois
+SHALL	xz-utils	xz-utils	 
+SHALL	zsh	zsh	nixpkgs.zsh
+SHOULD	brightnessctl	brightnessctl	 
+SHOULD	bsdgames	bsdgames	 
+SHOULD	claws-mail	claws-mail	nixpkgs.claws-mail
+SHOULD	claws-mail-doc	claws-mail-doc	 
+SHOULD	claws-mail-tools	claws-mail-tools	 
+SHOULD	cmatrix	cmatrix	nixpkgs.cmatrix
+SHOULD	cmus	cmus	nixpkgs.cmus
+SHOULD	dmenu	dmenu	nixpkgs.dmenu
+SHOULD	exfat-fust	exfat-fuse	 
+SHOULD	exfat-utils	exfat-utils	 
+SHOULD	firejail	firejail	 
+SHOULD	i3	i3	nixpkgs.i3
+# Install i3lock via apt due to permissions issues
+SHOULD	i3lock	i3lock	 
+SHOULD	i3status	i3status	nixpkgs.i3status
+SHOULD	openssh-server	openssh-server	 
+SHOULD	py3status	py3status	nixpkgs.python39Packages.py3status
+SHOULD	rsync	rsync	nixpkgs.rsync
+SHOULD	sox	sox	 
+SHOULD	ufw	ufw	 
+SHOULD	v4l2loopback-dkms	v4l2loopback-dkms	 
+SHOULD	v4l2loopback-utils	v4l2loopback-utils	 
+SHOULD	vlc	vlc	nixpkgs.vlc
+SHOULD	xcape	xcape	 
+SHOULD	xclip	xclip	nixpkgs.xclip
+SHOULD	 	 	nixpkgs.xfce.thunar
+# vagrant isn't working via nix, but I don't use it (enough) to install via apt
+MAYY	vagrant	vagrant	nixpkgs.vagrant
+# nixpkgs.slack
+# nixpkgs.so
+# nixpkgs.xpdf
+# nixpkgs.gh
+SHOULD	 	 	nixpkgs.docker-compose
