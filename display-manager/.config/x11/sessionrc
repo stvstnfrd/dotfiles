@@ -12,6 +12,7 @@ if command -v xcape >/dev/null 2>&1
 then
     xcape -e 'Shift_L=parenleft;Shift_R=parenright;Control_L=Escape'
 fi
+xrandr --auto
 set_gtk_theme() {
     if command -v gsettings >/dev/null 2>&1
     then
