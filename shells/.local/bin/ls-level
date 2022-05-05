@@ -1,0 +1,97 @@
+#!/bin/sh
+set -eau
+help() { grep '^#h' "${1}" | sed 's/^#h \?//g'; }
+usage() { echo "Usage:"; help "${@}" | awk 'BEGIN { inside=0 }; /^[^\t]/ { inside=0 }  inside; /^SYNOPSIS/ { inside=1 };'; }
+
+level=1
+if expr "${1:-}" : '^[0-9]\+$' >/dev/null
+then
+    level="${1}"
+    shift
+fi
+for option in "${@}"; do case "${option}" in
+    #d Print help text and exit
+    -h|--help) help "${0}"; exit;;
+    *) ;;
+esac; done
+
+find_files() {
+    level="${1}"
+    shift
+    if [ "${#}" -eq 0 ]
+    then
+        set -- '.'
+    fi
+    find "${@}" \
+        -mindepth 1 \
+        -maxdepth "${level}" \
+        -name .git -prune -o \
+        -print0 \
+    ;
+}
+
+is_exa_flag_available() {
+    flag="${1}"
+    exa "${flag}" /bin >/dev/null 2>&1
+}
+
+_command='ls'
+if command -v exa >/dev/null 2>&1
+then
+    _command='exa'
+    set -- \
+        -a \
+        --ignore-glob='\.git' \
+        --group-directories-first \
+        --color=always \
+        --ignore-glob .git \
+        -l \
+        --tree \
+        --time-style=long-iso \
+        --level="${level}" \
+        "${@}" \
+    ;
+    # Ubuntu (as of 21.10) builds exa *without* git support
+    if is_exa_flag_available '--git'
+    then
+        set -- \
+            --git \
+            --git-ignore \
+            "${@}" \
+        ;
+    fi
+elif command -v trees >/dev/null 2>&1
+then
+    _command='tree'
+    set -- -aL "${level}" "${@}"
+    set -- -I .git "${@}"
+else
+    _command='ls'
+    # set -- -Al
+    paths='.'
+    echo "PATHS: ${paths}"
+    find_files "${level}" "${@}" \
+    | xargs --null \
+        ls \
+            -ld \
+            --time-style long-iso \
+            --human-readable \
+            --color=always \
+    | awk '
+        {
+            fpath=$8
+            gsub(/[^/]/,"",fpath)
+            ftitle=""
+            for (i=0; i<length(fpath)*4-4; i++) {
+                ftitle = ftitle " "
+            }
+            ftitle = ftitle "|-- " $8
+            $8=ftitle
+            OFS="\t"
+            print
+        }
+    ' \
+    | less \
+    ;
+fi
+"${_command}" "${@}"
