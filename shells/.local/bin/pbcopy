@@ -1,0 +1,17 @@
+#!/bin/sh
+pb_copy() {
+    xclip -in -selection default
+}
+_command=
+if _command=$(command-shadowed -v pbcopy  >/dev/null 2>&1)
+then
+    _command='pbcopy'
+elif _command=$(command-shadowed -v xclip  >/dev/null 2>&1)
+then
+    _command='pb_copy'
+else
+    echo "No clipboard tool found!"
+    exit 1
+fi
+echo '\037' >> /tmp/clipboard
+tee -a /tmp/clipboard | "${_command}"
