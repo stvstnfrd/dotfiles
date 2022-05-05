@@ -1,4 +1,4 @@
-MAN_COMMANDS=
+MAN_COMMANDS=grep-right itsdm screens
 COMMAND_DIR=$(HOME)/.local/bin
 MAN_DIR=$(HOME)/.local/share/man/man1
 MAN_FILES:=$(addprefix $(MAN_DIR)/,$(MAN_COMMANDS))
