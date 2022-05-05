@@ -1,0 +1,16 @@
+#!/bin/sh
+pb_paste() {
+    xclip -out -selection default
+}
+_command=
+if _command=$(command-shadowed -v pbpaste  >/dev/null 2>&1)
+then
+    _command='pbpaste'
+elif _command=$(command-shadowed -v xclip  >/dev/null 2>&1)
+then
+    _command='pb_paste'
+else
+    echo "No clipboard tool found!"
+    exit 1
+fi
+"${_command}"
