@@ -13,6 +13,12 @@ alias i='ipython '
 alias k='kill '
 alias k9='kill -9 '
 # l
+_name=
+for _level in $(seq 1 5); do
+    _name="${_name}l"
+    # shellcheck disable=SC2139
+    alias "${_name}"="ls-level ${_level}"
+done
 alias m='man '
 alias n='npm '
 alias ni='npm install '
