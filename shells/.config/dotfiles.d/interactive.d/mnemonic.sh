@@ -7,6 +7,15 @@ alias d='vimdiff '
 alias e='echo '
 alias f='find '
 alias g='git '
+# map aliases from git to bash
+# foreach git alias 'x', create bash alias 'gx'
+if command -v git >/dev/null 2>&1; then
+    alias g='git '
+    for a in $(git var -l | sed -nE 's/^alias\.([^=]*)=.*/\1/p'); do
+        # shellcheck disable=SC2139
+        alias "g${a}=git ${a} "
+    done
+fi
 alias h='head '
 alias i='ipython '
 # j
