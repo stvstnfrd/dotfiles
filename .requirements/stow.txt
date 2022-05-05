@@ -10,6 +10,7 @@ nix
 python
 screen
 shells
+utils
 vagrant
 vim
 vim-plugins
