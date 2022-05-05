@@ -45,10 +45,11 @@ exec --no-startup-id ssh-agent
 exec --no-startup-id ssh-add ~/.local/share/ssh/keys/id_rsa
 
 # Startup default windows
-exec --no-startup-id slack
 exec --no-startup-id thunderbird
-exec --no-startup-id i3-msg 'workspace 2; exec xfce4-terminal'
+exec --no-startup-id discord
+exec --no-startup-id i3-msg 'workspace 2; exec xfce4-terminal --hide-menubar --hide-toolbar -e "screen -UrxR wip"; workspace 2'
 exec --no-startup-id firefox --new-instance
+exec --no-startup-id i3-msg 'workspace 4; exec cool-retro-term -e screen -UrxR focus; workspace 2'
 
 # Assign windows to workspaces
 assign [class="Slack"] 1
