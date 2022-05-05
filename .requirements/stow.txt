@@ -4,6 +4,7 @@ display-manager
 git
 javascript
 keyboard
+media
 neofetch
 nix
 python

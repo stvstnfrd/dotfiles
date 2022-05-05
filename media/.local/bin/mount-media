@@ -1,0 +1,189 @@
+#!/bin/sh
+#h NAME:
+#h 	mount-media - Overlay your local and remote media libraries into a single directory
+#h
+#h SYNOPSIS:
+#h 	mount-media -h
+#h
+#h 	mount-media -V
+#h
+#h 	mount-media [-n] [-v] [path-destination]
+#h
+#h 	mount-media [-n] [-v] [path-overlay [path-read-write [path-read-only...]]
+#h
+#h  See complete help with `mount-media -h`.
+#h
+#h DESCRIPTION:
+#h  *mount-media* layers together two (or more, eventually!) media
+#h  directories and mounts the merged directory to a single location.
+#h
+#h  This allows you to store media in multiple locations,
+#h  but to access them as if they were a single collection.
+#h
+#h EXAMPLES:
+#h 	mount-media -h
+#h 		Print the help text and exit.
+#h
+#h 	mount-media -V
+#h 		Print the version number and exit.
+#h
+#h 	mount-media -n
+#h 		Run dry-mode; print what would be done, but don't actually do it.
+#h 		Implies *-v*, **verbose mode**
+#h
+#h 	mount-media -v
+#h 		Run verbosely; print what is done as it's done.
+#h
+#h 	mount-media ~/library
+#h 		Mount the merged path here, instead of the default (see *DEFAULTS*).
+#h
+#h OVERVIEW:
+#h 	TODO: Write more here.
+#h
+#h OPTIONS:
+#h
+#h 	-h
+#h 		Display help text and exit.
+#h
+#h 	-V
+#h 		Display version number and exit.
+#h
+#h 	-v
+#h 		Run verbosely; print what is done as it's done.
+#h
+#h 	-n
+#h 		Perform a dry-run/no-op; display what would be done, but don't actually do it.
+#h 		Implies *-v*, **verbose mode**
+#h
+#h DEFAULTS:
+#h 	XDG_MEDIA_HOMES_
+#h 		/media/share
+#h
+#h 	MOUNT_MEDIA__PATH_MEDIA_USER
+#h 		${HOME}/.local/share/media
+#h
+#h EXIT STATUS:
+#h 	0
+#h 		success
+#h
+#h 	1
+#h 		unsupported argument(s)
+#h
+#h ENVIRONMENT:
+#h 	XDG_MEDIA_HOME_
+#h 		The base path for your local user media collection.
+#h 		Note the trailing underscore in the variable name;
+#h 		this is a non-standard XDG_* setting,
+#h 		chosen to not conflict with any possible future adoption.
+#h
+#h FILES:
+#h 	XDG_MEDIA_HOMES_
+#h 		This is the path for the site-wide media library.
+#h
+#h 	MOUNT_MEDIA__PATH_MEDIA_USER
+#h 		This is the path for the user-local media library.
+#h
+#h SEE ALSO:
+#h 	overlayfs, mount(1), umount(1)
+#h
+#h HISTORY:
+#h 	2022
+#h 		Created.
+#h
+#h BUGS:
+#h 	 https://github.com/stvstnfrd/dotfiles/issues
+set -aeu
+
+_MOUNT_MEDIA__VERSION='0.0.0'
+MOUNT_MEDIA__PATH_MEDIA_USER="${MOUNT_MEDIA__PATH_MEDIA_USER:-${HOME}/.local/share/media}"
+MOUNT_MEDIA__PATH_MEDIA_TEMP="${MOUNT_MEDIA__PATH_MEDIA_TEMP:-${TMPDIR:-${HOME}/.local/tmp}/media}"
+MOUNT_MEDIA__NOOP=
+MOUNT_MEDIA__VERBOSITY=0
+XDG_MEDIA_HOME_="${XDG_MEDIA_HOME_:-${HOME}/library}"
+XDG_MEDIA_HOMES_='/media/share'
+
+_file=${0}
+print_help_section() {
+    src_title=${1}
+    dst_title=${2:-${src_title}}
+    cat "${_file}" \
+    | sed 's/^#h \?//g' \
+    | awk "
+        BEGIN {
+            print \"${dst_title}:\"
+        }
+        /^${src_title}:/ {
+            flag=1
+            next
+        }
+        /^[^ \t]/ {
+            flag=0
+        }
+        flag
+    "
+}
+while getopts ':hvVn' option
+do
+    case ${option} in
+        h)
+            grep '^#h' "${0}" \
+            | sed 's/^#h \?//g'
+            exit
+        ;;
+        v) MOUNT_MEDIA__VERBOSITY=$(echo "1 + ${MOUNT_MEDIA__VERBOSITY}" | bc); shift;;
+        V) echo "v${_MOUNT_MEDIA__VERSION}"; exit;;
+        n)
+            shift
+            MOUNT_MEDIA__NOOP=1
+            MOUNT_MEDIA__VERBOSITY=$(echo "1 + ${MOUNT_MEDIA__VERBOSITY}" | bc)
+        ;;
+        *)
+            print_help_section SYNOPSIS USAGE
+            exit 1
+        ;;
+    esac
+done
+
+do_and_or_show() {
+    stdout='/dev/null'
+    stderr='/dev/null'
+    if [ "${MOUNT_MEDIA__VERBOSITY}" -gt 0 ]
+    then
+        stdout='/dev/stdout'
+        stderr='/dev/stderr'
+    fi
+    if [ -n "${MOUNT_MEDIA__NOOP}" ]
+    then
+        set -- echo "${@}"
+    fi
+    "${@}" >"${stdout}" 2>"${stderr}"
+}
+
+main() {
+    XDG_MEDIA_HOME_="${1:-${XDG_MEDIA_HOME_}}"
+    library_dir="${XDG_MEDIA_HOME_}"
+    local_dir="${MOUNT_MEDIA__PATH_MEDIA_USER}"
+    remote_dir="${XDG_MEDIA_HOMES_}"
+    work_dir="${MOUNT_MEDIA__PATH_MEDIA_TEMP}"
+    if [ ! -e "${remote_dir}" ]
+    then
+        do_and_or_show echo "Create:  	${remote_dir}"
+        do_and_or_show sudo mkdir -p "${remote_dir}"
+    fi
+    for dir in "${local_dir}" "${work_dir}" "${library_dir}"
+    do
+        if [ ! -e "${dir}" ]
+        then
+            do_and_or_show echo "Create:	${remote_dir}"
+            do_and_or_show mkdir -p "${dir}"
+        fi
+    done
+    do_and_or_show sudo umount "${library_dir}" || true
+    do_and_or_show sudo mount -t overlay overlay \
+        -olowerdir="${remote_dir}",upperdir="${local_dir}",workdir="${work_dir}" \
+        -ox-gvfs-hide \
+        "${library_dir}" \
+    ;
+}
+
+main "${@}"
