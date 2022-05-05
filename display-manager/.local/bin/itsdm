@@ -74,9 +74,9 @@
 #h 	https://github.com/stvstnfrd/dotfiles/issues
 # shellcheck disable=SC2003
 set -e
-while getopts ":hm" option; do case ${option} in
-    h) grep '^#h' "${0}" | sed 's/^#h \?//g'; exit;;
-    m) "${0}" --help | ${PAGER:-less}; exit;;
+print_help() { grep '^#h' "${1}" | sed 's/^#h \?//g'; }
+while getopts ":hmM" option; do case ${option} in
+    h) print_help "${0}"; exit;;
     *) ;;
 esac; done
 
