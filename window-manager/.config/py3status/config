@@ -1,0 +1,149 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+        colors = true
+        interval = 5
+        separator = " | "
+        color_good = "#50FA7B"
+        color_degraded = "#F1FA8C"
+        color_bad = "#FF5555"
+}
+
+order += "xsel"
+order += "tztime local"
+order += "battery all"
+order += "memory"
+order += "cpu_usage"
+order += "disk /"
+order += "volume master"
+order += "wireless _first_"
+order += "ethernet _first_"
+order += "apt_updates"
+order += "cmus"
+order += "do_not_disturb"
+order += "keyboard_locks"
+order += "pomodoro"
+# order += "load"
+
+wireless _first_ {
+        format_up = "📡 (%quality) %ip"
+        format_down = "📡 🚫"
+        format_down = ""
+}
+
+ethernet _first_ {
+        format_up = "🖧 %ip (%speed)"
+        format_up = "🖧 %ip (%speed)"
+        format_down = "🖧 🚫"
+        format_down = "🖧 ⮽"
+        format_down = ""
+# ☠
+# 🕱
+# ⯯
+# ⭅
+}
+
+battery all {
+        # format = " %status %percentage %remaining"
+        format = "%status %percentage %remaining"
+        integer_battery_capacity = true
+        format_down = ""
+        status_chr =  "⚡"
+        status_bat =  "🔋"
+        status_unk = "⁉️"
+        status_full =  "🔌"
+        low_threshold = 30
+}
+
+disk "/" {
+        format = "🖴 %percentage_used"
+        # on_click 1 = "exec thunar /"
+        on_click 1 = 'exec xfce4-terminal --execute df -h | less -+F'
+}
+
+load {
+        format = "🏋️ %1min"
+}
+
+memory {
+        format = "🧠 %percentage_used"
+        threshold_degraded = "1G"
+        format_degraded = "💥 %percentage_used"
+}
+
+tztime local {
+        format = "⏰ %Y-%m-%d %H:%M"
+        # on_click 1 = "exec bash -c 'cal'"
+}
+
+volume master {
+        format = "🔈 %volume"
+        format_muted = "🔇 %volume"
+        # on_click 1 = "exec i3-sensible-terminal -e alsamixer"
+        # on_click 2 = "exec amixer set Master toggle"
+        # on_click 3 = "exec killall alsamixer"
+        # on_click 4 = "exec amixer set Master 1+"
+        # on_click 5 = "exec amixer set Master 1-"
+}
+
+cpu_usage {
+        degraded_threshold = 10
+        max_threshold = 75
+        format = "😴 %usage"
+        format_above_degraded_threshold = "🤔 %usage"
+        format_above_threshold = "🤯 %usage"
+        on_click 1 = 'exec xfce4-terminal --execute htop'
+}
+# cpu_temperature {
+#     format = "T: %degrees <degree>C"
+#     title = 'hi'
+#     max_threshold = 42
+#     format_above_threshold = "Warning T above threshold: %degrees <degree>C"
+#     path = "/sys/devices/platform/coretemp.0/temp1_input"
+# }
+
+# PY3STATUS
+
+apt_updates {
+    format = "[\?not_zero : UPD: {apt}]"
+    format = "[\?not_zero : ☝️ {apt}]"
+    separator = true
+    on_click 1 = 'exec cool-retro-term -e sudo apt-get upgrade'
+}
+cmus {
+    separator = false
+}
+do_not_disturb {
+    separator = true
+    format = '🤫[\?color=state [\?if=state  | OFF]]'
+}
+keyboard_locks {
+    separator = true
+    format = '\?color=good [\?if=num_lock NUM][\?soft  ]'
+    format += '[\?if=caps_lock CAPS][\?soft  ][\?if=scroll_lock SCR]'
+}
+pomodoro {
+    separator = true
+    # display_bar = true
+    format = "⏲️ {ss} {bar}"
+    format_active = "  focus {format}"
+    format_stopped = "⏲️ focus"
+    format_break = "relax #{breakno} {format}"
+    format_break_stopped = "relax #{breakno} {format}"
+}
+xsel {
+    separator = true
+    max_size = 50
+    # command = "xsel --clipboard --output"
+    command = "xclip -out -selection default"
+    # on_click 1 = "exec xsel --clear --clipboard"
+    on_click 1 = "exec xclip -in -selection default /dev/null"
+    log_file = "~/.local/share/xsel/clipboard_log"
+    format = "✂️ {selection} 📋"
+}
