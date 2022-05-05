@@ -45,7 +45,7 @@ $(DOCKER_BUILD_TARGETS):  ## Build a docker container; from a specific base
 	codename="$(subst .,,$(suffix $(subst -,.,$(subst docker.build.,,$(@)))))"; \
 	tag="dotfiles-$${id}:$${codename}"; \
 	dockerfile="./.requirements/docker/$${id}-$${codename}.dockerfile"; \
-	$(MAKE) "./.requirements/deb/$${id}-$${codename}.cfg" "$${dockerfile}"; \
+	$(MAKE) $(wildcard .requirements/deb/its-package_*~$${id}-$${codename}_all.deb) "$${dockerfile}" "./.requirements/config.nix"; \
 	docker build -t "$${tag}" --file "$${dockerfile}" .
 	@echo "Built:	$(@)"
 
