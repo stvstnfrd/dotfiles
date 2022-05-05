@@ -1,0 +1,114 @@
+#!/bin/sh
+# TODO: sync/nosync
+#h NAME:
+#h 	its-df -  (simply) report file system space usage
+#h
+#h SYNOPSIS:
+#h 	its-df
+#h
+#h 	its-df -h
+#h
+#h 	its-df df-options
+#h
+#h  See complete help with **`its-df -h`**.
+#h
+#h  See *df-options* with **`df --help`**.
+#h
+#h DESCRIPTION:
+#h  Run **df** with (most) virtual filesystems excluded
+#h  and a simpler output.
+#h
+#h EXAMPLES:
+#h 	its-df
+#h 		Limit listing to non-virtual filesystems
+#h
+#h 	its-df -h
+#h 		Display help text and exit.
+#h
+#h 	its-df [...]
+#h 		When called with any other options,
+#h 		fall back to default behavior of **df**.
+#h
+#h OVERVIEW:
+#h  Frustrated seeing the output of **df** polluted with snaps
+#h  and other ad-hoc/virtual filesystems?
+#h 
+#h  **its-df** can help by filtering out more filesystems than **df** normally can.
+#h  While **df** does provide the **-x**/**--exclude-type** flag,
+#h  it only filters *one* filesystem type;
+#h  it doesn't support multiple options.
+#h
+#h OPTIONS:
+#h 	-h
+#h 		Display help text and exit.
+#h
+#h 	df-options
+#h 		Options to be passed directly to **df**;
+#h 		this disables all custom functionality of **its-dm**.
+#h
+#h DEFAULTS:
+#h 	ITS_DF_EXCLUDE_TYPES
+#h 		squashfs overlay tmpfs cifs devtmpfs
+#h
+#h EXIT STATUS:
+#h 	0
+#h 		success
+#h
+#h 	>0
+#h 		failure, the result of calling **df**
+#h
+#h ENVIRONMENT:
+#h 	ITS_DF_EXCLUDE_TYPES
+#h 		Space-separated list of filesystem types to be excluded
+#h
+#h SEE ALSO:
+#h 	df(1)
+#h
+#h HISTORY:
+#h 	2022
+#h 		Created.
+#h
+#h BUGS:
+#h 	 https://github.com/stvstnfrd/dotfiles/issues
+ITS_DF_EXCLUDE_TYPES="${ITS_DF_EXCLUDE_TYPES-squashfs,overlay,tmpfs,cifs,devtmpfs}"
+ITS_DF_OUTPUT_COLUMNS="${ITS_DF_OUTPUT_COLUMNS-source,fstype,size,avail,pcent,target}"
+print_help() { grep '^#h' "${1}" | sed 's/^#h \?//g'; }
+
+main() {
+    if [ "${#}" -eq 1 ] && [ "${1}" = '-h' ]
+    then
+        print_help "${0}"
+        return
+    elif [ "${#}" -gt 0 ]
+    then
+        command df "${@}"
+        return "${?}"
+    fi
+    excludes=$(echo "${ITS_DF_EXCLUDE_TYPES}" | sed 's/\(^[ \t]\+\)\|\([ \t]\+$\)//g; s/,/\\\|/g')
+    _grep() {
+        if [ -n "${excludes}" ]
+        then
+            grep -v "^\(${excludes}\) "
+        else
+            cat
+        fi
+    }
+    if [ -n "${ITS_DF_OUTPUT_COLUMNS}" ]
+    then
+        set -- --output="${ITS_DF_OUTPUT_COLUMNS}" "${@}"
+    fi
+    df \
+        --portability \
+        --print-type \
+    | tail +2 \
+    | awk '{print $2 FS $7}' \
+    | _grep \
+    | awk '{print $2}' \
+    | xargs df \
+        --human-readable \
+        --total \
+        "${@}" \
+    ;
+}
+
+main "${@}"
