@@ -8,6 +8,8 @@
 #h 	command-shadowed {executable} [args ...]
 #h 	command-shadowed /path/to/executable [args ...]
 #h
+#h 	See complete help with `command-shadowed --help`.
+#h
 #h DESCRIPTION:
 #h 	Execute the specified command, but when searching, ignore the
 #h 	first-matching ${PATH} entry, as well as shell functions.
