@@ -1,0 +1,8 @@
+#!/bin/sh
+# Trick kodi into thinking it's ${HOME} is actually a
+# subdirectory of ${XDG_CONFIG_HOME}
+# to keep its config file out of the real ${HOME}.
+HOME=${HOME}/.config/kodi \
+command-shadowed "${0}" \
+    "${@}" \
+;
