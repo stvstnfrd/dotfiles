@@ -1,4 +1,17 @@
 #!/usr/bin/env sh
+if command -v setxkbmap >/dev/null 2>&1
+then
+    # setxkbmap -option caps:swapescape
+    setxkbmap -option ctrl:nocaps
+fi
+if command -v xmodmap >/dev/null 2>&1 && [ -e "${HOME}/.local/etc/itsdm/x11/keyboard" ]
+then
+    xmodmap "${HOME}/.local/etc/itsdm/x11/keyboard"
+fi
+if command -v xcape >/dev/null 2>&1
+then
+    xcape -e 'Shift_L=parenleft;Shift_R=parenright;Control_L=Escape'
+fi
 set_gtk_theme() {
     if command -v gsettings >/dev/null 2>&1
     then
