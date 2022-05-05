@@ -62,6 +62,14 @@ bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 workspace_auto_back_and_forth yes
 
+# Media player controls
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPlayPause exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86AudioMedia exec --no-startup-id bash -c 'pgrep obs && (i3-msg "workspace prev" && pkill obs || true) || (i3-msg "workspace 3" && obs)'
+
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -69,7 +77,10 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
-bindsym XF86Display exec --no-startup-id bash "${HOME}/.config/i3/display.sh"
+bindsym XF86Display exec --no-startup-id "${HOME}/.config/i3/display.sh"
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
+
 bindsym XF86Tools exec --no-startup-id firefox -new-tab 'about:config'
 bindsym XF86Favorites exec --no-startup-id firefox -new-tab 'about:home'
 
