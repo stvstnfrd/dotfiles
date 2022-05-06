@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+# Select and exec a terminal emulator.
+
+command_exists() {
+	command -v "${1}" >/dev/null 2>&1
+}
+
+# shellcheck disable=SC2153
+terminals="${TERMINAL} xfce4-terminal cool-retro-term x-terminal-emulator mate-terminal gnome-terminal terminator urxvt rxvt termit Eterm aterm uxterm xterm roxterm termite lxterminal terminology st qterminal lilyterm tilix terminix konsole kitty guake tilda alacritty hyper"
+for terminal in ${terminals}
+do
+    if command_exists "${terminal}"
+    then
+        if [ "${terminal}" = 'xfce4-terminal' ]
+        then
+            set -- --hide-menubar --hide-toolbar "${@}"
+        fi
+        exec "${terminal}" "${@}"
+    fi
+done
+
+message="Could not find a terminal emulator; please install one:
+
+Suggestions:
+$(echo "${terminals}" | fold --spaces | sed 's/^ */\t/')"
+printf '%s\n' "${message}"
+exit 1
+# vim: tw=0
