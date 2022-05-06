@@ -1,6 +1,12 @@
 #!/bin/sh
 #h NAME:
+#h 	**PROGRAM-NAME**
+#h
 #h SYNOPSIS:
+#h 	**PROGRAM-NAME** **-h**
+#h
+#h 	See complete help with `PROGRAM-NAME -h`.
+#h
 #h DESCRIPTION:
 #h EXAMPLES:
 #h OVERVIEW:
