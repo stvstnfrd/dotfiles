@@ -52,11 +52,12 @@ exec --no-startup-id firefox --new-instance
 exec --no-startup-id i3-msg 'workspace 4; exec cool-retro-term -e screen -UrxR focus; workspace 2'
 
 # Assign windows to workspaces
+assign [class="discord"] 1
 assign [class="Slack"] 1
 assign [class="Thunderbird"] 1
-assign [class="Firefox"] 2
-# assign [class="Xfce4-terminal"] 2
-assign [class="Chrome"] 3
+assign [class="firefox"] 2
+assign [class="obs"] 3
+for_window [class="cool-retro-term"] fullscreen enable
 
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
