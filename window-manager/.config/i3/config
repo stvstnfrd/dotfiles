@@ -91,6 +91,9 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec its-terminal
 
+# Open a file browser
+bindsym $mod+t exec xdg-open ${HOME}
+
 # kill focused window
 bindsym $mod+q kill
 bindsym $mod+Shift+q kill
