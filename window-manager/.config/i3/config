@@ -90,7 +90,7 @@ bindsym $mod+q kill
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id "dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'monospace-22'"
+bindsym $mod+d exec --no-startup-id "dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'SpaceMono Nerd Font Mono-17-Bold'
 bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'monospace-22'"
 
 # change focus
