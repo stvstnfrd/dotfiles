@@ -9,7 +9,16 @@ on:
     - master
 jobs:
   bootstrap:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+        - debian-bullseye
+        - debian-buster
+        - debian-sid
+        - ubuntu-bionic
+        - ubuntu-impish
+        - ubuntu-jammy
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
     - run: sudo apt-get clean --fix-missing
@@ -18,10 +27,19 @@ jobs:
       run: make from-scratch
   docker:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+        - debian-bullseye
+        - debian-buster
+        - debian-sid
+        - ubuntu-bionic
+        - ubuntu-impish
+        - ubuntu-jammy
     steps:
     - uses: actions/checkout@v2
     - name: Build a docker container
-      run: make docker.build
+      run: make docker.build.${{ matrix.os }}
   lint:
     runs-on: ubuntu-latest
     steps:
