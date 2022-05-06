@@ -54,7 +54,10 @@ lint-awk: $(AWK_FILES)
 		--files-with-match \
 		'^\#!\/usr\/bin\/awk' \
 		--null \
-	| xargs -0 -n 1 $(AWK_LINT) \
+	| xargs -0 \
+		-n 1 \
+		--no-run-if-empty \
+		$(AWK_LINT) \
 	;
 
 .PHONY: lint
