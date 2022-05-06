@@ -37,6 +37,7 @@ docker.build:  ## Build a docker container; choose base with docker.build.*
 	do \
 		printf '\tmake %s\n' "$${target}"; \
 	done
+	exit 1
 
 .PHONY: $(DOCKER_BUILD_TARGETS)
 $(DOCKER_BUILD_TARGETS):  ## Build a docker container; from a specific base
@@ -76,6 +77,7 @@ docker.shell:  ## Start a container with a new --login shell; choose ${SHELL} wi
 	@echo
 	@echo 'You can also specify a command to be run by the shell by setting the COMMAND variable, like:'
 	@printf '\t%s\n' "make docker.shell.ubuntu-jammy COMMAND='ls -al'"
+	exit 1
 
 .PHONY: $(DOCKER_SHELL_TARGETS)
 $(DOCKER_SHELL_TARGETS):  ## Start a container with a new --login shell, customize via ${SHELL}
