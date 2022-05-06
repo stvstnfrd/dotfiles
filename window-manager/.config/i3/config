@@ -41,7 +41,6 @@ bindsym $mod+Shift+x exec i3lock --color=000000 && systemctl suspend
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id syndaemon -d -i 0.6s
-exec --no-startup-id ssh-add ~/.local/share/ssh/keys/id_rsa
 
 # Startup default windows
 exec --no-startup-id thunderbird
