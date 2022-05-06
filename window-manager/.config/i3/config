@@ -76,10 +76,12 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+# Brightness controls
 bindsym XF86Display exec --no-startup-id "${HOME}/.config/i3/display.sh"
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
 
+# Additional Function keys
 bindsym XF86Tools exec --no-startup-id firefox -new-tab 'about:config'
 bindsym XF86Favorites exec --no-startup-id firefox -new-tab 'about:home'
 
