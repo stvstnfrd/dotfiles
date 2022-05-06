@@ -20,14 +20,9 @@ client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
 client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
 client.background       #F8F8F2
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:monospace 12
-
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
-
+# Font for window titles.
+# Will also be used by the bar unless a different font is used in the bar {} block below.
+font pango:monospace,DejaVu Sans Mono,SpaceMono Nerd Font Mono Bold 16
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
@@ -217,6 +212,7 @@ bindsym $mod+r mode "resize"
 bar {
     status_command ${HOME}/.config/i3/status
     separator_symbol " | "
+    font pango:monospace,DejaVu Sans Mono,SpaceMono Nerd Font Mono Bold 15
     colors {
         # Dracula Theme
         background #282A36
