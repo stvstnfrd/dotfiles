@@ -106,6 +106,7 @@ _file=${0}
 print_help_section() {
     src_title=${1}
     dst_title=${2:-${src_title}}
+    # shellcheck disable=SC2002
     cat "${_file}" \
     | sed 's/^#h \?//g' \
     | awk "
