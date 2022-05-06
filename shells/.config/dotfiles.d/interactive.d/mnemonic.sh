@@ -26,7 +26,7 @@ _name=
 for _level in $(seq 1 5); do
     _name="${_name}l"
     # shellcheck disable=SC2139
-    alias "${_name}"="ls-level ${_level}"
+    alias "${_name}=ls-level ${_level}"
 done
 alias m='man '
 alias n='npm '
