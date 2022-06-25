@@ -36,7 +36,7 @@ bindsym $mod+Shift+x exec i3lock --color=000000 && systemctl suspend
 # Startup default windows
 exec --no-startup-id thunderbird
 exec --no-startup-id discord
-exec --no-startup-id i3-msg 'workspace 2; exec xfce4-terminal --hide-menubar --hide-toolbar -e "screen -UrxR wip"; workspace 2'
+exec --no-startup-id i3-msg 'workspace 2; exec xfce4-terminal --hide-menubar --hide-toolbar -e "screens"; workspace 2'
 exec --no-startup-id firefox --new-instance
 exec --no-startup-id i3-msg 'workspace 4; exec cool-retro-term -e screen -UrxR focus; workspace 2'
 
