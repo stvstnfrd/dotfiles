@@ -1,0 +1,31 @@
+#!/bin/sh
+get_process_id() {
+	process_id="$( \
+		pgrep \
+			--list-name \
+			--list-full \
+			--euid "${USER}" \
+			"${search}" \
+		| fzf \
+			--tac \
+		;
+	)"
+	if [ -n "${process_id}" ]
+	then
+		set -- ${process_id}
+		echo "${1}"
+	fi
+}
+
+flag=
+search="${1}"
+if [ "${search}" = '-9' ]
+then
+	search="${2}"
+	flag='-9'
+fi
+process_id="$(get_process_id "${search}")"
+if [ -n "${process_id}" ]
+then
+	kill ${flag} "${process_id}"
+fi
