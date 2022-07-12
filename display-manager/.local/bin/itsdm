@@ -230,18 +230,23 @@ handle_choice() {
     choice=${1}
     if [ -n "${choice}" ]
     then
+        log INFO "Attempting to exec choice: ${choice}" >&2
         check_choice "${choice}" || return ${?}
         check_exec "${choice}" || return ${?}
         execute_app "${choice}"
     else
+        log INFO "Falling back to default sh(ell): ${SHELL:-sh}" >&2
         exec "${SHELL:-sh}"
     fi
 }
 main() {
+    log DEBUG "Initialize" >&2
     if command -v fzf >/dev/null 2>&1
     then
+        log DEBUG "FZF available" >&2
         choice=$(gather_choices | display_choices_fzf)
     else
+        log DEBUG "FZF not available" >&2
         # shellcheck disable=SC2046
         choice=$(display_choices_sh $(gather_choices))
     fi
