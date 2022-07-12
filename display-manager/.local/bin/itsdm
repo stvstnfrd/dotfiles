@@ -38,15 +38,16 @@
 #h 		failure
 #h
 #h ENVIRONMENT:
+#h 	ITSDM_PATH
+#h 		A colon-separated list of paths which contain
+#h 		available *.desktop* xsession files.
+#h
 #h 	XDG_CACHE_HOME
 #h 		The base location for logs, default is *${HOME}/.cache*.
 #h
 #h 	PAGER
 #h 		The pager to be used when invoked with **-m**, **--manual**,
 #h 		defaults to **less**.
-#h
-# 	If they exist, the list of available options will be pulled from
-# 	*.desktop* files in the following directories:
 #h
 #h FILES:
 #h
@@ -79,6 +80,23 @@ while getopts ":hmM" option; do case ${option} in
     h) print_help "${0}"; exit;;
     *) ;;
 esac; done
+
+if [ -z "${ITSDM_PATH}" ]
+then
+    ITSDM_PATH=''
+    if [ -d '/usr/share/xsessions' ]
+    then
+        ITSDM_PATH="/usr/share/xsessions:${ITSDM_PATH}"
+    fi
+    if [ -d "${NIX_PROFILE:-${HOME}/.nix-profile}/share/xsessions" ]
+    then
+        ITSDM_PATH="${NIX_PROFILE:-${HOME}/.nix-profile}/share/xsessions:${ITSDM_PATH}"
+    fi
+    if [ -d "${HOME}/.local/share/xsessions" ]
+    then
+        ITSDM_PATH="${HOME}/.local/share/xsessions:${ITSDM_PATH}"
+    fi
+fi
 
 log() {
     level=${1}
