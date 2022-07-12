@@ -42,6 +42,18 @@
 #h 		A colon-separated list of paths which contain
 #h 		available *.desktop* xsession files.
 #h
+#h 	ITSDM_VT1, ITSDM_VT2, ..., ITSDM_VT9
+#h 		A preferred desktop (x)session to be run
+#h 		on the specified virtual terminal.
+#h 		The string is passed directly to to `fzf`
+#h 		(eg: `fzf --query "${ITSDM_VT1}"`),
+#h 		so you can use any fuzzy text matching that it supports.
+#h 		For example, from least specific to most:
+#h 			- `i3` (matches any filename matching `i3`)
+#h 			- `^i3` (matches any filename starting with `i3`)
+#h 			- `^i3.desktop$` (matches only one file named `i3.desktop`
+#h 		See *man fzf* for more details.
+#h
 #h 	XDG_CACHE_HOME
 #h 		The base location for logs, default is *${HOME}/.cache*.
 #h
@@ -153,7 +165,11 @@ display_choices_sh() {
     return 1
 }
 display_choices_fzf() {
+    default=''
+    eval "default=\${ITSDM_VT${XDG_VTNR}}"
     fzf \
+        --query="${default}" \
+        --select-1 \
         --preview="grep \
         '^\(Name\|Exec\|Comment\)=' \
         {} \
