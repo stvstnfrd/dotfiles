@@ -79,6 +79,7 @@ if [ "${XDG_VTNR:-100}" -le 3 ]; then
 		if command -v itsdm >/dev/null 2>&1; then
 			# and not already running
 			if [ -z "${ITSDM_PID}" ]; then
+				clear
 				exec itsdm
 			fi
 		fi
