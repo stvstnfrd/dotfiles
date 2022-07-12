@@ -116,7 +116,7 @@ log() {
     logfile=${XDG_CACHE_HOME}/itsdm/log
     test -e "${logfile}" || mkdir -p "$(dirname "${logfile}")"
     datestamp=$(date +'%Y-%m-%d %H:%M:%S')
-    echo "${datestamp}	${level}	${message}" >>"${logfile}"
+    echo "${datestamp}	${level}	$$	${message}" >>"${logfile}"
 }
 gather_choices() {
     grep_args=
