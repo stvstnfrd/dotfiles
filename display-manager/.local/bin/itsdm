@@ -228,9 +228,14 @@ check_choice() {
 }
 handle_choice() {
     choice=${1}
-    check_choice "${choice}" || return ${?}
-    check_exec "${choice}" || return ${?}
-    execute_app "${choice}"
+    if [ -n "${choice}" ]
+    then
+        check_choice "${choice}" || return ${?}
+        check_exec "${choice}" || return ${?}
+        execute_app "${choice}"
+    else
+        exec "${SHELL:-sh}"
+    fi
 }
 main() {
     if command -v fzf >/dev/null 2>&1
