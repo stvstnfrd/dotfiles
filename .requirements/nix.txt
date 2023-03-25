@@ -27,6 +27,7 @@ nixpkgs.neofetch
 nixpkgs.netcat
 nixpkgs.newsboat
 nixpkgs.nodejs
+nixpkgs.pandoc
 nixpkgs.pass
 nixpkgs.python38Full
 nixpkgs.python38Packages.pip

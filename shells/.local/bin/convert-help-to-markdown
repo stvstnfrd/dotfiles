@@ -1,0 +1,101 @@
+#!/usr/bin/awk -f
+BEGIN {
+    everything = ""
+    second_level = 0
+}
+/^[A-Za-z]/ {
+    sub(/:$/,"")
+    heading = $0
+    second_level = 0
+    everything = everything "\n\n# " $0 "\n"
+    next
+}
+heading ~ /NAME/ && /^[\t]/ {
+    FS=" - "
+    sub(/^\t/,"")
+    name = $1
+    title = $2
+    everything = everything "\n**" name "**" FS title "\n"
+    FS=" "
+    next
+}
+heading ~ /DEFAULTS|ENVIRONMENT|EXIT STATUS|FILES|HISTORY|VERSIONS/ && $0 ~ /^[\t][^\t ]/ {
+    sub(/^\t/,"")
+    formatter = "**"
+    if (heading ~ /FILES/) {
+        formatter = "*"
+    }
+    everything = everything "\n" formatter $0 formatter " "
+    next
+}
+heading ~ /DEFAULTS|ENVIRONMENT|EXAMPLES|FILES|EXIT STATUS|HISTORY|OPTIONS|VERSIONS/ && /^[\t][\t]/ {
+    sub(/^\t\t/,"")
+    everything = everything "\n: " $0
+    next
+}
+heading ~ /SEE ALSO/ {
+    sub(/^\t/,"")
+    gsub(/[-_a-zA-Z0-9]+\([0-9]\)/,"**&**")
+}
+heading ~ /OPTIONS/ && /^\t+[^ \t]/ {
+    FS=", "
+    sub(/^\t/,"")
+    formatted=""
+    for (i=1; i<=NF; i++) {
+        formatted=$i
+        if (formatted ~ / /) {
+            sub(/ /,"** *",formatted)
+            sub(/^/,"**",formatted)
+            sub(/$/,"*",formatted)
+        } else {
+            sub(/^.*$/,"**&**",formatted)
+        }
+        $i = formatted
+    }
+    gsub(/ \*\*/,", **")
+    gsub(/--/,"\\\&")
+    everything = everything "\n" $0
+    FS=" "
+    next
+}
+heading ~ /SYNOPSIS/ && /\t[^ ]/ {
+    sub(/^\t/,"")
+    gsub(/\[/,"& ")
+    gsub(/\]/," &")
+    $1 = "**" $1 "**"
+    for (i=2; i<=NF; i++) {
+        if ($i ~ /^--/) {
+            $i = "**\\" $i "**"
+        } else if ($i ~ /^-/) {
+            $i = "**" $i "**"
+        } else if ($i !~ /[\[\]]/) {
+            $i = "*" $i "*"
+        }
+    }
+    gsub(/\[ /,"[")
+    gsub(/ \]/,"]")
+}
+heading ~ /EXAMPLES/ && /.+/ {
+    sub(/^\t/,"")
+    $1 = "**" $1 "**"
+    for (i=2; i<=NF; i++) {
+        if ($i ~ /^-/) {
+            $i = "**\\" $i "**"
+        } else {
+            $i = "*" $i "*"
+        }
+    }
+}
+/^\t / {
+    sub(/^\t /,"")
+}
+{
+    everything = everything "\n" $0
+}
+END {
+    if (title == "") {
+        title = "The " name " Manual Page"
+    }
+    print "% " toupper(name) "(1) Version " version " | " title
+    print everything
+}

@@ -44,6 +44,20 @@ FIND_FILES_ALL=( \
 LINT_SH_ALL=$(FIND_FILES_ALL) | $(XARGS_SHELLCHECK)
 XARGS_SHELLCHECK = xargs -0 --no-run-if-empty shellcheck --external-sources
 
+AWK_LINT=$(shell command -v awk-lint >/dev/null 2>&1 && echo awk-lint || echo "echo '\n\ta b c\td ef\n\ng' | awk -f")
+AWK_FILES=$(shell grep \
+    --recursive \
+    --files-with-match \
+    '^\#!\/usr\/bin\/awk' \
+)
+
+.PHONY: lint-awk
+lint-awk: $(AWK_FILES)
+
+.PHONY: $(AWK_FILES)
+$(AWK_FILES):
+	@$(AWK_LINT) "$(@)"
+
 .PHONY: lint
-lint:  ## Run the linter against all files
+lint: lint-awk  ## Run the linter against all files
 	$(LINT_SH_ALL)
