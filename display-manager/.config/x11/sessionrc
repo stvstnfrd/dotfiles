@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+set_gtk_theme() {
+    if command -v gsettings >/dev/null 2>&1
+    then
+        current_theme=$(gsettings get org.gnome.desktop.interface gtk-theme)
+        theme_name="${1:-${current_theme}}"
+        if find \
+            /usr/share/themes \
+            -mindepth 1 -maxdepth 1 -type d \
+            -print0 \
+        | xargs -0 -n1 basename \
+        | sort \
+        | grep -qw "${theme_name}" \
+        ; then
+            echo >/dev/null
+            if ! [ "${current_theme}" = "${theme_name}" ]
+            then
+                gsettings set org.gnome.desktop.interface gtk-theme "${theme_name}"
+            fi
+        fi
+    fi
+}
+set_gtk_theme 'Greybird-dark'
