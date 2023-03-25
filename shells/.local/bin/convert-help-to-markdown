@@ -53,7 +53,7 @@ heading ~ /OPTIONS/ && /^\t+[^ \t]/ {
         $i = formatted
     }
     gsub(/ \*\*/,", **")
-    gsub(/--/,"\\\&")
+    # gsub(/--/,"\\\&")
     everything = everything "\n" $0
     FS=" "
     next
