@@ -27,7 +27,7 @@ fi
 unset __dir_dotfiles_startup
 
 if [ -s "${HOME}/.nix-profile/share/bash-completion/bash_completion" ]; then
-    # shellcheck disable=SC1090
+    # shellcheck disable=SC1090,SC1091
     . "${HOME}/.nix-profile/share/bash-completion/bash_completion"
 fi
 for alias_file in "${XDG_CONFIG_HOME}"/bash/completion.d/*

@@ -10,7 +10,7 @@ PATH="/usr/local/sbin:${PATH}"
 PATH="/nix/var/nix/profiles/default/bin:${PATH}"
 PATH="${HOME}/.nix-profile/bin:${PATH}"
 if [ -e "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]; then
-    # shellcheck disable=SC1090
+    # shellcheck disable=SC1090,SC1091
     . "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 elif [ -e "/etc/profile.d/nix.sh" ]; then
     # shellcheck disable=SC1090,SC1091
@@ -31,5 +31,5 @@ export MANPATH
 # https://stackoverflow.com/a/53825858
 _preload=/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0
 if [ -e "${_preload}" ]; then
-    export LD_PRELOAD=${_preload}:${LD_PRELOAD}
+    export LD_PRELOAD="${_preload}:${LD_PRELOAD}"
 fi

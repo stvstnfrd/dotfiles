@@ -46,7 +46,7 @@ try_fork() {
 }
 edx_devstack_update() {
     REPOS="configuration course-discovery credentials cs_comments_service devstack edx-notes-api edx-platform edx-proctoring edx-themes frontend-app-course-authoring frontend-app-gradebook frontend-app-learning frontend-app-program-console frontend-app-publisher frontend-build frontend-platform frontend-template-application xblock-free-text-response xblock-image-modal xblock-in-video-quiz xblock-qualtrics-survey xblock-sdk xblock-sql-grader xblock-submit-and-compare"
-    export DEVSTACK_WORKSPACE=${HOME}/edx/src
+    export DEVSTACK_WORKSPACE="${HOME}/edx/src"
     DEVSTACK_WORKSPACE_INTERNAL=${HOME}/edx/local/src
     DEVSTACK_CHECKOUT=${DEVSTACK_WORKSPACE}/devstack
     makeC "${DEVSTACK_CHECKOUT}" dev.pull
@@ -59,9 +59,9 @@ edx_devstack_checkout() {
     DEVSTACK_NAME=devstack
     WORKON_HOME=${WORKON_HOME-:${HOME}/.local/virtualenvs}
     VENV_PATH=${WORKON_HOME}/${DEVSTACK_NAME}
-    export DEVSTACK_WORKSPACE=${HOME}/edx/src
+    export DEVSTACK_WORKSPACE="${HOME}/edx/src"
     DEVSTACK_WORKSPACE_INTERNAL=${HOME}/edx/local/src
-    DEVSTACK_CHECKOUT=${DEVSTACK_WORKSPACE}/devstack
+    DEVSTACK_CHECKOUT="${DEVSTACK_WORKSPACE}/devstack"
     export DEFAULT_SERVICES=lms+studio+forum+frontend-app-learning+discovery
     PRIVATE_REPOS="${PRIVATE_REPOS:-''}"
     REPOS="configuration course-discovery credentials cs_comments_service devstack edx-notes-api edx-platform edx-proctoring edx-themes frontend-app-course-authoring frontend-app-gradebook frontend-app-learning frontend-app-program-console frontend-app-publisher frontend-build frontend-platform frontend-template-application xblock-free-text-response xblock-image-modal xblock-in-video-quiz xblock-qualtrics-survey xblock-sdk xblock-sql-grader xblock-submit-and-compare"
