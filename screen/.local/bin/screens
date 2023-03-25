@@ -1,21 +1,87 @@
 #!/bin/sh
 #h NAME:
-#h 	screens
+#h 	screens - A Display Manager for GNU screen sessions
+#h
 #h SYNOPSIS:
+#h
+#h 	screens [screen-options]
+#h
+#h 	screens -h
+#h
 #h DESCRIPTION:
+#h 	 **screens** is a _nearly_ drop-in replacement for GNU **screen**.
+#h
+#h 	 If invoked *with* any arguments,
+#h 	 **screen** is called directly and all options are passed along.
+#h
+#h 	 If invoked *without* any arguments,
+#h 	 a new/existing session is chosen and created/connected.
+#h
 #h EXAMPLES:
+#h 	screens
+#h 		Select a new/existing session to start/connect
+#h
+#h 	screens -x
+#h 		Connect to a running session
+#h
+#h 	screens -S session-name
+#h 		Start and connect to a new session (named *session-name*)
+#h
 #h OVERVIEW:
-#h OPTIONS:
+#h 	 If invoked *with* any arguments,
+#h 	 **screens** execution is simply a proxy/wrapper for the default GNU **screen**.
+#h
+#h 	 We extend the behavior through the default case,
+#h 	 without any options.
+#h
+#h 	 If invoked *without* any arguments,
+#h 	 the user is presented a list of all running user sessions,
+#h 	 as well as an option to create a new session.
+#h
+#h 	 Selecting an existing screen connects to the screen in-progress,
+#h 	 whereas selecting *New Session* creates a new session before connecting.
+#h 	 Selections can be made by navigating with the arrow keys
+#h 	 or typing out a name; autocomplete is available.
+#h 	 Confirm the selection by pressing **ENTER**.
+#h
+#h 	 The interactive selection screen is powered by **fzf**.
+#h 	 Without it installed, **screens** degrades gracefully by
+#h 	 automatically selecting the default session
+#h 	 and creating/connecting to it.
+#h
 #h DEFAULTS:
+#h 	default_session_name='scratchpad'
+#h 		New/existing sessions will be created/reconnected with this name.
+#h
+#h OPTIONS:
+#h 	-h, --help
+#h 		Print this message and exit.
+#h
+#h 	 Any options (besides **-h**), will be passed directly to **screen**.
+#h 	 See `screen --help` for the list.
+#h
 #h EXIT STATUS:
-#h ENVIRONMENT:
-#h FILES:
+#h 	0
+#h 		success
+#h
+#h 	>0
+#h 		failure, returned from **screen** itself
+#h
 #h SEE ALSO:
+#h 	screen(1)
+#h
 #h HISTORY:
+#h 	 Created to scratch an itch...
+#h
+#h AUTHORS:
+#h 	 stvstnfrd
+#h
+#h VERSIONS:
+#h 	0.0.0
+#h 		YYYY-MM-dd	created
+#h
 #h BUGS:
-#h USAGE:
-#h VERSION:
-#h 	0.0
+#h 	 https://github.com/stvstnfrd/dotfiles/issues
 _screens () {
     while getopts ":h" option; do case ${option} in h) grep '^#h' "${0}" | sed 's/^#h \?//g'; exit;; *) ;; esac; done
     if [ "${#}" -eq 0 ]
