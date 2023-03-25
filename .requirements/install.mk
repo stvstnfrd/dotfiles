@@ -52,4 +52,9 @@ install.user-dirs:  ## Create untracked user directories
 			mkdir -p $${XDG_CACHE_HOME}/$${path}; \
 		fi \
 	done \
+	&& for path in freecad; do \
+		if [ ! -e $${XDG_CONFIG_HOME}/$${path} ]; then \
+			mkdir -p $${XDG_CONFIG_HOME}/$${path}; \
+		fi \
+	done \
 	;
