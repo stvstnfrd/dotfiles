@@ -13,4 +13,4 @@ man: $(MAN_FILES)  ## Generate local man pages
 $(MAN_DIR)/%.1: $(COMMAND_DIR)/%
 	"$(<)" -h \
 	| "$(PANDOC_PREPROCESS)" \
-	| "$(PANDOC)" $(PANDOC_ARGS) --from markdown --to man -o "$(@)"
+	| "$(PANDOC)" $(PANDOC_ARGS) --from markdown-smart --to man -o "$(@)"
