@@ -1,0 +1,155 @@
+#!/bin/sh
+#h NAME:
+#h 	grep-right - *grep* done right!
+#h
+#h SYNOPSIS:
+#h 	grep-right [-h|--help]
+#h
+#h 	grep-right [grep-option ...] search-term [directory ...]
+#h
+#h DESCRIPTION:
+#h 	 **grep-right** tries to be "grep done right";
+#h 	 a drop-in replacement/wrapper for standard **grep**
+#h 	 with sane/speedy defaults.
+#h
+#h 	 Most importantly, it searches recursively by default.
+#h
+#h 	 A (customizable) list of files/directories are omitted from searches.
+#h
+#h 	 Output is colorized and sent to PAGER.
+#h
+#h EXAMPLES:
+#h 	grep-right help
+#h 		Search current directory recursively for text files containing *help*
+#h
+#h 	grep-right --include='Makefile' '^install:'
+#h 		Search for Makefiles containing an *install* target.
+#h
+#h OVERVIEW:
+#h 	 By setting **GREP_EXCLUDE_PATH**=; and **GREP_EXCLUDE_GLOB**=;,
+#h 	 **grep-right** fallback
+#h 	 
+#h 	 TODO: More here...
+#h 	 
+#h 	 
+#h
+#h OPTIONS:
+#h 	 **grep-right** acts as a proxy wrapper for **grep**,
+#h 	 so it supports all the same arguments;
+#h 	 see `man grep` for details.
+#h
+#h 	-h, --help
+#h 		Display help text and exit
+#h
+#h DEFAULTS:
+#h 	GREP_EXCLUDE_PATH
+#h 		.cvs:.git:.hg:.svn:\__pycache__:test_root:dist:node_modules:coverage:htmlcov:cover
+#h
+#h 	GREP_EXCLUDE_GLOB
+#h 		\*.po:\*.mo
+#h
+#h EXIT STATUS:
+#h 	0
+#h 		if *a* line is selected
+#h
+#h 	1
+#h 		if *no* line is selected
+#h
+#h 	2
+#h 		if an *error* occurred
+#h
+#h 	 However, if **\-q** or **\--quiet** or **\--silent** is used and
+#h 	 a line is selected, the exit status is 0 even if an error occurred.
+#h
+#h ENVIRONMENT:
+#h 	GREP_EXCLUDE_PATH
+#h 		A colon-separated list of *directories* to be excluded from searches
+#h
+#h 	GREP_EXCLUDE_GLOB
+#h 		A colon-separated list of *file globs* to be excluded from searches
+#h
+#h FILES:
+#h 	${XDG_CONFIG_HOME}/dotfiles.d/interactive.d/grep.sh
+#h 		Provide some aliases here.
+#h
+#h SEE ALSO:
+#h 	grep(1)
+#h
+#h HISTORY:
+#h 	2014
+#h 		Original work began under the name **grepr**.
+#h
+#h 	2014-2022
+#h 		Underwent various incarnations; **rgrep**, **rg**.
+#h 		Implemented as various shell scripts, aliases, exectuable, scripts.
+#h
+#h 	2022
+#h 		Cleaned up, moved to a script, and renamed **grep-right**
+#h
+#h BUGS:
+#h 	 https://github.com/stvstnfrd/dotfiles/issues
+#h
+#h VERSIONS:
+#h 	1.0.0
+#h 		initial release
+#h
+# shellcheck disable=SC2002
+set -eau # o pipefail
+
+GREP_EXCLUDE_PATH=${GREP_EXCLUDE_PATH:-'.cvs:.git:.hg:.svn:__pycache__:test_root:dist:node_modules:coverage:htmlcov:cover'}
+GREP_EXCLUDE_GLOB=${GREP_EXCLUDE_GLOB:-'*.po:*.mo'}
+
+_NAME=${0}
+
+help() { grep '^#h' "${1}" | sed 's/^#h \?//g'; }
+usage() { echo "Usage:"; help "${@}" | awk 'BEGIN { inside=0 }; /^[^\t]/ { inside=0 }  inside; /^SYNOPSIS/ { inside=1 };'; }
+
+main() {
+    #d OPTIONS
+    for option in "${@}"; do case "${option}" in
+        #d Print help text and exit
+        -h|--help) help "${0}"; exit;;
+        *) ;;
+    esac; done
+    grep_flag_available() {
+        echo | grep "${1}" '' >/dev/null 2>&1
+    }
+    grep_flag_provided_include() {
+        echo "${@}" | grep --quiet -- '--include='
+    }
+    set -- --color=always "${@}"
+    set -- --binary-files=without-match "${@}"
+    set -- --recursive "${@}"
+    OLD_IFS="${IFS}"
+    IFS=':'
+    if grep_flag_available --exclude-dir=.cvs; then
+        # added in grep 2.5.3
+        for PATTERN in ${GREP_EXCLUDE_PATH}; do
+            set -- --exclude-dir="${PATTERN}" "${@}"
+        done
+    elif grep_flag_available --exclude=.cvs; then
+        for PATTERN in ${GREP_EXCLUDE_PATH}; do
+            set -- --exclude="${PATTERN}" "${@}"
+        done
+    fi
+    if ! grep_flag_provided_include "${@}"
+    then
+        if grep_flag_available "--exclude='*.po'"
+        then
+            for PATTERN in ${GREP_EXCLUDE_GLOB}; do
+                set -- --exclude="${PATTERN}" "${@}"
+            done
+        fi
+    fi
+    IFS="${OLD_IFS}"
+    # shellcheck disable=SC2086
+    grep \
+        "${@}" \
+    | less \
+        --RAW-CONTROL-CHARS \
+        -S \
+        --quit-if-one-screen \
+    ;
+}
+
+main "${@}"

@@ -1,0 +1,9 @@
+#!/bin/sh
+main() {
+    grep-right \
+        --files-with-matches \
+        "${@}" \
+    ;
+}
+
+main "${@}"

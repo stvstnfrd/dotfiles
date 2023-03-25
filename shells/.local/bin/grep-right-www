@@ -1,0 +1,11 @@
+#!/bin/sh
+main() {
+    grep-right \
+        --include='*.html' \
+        --include='*.jsx?' \
+        --include='*.s?css' \
+        "${@}" \
+    ;
+}
+
+main "${@}"
