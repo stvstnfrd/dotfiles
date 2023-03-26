@@ -6,7 +6,6 @@ alias ag='ag --pager=less '
 alias d='vimdiff '
 alias e='echo '
 alias f='find '
-alias g='git '
 # map aliases from git to bash
 # foreach git alias 'x', create bash alias 'gx'
 if command -v git >/dev/null 2>&1; then
