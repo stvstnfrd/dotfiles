@@ -9,7 +9,11 @@ on:
     - master
 jobs:
   bootstrap:
-    runs-on: ubuntu-latest
+    matrix:
+      os:
+      - ubuntu-bionic
+      - ubuntu-impish
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
     - run: sudo apt-get clean --fix-missing
