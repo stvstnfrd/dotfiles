@@ -1,19 +1,32 @@
 #!/bin/sh
 set -eau
-keyname=${1:-id_rsa}
-[ "${#}" -eq 0 ] || shift
-comment=${*:-${USER}@$(uname -n)}
-keypath=${HOME}/.config/ssh/keys/${keyname}
-if [ -e "${keypath}" ]
-then
-	echo "This key already exists:	${keypath}"
-	echo "Specify a new name like:	$(basename "${0}") new-key-name"
-	exit 1
-fi
-ssh-keygen \
-	-t rsa \
-	-b 4096 \
-	-f "${keypath}" \
-	-C "${comment}" \
-;
-echo "Key created at:	${keypath}"
+
+help() { grep '^#h' "${1}" | sed 's/^#h \?//g'; }
+
+main() {
+    for option in "${@}"; do case "${option}" in
+        #d Print help text and exit
+        -h|--help) help "${0}"; exit;;
+        *) ;;
+    esac; done
+
+    keyname=${1:-id_rsa}
+    [ "${#}" -eq 0 ] || shift
+    comment=${*:-${USER}@$(uname -n)}
+    keypath=${HOME}/.config/ssh/keys/${keyname}
+    if [ -e "${keypath}" ]
+    then
+        echo "This key already exists:	${keypath}"
+        echo "Specify a new name like:	$(basename "${0}") new-key-name"
+        exit 1
+    fi
+    ssh-keygen \
+        -t rsa \
+        -b 4096 \
+        -f "${keypath}" \
+        -C "${comment}" \
+    ;
+    echo "Key created at:	${keypath}"
+}
+
+main "${@}"
