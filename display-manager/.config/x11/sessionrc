@@ -12,8 +12,14 @@ if command -v xcape >/dev/null 2>&1
 then
     xcape -e 'Shift_L=parenleft;Shift_R=parenright;Control_L=Escape'
 fi
-xrandr --auto
-udiskie --automount --notify --tray --file-manager=thunar &
+if command -v xrandr >/dev/null 2>&1
+then
+    xrandr --auto
+fi
+if command -v udiskie >/dev/null 2>&1
+then
+    udiskie --automount --notify --tray --file-manager=thunar &
+fi
 set_gtk_theme() {
     if command -v gsettings >/dev/null 2>&1
     then
