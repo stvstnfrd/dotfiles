@@ -9,8 +9,8 @@ log() {
 [ -d "${agent_dir}" ] || mkdir -p "${agent_dir}"
 if [ -f "${agent_file}" ]
 then
-    # shellcheck disable=SC1090
     log INFO "Sourcing existing agent file: ${agent_file}"
+    # shellcheck disable=SC1090
     . "${agent_file}" >/dev/null
     log INFO "Sourced existing agent file: ${agent_file}"
     if ! kill -0 "${SSH_AGENT_PID}" >/dev/null 2>&1
