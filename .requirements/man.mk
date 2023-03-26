@@ -1,4 +1,4 @@
-MAN_COMMANDS=grep-right itsdm its-terminal make-ssh-key pbcopy pbpaste screens its-df
+MAN_COMMANDS=grep-right itsdm its-terminal make-ssh-key mount-media pbcopy pbpaste screens its-df
 COMMAND_DIR=$(HOME)/.local/bin
 MAN_DIR=$(HOME)/.local/share/man/man1
 MAN_FILES:=$(addprefix $(MAN_DIR)/,$(MAN_COMMANDS))
