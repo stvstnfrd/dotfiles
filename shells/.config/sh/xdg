@@ -24,16 +24,16 @@ fi
 export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
 export NETRC="${XDG_CONFIG_HOME}/dotsecrets/netrc/.netrc"
 export NODE_REPL_HISTORY="${XDG_CACHE_HOME}/node.repl.history"
-export NPM_CONFIG_USERCONFIG=${XDG_CONFIG_HOME}/npm/rc
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/rc"
 export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
-export PASSWORD_STORE_DIR=${XDG_CONFIG_HOME}/pass
+export PASSWORD_STORE_DIR="${XDG_CONFIG_HOME}/pass"
 export PIP_CONFIG_FILE="${XDG_CONFIG_HOME}/pip/conf"
 export PIP_LOG_FILE="${XDG_CACHE_HOME}/pip/log"
 export PROJECT_HOME="${HOME}/projects"
 export PYTHON_EGG_CACHE="${XDG_CACHE_HOME}/python-eggs"
 export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/startup.py"
 export SCREENRC="${XDG_CONFIG_HOME}/screen/rc"
-export SQLITE_HISTORY=${XDG_DATA_HOME}/sqlite_history
+export SQLITE_HISTORY="${XDG_DATA_HOME}/sqlite_history"
 export VAGRANT_HOME="${XDG_CONFIG_HOME}/vagrant.d"
 if command -v VBoxManage >/dev/null 2>&1; then
 	export VBOX_USER_HOME="${XDG_CONFIG_HOME}/virtualbox"
@@ -41,8 +41,10 @@ if command -v VBoxManage >/dev/null 2>&1; then
 fi
 if [ -e "${XDG_CONFIG_HOME}/vim/rc.vim" ]; then
     # shellcheck disable=SC2016
+    # shellcheck disable=SC2089
     export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/rc.vim" | source $MYVIMRC'
 else
+    # shellcheck disable=SC2090
     export VIMINIT=''
 fi
 export WORKON_HOME="${HOME}/.local/virtualenvs"

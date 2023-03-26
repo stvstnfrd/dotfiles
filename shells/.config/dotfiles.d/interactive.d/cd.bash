@@ -4,7 +4,7 @@
 # $_Z_EXCLUDE_DIRS to an array of directory trees to exclude.
 # $_Z_OWNER to allow usage when in 'sudo -s' mode.
 if [ -e "${HOME}/src/z/z.sh" ]; then
-    # shellcheck disable=SC1090
+    # shellcheck disable=SC1090,SC1091
     . "${HOME}/src/z/z.sh"
     j(){
         if [ ${#} -gt 0 ]; then
