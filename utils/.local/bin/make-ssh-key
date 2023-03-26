@@ -1,4 +1,59 @@
 #!/bin/sh
+#h NAME:
+#h 	make-ssh-key - create new SSH keys easily
+#h
+#h SYNOPSIS:
+#h 	make-ssh-key [-h|--help]
+#h 	make-ssh-key [key-name [a long comment]]
+#h
+#h DESCRIPTION:
+#h 	 **make-ssh-key** is an easy way to generate new SSH keys
+#h 	 with sane defaults.
+#h
+#h EXAMPLES:
+#h 	make-ssh-key
+#h 		Create a new key named id_rsa
+#h
+#h 	make-ssh-key github
+#h 		Create a new key named github
+#h
+#h 	make-ssh-key work-user This is my work account.
+#h 		Create a new key named work-user with an attached comment.
+#h
+#h OVERVIEW:
+#h 	 This will create a new ssh key,
+#h 	 but will never overwrite an existing key.
+#h
+#h OPTIONS:
+#h 	-h, --help
+#h 		Display help text and exit
+#h
+#h EXIT STATUS:
+#h 	0
+#h 		a key is created
+#h
+#h 	1
+#h 		a key exists with this name
+#h
+#h ENVIRONMENT:
+#h 	XDG_CONFIG_HOME
+#h 		We write keys to ${XDG_CONFIG_HOME}/ssh/keys
+#h
+#h FILES:
+#h 	${XDG_CONFIG_HOME}/ssh/keys/{key-name}
+#h 		The {key-name} file path
+#h
+#h HISTORY:
+#h 	2014-2023
+#h 		This script has evolved over the years.
+#h
+#h BUGS:
+#h 	 https://github.com/stvstnfrd/dotfiles/issues
+#h
+#h VERSIONS:
+#h 	1.0.0
+#h 		initial release
+#h
 set -eau
 
 help() { grep '^#h' "${1}" | sed 's/^#h \?//g'; }
