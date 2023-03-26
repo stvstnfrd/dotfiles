@@ -18,6 +18,7 @@ make system NIX_DAEMON=--daemon
 make backup
 make install
 make configure.harden || true
+make configure.hardware || true
 
 echo; echo
 echo "Bootstrap complete."

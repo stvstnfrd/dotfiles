@@ -9,3 +9,12 @@ configure.harden:  ## Harden local configuration
 	echo 'GRUB_CMDLINE_LINUX_DEFAULT="text"' \
 	| sudo tee -a /etc/default/grub GRUB_CMDLINE_LINUX_DEFAULT="text" || true
 	sudo update-grub || true
+
+configure.hardware:  ## Configure hardware
+ifneq (,$(wildcard /etc/udev/hwdb.d))
+	make /etc/udev/hwdb.d/90-thinkpad-keys.hwdb
+	sudo udevadm hwdb --update
+endif
+
+/etc/udev/hwdb.d/90-thinkpad-keys.hwdb: root/etc/udev/hwdb.d/90-thinkpad-keys.hwdb
+	sudo cp "$(<)" "$(@)"
