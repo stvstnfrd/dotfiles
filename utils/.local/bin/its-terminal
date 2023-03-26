@@ -1,0 +1,81 @@
+#!/usr/bin/env sh
+#h NAME:
+#h 	its-terminal - It's The Simple Terminal Selector
+#h
+#h SYNOPSIS:
+#h 	its-terminal [-h|--help]
+#h
+#h DESCRIPTION:
+#h 	 **its-terminal** selects and exectutes your "preferred" terminal emulator
+#h
+#h EXAMPLES:
+#h 	its-terminal
+#h 		Select and execute the preferred terminal emulator
+#h
+#h OVERVIEW:
+#h 	 Look through a list of the most popular terminal emulators
+#h 	 and select our highest priority from those available on the system.
+#h
+#h 	 The selected terminal will be exec'ed.
+#h
+#h OPTIONS:
+#h 	-h, --help
+#h 		Display help text and exit
+#h
+#h EXIT STATUS:
+#h 	0
+#h 		the return code of the terminal
+#h
+#h 	1
+#h 		no preferred terminal found
+#h
+#h ENVIRONMENT:
+#h 	TERMINAL
+#h 		If set, this terminal emulator will have the highest priority.
+#h
+#h HISTORY:
+#h 	2022
+#h 		Created
+#h
+#h BUGS:
+#h 	 https://github.com/stvstnfrd/dotfiles/issues
+#h
+#h VERSIONS:
+#h 	1.0.0
+#h 		initial release
+#h
+set -aeu
+
+help() { grep '^#h' "${1}" | sed 's/^#h \?//g'; }
+
+for option in "${@}"; do case "${option}" in
+    #d Print help text and exit
+    -h|--help) help "${0}"; exit;;
+    *) ;;
+esac; done
+
+command_exists() {
+	command -v "${1}" >/dev/null 2>&1
+}
+
+# shellcheck disable=SC2153
+terminals="${TERMINAL} xfce4-terminal cool-retro-term x-terminal-emulator mate-terminal gnome-terminal terminator urxvt rxvt termit Eterm aterm uxterm xterm roxterm termite lxterminal terminology st qterminal lilyterm tilix terminix konsole kitty guake tilda alacritty hyper"
+for terminal in ${terminals}
+do
+    if command_exists "${terminal}"
+    then
+        if [ "${terminal}" = 'xfce4-terminal' ]
+        then
+            set -- --hide-menubar --hide-toolbar "${@}"
+        fi
+        exec "${terminal}" "${@}"
+    fi
+done
+
+message="Could not find a terminal emulator; please install one:
+
+Suggestions:
+$(echo "${terminals}" | fold --spaces | sed 's/^ */\t/')"
+printf '%s\n' "${message}"
+exit 1
+# vim: tw=0
