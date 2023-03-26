@@ -68,7 +68,7 @@ main() {
     keyname=${1:-id_rsa}
     [ "${#}" -eq 0 ] || shift
     comment=${*:-${USER}@$(uname -n)}
-    keypath=${HOME}/.config/ssh/keys/${keyname}
+    keypath=${XDG_CONFIG_HOME:-${HOME:-/home/${USER}}/.config}/ssh/keys/${keyname}
     if [ -e "${keypath}" ]
     then
         echo "This key already exists:	${keypath}"
