@@ -1,0 +1,86 @@
+#!/bin/sh
+#h NAME:
+#h 	pbcopy - a CLI clipboard copier
+#h
+#h SYNOPSIS:
+#h 	pbcopy [-h|--help]
+#h
+#h DESCRIPTION:
+#h 	 **pbcopy** is a POSIX-shell rewrite/wrapper of the OSX-equivalent.
+#h
+#h 	 You use it to copy text to the clipboard.
+#h
+#h EXAMPLES:
+#h 	{command} | pbcopy
+#h 		Copy the output of {command} to the default clipboard
+#h
+#h OVERVIEW:
+#h 	 If you already have a utility named pbcopy in your ${PATH},
+#h 	 that'll be used instead.
+#h 	 
+#h 	 Otherwise, we'll try to xclip for clipboard management and will wrap it.
+#h 	 
+#h 	 No other clipboard managers are supported at this time.
+#h
+#h OPTIONS:
+#h 	 **pbcopy** has no non-help options at this time.
+#h
+#h 	-h, --help
+#h 		Display help text and exit
+#h
+#h EXIT STATUS:
+#h 	0
+#h 		the return code of the clipboard manager
+#h
+#h 	1
+#h 		if *no* clipboard manager is found
+#h
+#h ENVIRONMENT:
+#h 	PATH
+#h 		We'll check ${PATH} for an existing clipboard manager,
+#h 		that *may* have the same name as this script
+#h
+#h FILES:
+#h 	/dev/stdin
+#h 		Clipboard managers receive input via STDIN
+#h
+#h HISTORY:
+#h 	2014-2023
+#h 		This script has evolved over the years.
+#h
+#h BUGS:
+#h 	 https://github.com/stvstnfrd/dotfiles/issues
+#h
+#h VERSIONS:
+#h 	1.0.0
+#h 		initial release
+#h
+set -aeu
+
+help() { grep '^#h' "${1}" | sed 's/^#h \?//g'; }
+
+main() {
+    for option in "${@}"; do case "${option}" in
+        #d Print help text and exit
+        -h|--help) help "${0}"; exit;;
+        *) ;;
+    esac; done
+
+    pb_copy() {
+        xclip -in -selection default
+    }
+    _command=
+    if _command=$(command-shadowed -v pbcopy  >/dev/null 2>&1)
+    then
+        _command='pbcopy'
+    elif _command=$(command-shadowed -v xclip  >/dev/null 2>&1)
+    then
+        _command='pb_copy'
+    else
+        echo "No clipboard tool found!"
+        exit 1
+    fi
+    "${_command}"
+}
+
+main "${@}"
