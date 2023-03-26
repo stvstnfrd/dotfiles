@@ -11,46 +11,54 @@
 
 set $mod Mod1
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:monospace 12
+# Dracula Theme
+# class                 border  bground text    indicator child_border
+client.focused          #6272A4 #6272A4 #F8F8F2 #6272A4   #6272A4
+client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
+client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
+client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
+client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
+client.background       #F8F8F2
 
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
+# Font for window titles.
+# Will also be used by the bar unless a different font is used in the bar {} block below.
+font pango:monospace,DejaVu Sans Mono,SpaceMono Nerd Font Mono Bold 16
 
-# The combination of xss-lock, nm-applet and pactl is a popular choice, so
-# they are included here as an example. Modify as you see fit.
+# Startup background services
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --color=000000 --nofork
+exec --no-startup-id nm-applet
+exec --no-startup-id xfce4-power-manager
 
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+# Session Management
 bindsym $mod+x exec i3lock --color=000000
 bindsym $mod+Shift+x exec i3lock --color=000000 && systemctl suspend
 
-# Startup background services
-exec --no-startup-id nm-applet
-exec --no-startup-id xfce4-power-manager
-exec --no-startup-id syndaemon -d -i 0.6s
-exec --no-startup-id ssh-agent
-exec --no-startup-id ssh-add ~/.local/share/ssh/keys/id_rsa
-
 # Startup default windows
-exec --no-startup-id slack
 exec --no-startup-id thunderbird
-exec --no-startup-id i3-msg 'workspace 2; exec xfce4-terminal'
+exec --no-startup-id discord
+exec --no-startup-id i3-msg 'workspace 2; exec xfce4-terminal --hide-menubar --hide-toolbar -e "screen -UrxR wip"; workspace 2'
 exec --no-startup-id firefox --new-instance
+exec --no-startup-id i3-msg 'workspace 4; exec cool-retro-term -e screen -UrxR focus; workspace 2'
 
 # Assign windows to workspaces
+assign [class="discord"] 1
 assign [class="Slack"] 1
 assign [class="Thunderbird"] 1
-assign [class="Firefox"] 2
-# assign [class="Xfce4-terminal"] 2
-assign [class="Chrome"] 3
+assign [class="firefox"] 2
+assign [class="obs"] 3
+for_window [class="cool-retro-term"] fullscreen enable
 
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 workspace_auto_back_and_forth yes
+
+# Media player controls
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPlayPause exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86AudioMedia exec --no-startup-id bash -c 'pgrep obs && (i3-msg "workspace prev" && pkill obs || true) || (i3-msg "workspace 3" && obs)'
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -59,7 +67,12 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
-bindsym XF86Display exec --no-startup-id bash "${HOME}/.config/i3/display.sh"
+# Brightness controls
+bindsym XF86Display exec --no-startup-id "${HOME}/.config/i3/display.sh"
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
+
+# Additional Function keys
 bindsym XF86Tools exec --no-startup-id firefox -new-tab 'about:config'
 bindsym XF86Favorites exec --no-startup-id firefox -new-tab 'about:home'
 
@@ -69,17 +82,16 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# Open a file browser
+bindsym $mod+t exec xdg-open ${HOME}
+
 # kill focused window
 bindsym $mod+q kill
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run
-# A more modern dmenu replacement is rofi:
-# bindcode $mod+40 exec "rofi -modi drun,run -show drun"
-# There also is i3-dmenu-desktop which only displays applications shipping a
-# .desktop file. It is a wrapper around dmenu, so you need that installed.
-# bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id "dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'SpaceMono Nerd Font Mono-17-Bold'
+bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'monospace-22'"
 
 # change focus
 bindsym $mod+h focus left
@@ -194,6 +206,18 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
-        separator_symbol " | "
+    status_command ${HOME}/.config/i3/status
+    separator_symbol " | "
+    font pango:monospace,DejaVu Sans Mono,SpaceMono Nerd Font Mono Bold 15
+    colors {
+        # Dracula Theme
+        background #282A36
+        statusline #F8F8F2
+        separator  #44475A
+        focused_workspace  #44475A #44475A #F8F8F2
+        active_workspace   #282A36 #44475A #F8F8F2
+        inactive_workspace #282A36 #282A36 #BFBFBF
+        urgent_workspace   #FF5555 #FF5555 #F8F8F2
+        binding_mode       #FF5555 #FF5555 #F8F8F2
+    }
 }
