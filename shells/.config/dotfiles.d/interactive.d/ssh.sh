@@ -26,4 +26,5 @@ else
     log INFO "Starting ssh-agent"
     eval "$(ssh-agent | tee "${agent_file}")"
     ssh-add
+    ssh-add "${HOME}/.local/share/ssh/keys/id_rsa"
 fi
