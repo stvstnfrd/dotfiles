@@ -9,10 +9,11 @@ on:
     - master
 jobs:
   bootstrap:
-    matrix:
-      os:
-      - ubuntu-bionic
-      - ubuntu-impish
+    strategy:
+      matrix:
+        os:
+        - ubuntu-bionic
+        - ubuntu-impish
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
