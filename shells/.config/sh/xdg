@@ -30,6 +30,7 @@ export PIP_CONFIG_FILE="${XDG_CONFIG_HOME}/pip/conf"
 export PIP_LOG_FILE="${XDG_CACHE_HOME}/pip/log"
 export PROJECT_HOME="${HOME}/projects"
 export PYTHON_EGG_CACHE="${XDG_CACHE_HOME}/python-eggs"
+export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/startup.py"
 export SCREENRC="${XDG_CONFIG_HOME}/screen/rc"
 export SQLITE_HISTORY=${XDG_DATA_HOME}/sqlite_history
 export VAGRANT_HOME="${XDG_CONFIG_HOME}/vagrant.d"
