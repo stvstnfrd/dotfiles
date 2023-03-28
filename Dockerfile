@@ -1,12 +1,9 @@
-FROM debian:latest
+FROM debian:bullseye
 
-# We recreate `make system.apt` here,
-# to avoid copying over the Makefile this early;
-# this improves cache-hits w/ layering.
-# Also, `make` isn't even installed yet...
-COPY .requirements/apt.txt .requirements/apt.txt
-RUN apt update -y && \
-    apt install -y $(cat .requirements/apt.txt)
+RUN apt-get update && apt-get install --yes sudo
+ADD https://raw.githubusercontent.com/stvstnfrd/its-package/master/dist/debian/Bootstrap.sh /tmp/bootstrap.sh
+RUN . /tmp/bootstrap.sh
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --yes its-package its-package-dev its-package-gui
 
 # Create a test user
 ENV USER=dev
