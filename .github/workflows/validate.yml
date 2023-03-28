@@ -9,22 +9,29 @@ on:
     - master
 jobs:
   bootstrap:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - debian-bullseye
+        - debian-buster
+        - debian-stretch
+        - ubuntu-bionic
+        - ubuntu-focal
+        - ubuntu-jammy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: sudo apt-get clean --fix-missing
     - run: sudo apt-get update --fix-missing
     - name: Install everything from scratch
-      run: make from-scratch
-  docker:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build a docker container
-      run: make docker.build
+      env:
+        NIX_DAEMON: '--no-daemon'
+        DOCKER_OS_VERSION: '${{ matrix.os }}'
+      run: make docker.from-scratch
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
     - name: Run the linter
       run: make lint
