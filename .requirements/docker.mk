@@ -1,8 +1,10 @@
 #!/usr/bin/make -f
-DOCKER_OS_VERSION ?= debian-bullseye
+DOCKER_OS ?= debian-bullseye
+DOCKER_OS_ID ?= $(word 1,$(subst -, ,$(DOCKER_OS)))
+DOCKER_OS_VERSION ?= $(word 2,$(subst -, ,$(DOCKER_OS)))
 .PHONY: docker.build
 docker.build:  ## Build a docker container
-	docker build -t dotfiles:latest .
+	docker build --build-arg DOCKER_OS_ID=$(DOCKER_OS_ID) --build-arg DOCKER_OS_VERSION=$(DOCKER_OS_VERSION) -t dotfiles:latest .
 
 DOCKER_RUN=docker run --hostname dotfiles
 .PHONY: docker.lint
@@ -24,4 +26,4 @@ docker.sh:  ## Start a container in a POSIX shell
 	$(DOCKER_RUN) --rm -it --name dotfiles dotfiles:latest sh --login
 
 docker.from-scratch:  ## Bootstrap the container from scratch
-	docker build -t dotfiles:latest --file .requirements/docker/from-scratch/$(DOCKER_OS_VERSION).dockerfile .
+	docker build -t dotfiles:latest --file .requirements/docker/from-scratch/$(DOCKER_OS_ID)-$(DOCKER_OS_VERSION).dockerfile .

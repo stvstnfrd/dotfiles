@@ -4,4 +4,5 @@ PIP_PACKAGES=$(shell grep -v '^\#' .requirements/pip.txt)
 
 .PHONY: system.pip
 system.pip:  ## Install pip packages
+	PATH="$${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$${PATH}" \
 	pip install --user $(PIP_PACKAGES)

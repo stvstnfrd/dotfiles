@@ -1,43 +1,45 @@
-FROM debian:bullseye
+# Build a new sandbox
+ARG DOCKER_OS_ID
+ARG DOCKER_OS_VERSION
+FROM $DOCKER_OS_ID:$DOCKER_OS_VERSION
 
-RUN apt-get update && apt-get install --yes sudo
-ADD https://raw.githubusercontent.com/stvstnfrd/its-package/master/dist/debian/Bootstrap.sh /tmp/bootstrap.sh
-RUN . /tmp/bootstrap.sh
-RUN DEBIAN_FRONTEND=noninteractive apt-get install --yes its-package its-package-dev its-package-gui
+# Install some base requirements, as few as possible
+RUN apt-get update --yes
+RUN apt-get install --yes curl build-essential git sudo
 
 # Create a test user
 ENV USER=dev
 ENV HOME=/home/${USER}
-ENV PATH=${HOME}/.nix-profile/bin/:${PATH}
-ENV PATH=${HOME}/.local/bin:${PATH}
-RUN useradd -m --shell /bin/bash ${USER}
-# RUN adduser --disabled-password --gecos '' ${USER}
-RUN adduser ${USER} sudo
+RUN useradd -m --shell /bin/bash --groups sudo ${USER}
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN chown -R ${USER} ${HOME}
 ENV EUID=1000
 USER ${USER}
 
+# Ensure everything is done headless
+ENV DEBIAN_FRONTEND=noninteractive
+ENV NIX_DAEMON=--no-daemon
+
+# Create our project directory
 RUN mkdir -p ${HOME}/.config/dotfiles
 WORKDIR ${HOME}/.config/dotfiles
 
-# Install nix packages
-COPY --chown=dev .requirements/nix.mk .requirements/
-COPY --chown=dev .requirements/nix.txt .requirements/
-RUN make -f .requirements/nix.mk system.nix
-
-# Install python packages
-COPY --chown=dev .requirements/pip.mk .requirements/
-COPY --chown=dev .requirements/pip.txt .requirements/
-RUN make -f .requirements/pip.mk system.pip
-
-# Backup existing configuration
-COPY --chown=dev .requirements/install.mk .requirements/
-RUN make -f .requirements/install.mk backup
-
-# Install stow packages
+# Re-create `make from-scratch`, but omit `make update`, since the install is fresh.
+# Re-create `make system`, step-by-step, to improve caching
+COPY --chown=dev .requirements/system.apt.mk .requirements/
+RUN sudo make -f .requirements/system.apt.mk system.apt
+COPY --chown=dev .requirements/system.brew.mk .requirements/
+RUN make -f .requirements/system.brew.mk system.brew
+COPY --chown=dev .requirements/system.nix.mk .requirements/
+COPY --chown=dev nix/.config/nixpkgs/config.nix nix/.config/nixpkgs/config.nix
+RUN make -f .requirements/system.nix.mk system.nix
+COPY --chown=dev .requirements/system.pip.mk .requirements/
+RUN make -f .requirements/system.pip.mk system.pip
 COPY --chown=dev . .
+# This is the rest of `make from-scratch`.
+RUN make backup
 RUN make install
+RUN make configure.harden
+RUN make configure.hardware
 
-RUN sudo usermod --groups '' ${USER}
 CMD ["bash", "--login"]
