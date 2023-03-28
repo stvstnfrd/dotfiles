@@ -1,8 +1,8 @@
 #!/usr/bin/make -f
 NIX_EXISTS=$(shell test -e /nix 2>&1 >/dev/null && echo 1 || echo 0)
 NIX_PACKAGES=$(shell grep -v '^\#' .requirements/nix.txt)
-NIX_DAEMON=--no-daemon  # default to off/single-user
-# NIX_DAEMON=--daemon  # uncomment line to enable
+# NIX_DAEMON ?= --no-daemon  # uncomment to enable single-user
+NIX_DAEMON ?= --daemon  # default to multi-user
 
 .PHONY: system.nix
 system.nix: system.nix.bootstrap  ## Install nix packages

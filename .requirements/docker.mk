@@ -1,4 +1,5 @@
 #!/usr/bin/make -f
+DOCKER_OS_VERSION ?= debian-bullseye
 .PHONY: docker.build
 docker.build:  ## Build a docker container
 	docker build -t dotfiles:latest .
@@ -21,3 +22,6 @@ docker.zsh:  ## Start a container in a zsh shell
 
 docker.sh:  ## Start a container in a POSIX shell
 	$(DOCKER_RUN) --rm -it --name dotfiles dotfiles:latest sh --login
+
+docker.from-scratch:  ## Bootstrap the container from scratch
+	docker build -t dotfiles:latest --file .requirements/docker/from-scratch/$(DOCKER_OS_VERSION).dockerfile .
