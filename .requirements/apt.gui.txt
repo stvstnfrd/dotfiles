@@ -1,2 +1,0 @@
-i3lock
-obs-studio
