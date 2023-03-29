@@ -8,12 +8,14 @@
 #h 	command-shadowed {executable} [args ...]
 #h 	command-shadowed /path/to/executable [args ...]
 #h
-#h DESCRIPTION:
-#h 	Execute the specified command, but when searching, ignore the
-#h 	first-matching ${PATH} entry, as well as shell functions.
+#h 	See complete help with `command-shadowed --help`.
 #h
-#h 	This is useful when you have a wrapper script with the same name
-#h 	as an existing utility.
+#h DESCRIPTION:
+#h 	 Execute the specified command, but when searching, ignore the
+#h 	 first-matching ${PATH} entry, as well as shell functions.
+#h
+#h 	 This is useful when you have a wrapper script with the same name
+#h 	 as an existing utility.
 #h
 #h EXAMPLES:
 #h 	command-shadowed -h
@@ -39,52 +41,53 @@
 #h 		Meant to be included in a wrapper script.
 #h
 #h OVERVIEW:
-#h 	We sometimes want to lookup the _2nd_highest_priority_ location of
-#h 	executable within ${PATH} or to exclude a particular entry.
-#h 	Whereas running `command {executable}` will give the _1st_highest_priority_
-#h 	location of an executable and running `command -p {executable}` will give
-#h 	the _1st_highest_priority_ within "standard" system utility paths,
-#h 	this script attempts to look up the ${PATH} hierarchy one level
-#h 	and find the _next_ most appropriate location.
+#h 	 We sometimes want to lookup the _2nd_highest_priority_ location of
+#h 	 executable within ${PATH} or to exclude a particular entry.
+#h 	 Whereas running `command {executable}` will give the _1st_highest_priority_
+#h 	 location of an executable and running `command -p {executable}` will give
+#h 	 the _1st_highest_priority_ within "standard" system utility paths,
+#h 	 this script attempts to look up the ${PATH} hierarchy one level
+#h 	 and find the _next_ most appropriate location.
 #h
-#h 	This is useful in scripts that "shadow" or "wrap" another executable,
-#h 	using the same name, to perhaps provide default arguments transparently.
+#h 	 This is useful in scripts that "shadow" or "wrap" another executable,
+#h 	 using the same name, to perhaps provide default arguments transparently.
 #h
-#h 	Consider the example:
-#h 		Your ${PATH} variable looks:
-#h 			PATH=${HOME}/.local/bin:${HOME}/.nix-profile/bin:/usr/bin:/bin
-#h 		You have two separate versions of an executable, eg: `ssh`,
-#h 		each located in your ${PATH}.
-#h 			- ${HOME}/.nix-profile/bin/ssh
-#h 			- /usr/bin/ssh
-#h 		You want to create a wrapper script
-#h 			- ${HOME}/.local/bin/ssh
-#h 		that calls `ssh` with default arguments,
-#h 		eg: loading a custom config file
-#h 			`ssh -F ${XDG_CONFIG_DIR}/ssh/config`.
-#h 		If we execute it like
-#h 			command-shadowed ssh -F ${XDG_CONFIG_DIR}/ssh/config
-#h 		the copy will be executed from
-#h 			${HOME}/.nix-profile/bin
-#h 		whereas
-#h 			command -p ssh [...]
-#h 		would have executed from
-#h 			/usr/bin
-#h 		and
-#h 			command ssh [...]
-#h 		would have crashed in an infinite loop of self-recursion.
+#h 	 Consider the example:
+#h 	 	Your ${PATH} variable looks:
+#h 	 		PATH=${HOME}/.local/bin:${HOME}/.nix-profile/bin:/usr/bin:/bin
+#h 	 	You have two separate versions of an executable, eg: `ssh`,
+#h 	 	each located in your ${PATH}.
+#h 	 		- ${HOME}/.nix-profile/bin/ssh
+#h 	 		- /usr/bin/ssh
+#h 	 	You want to create a wrapper script
+#h 	 		- ${HOME}/.local/bin/ssh
+#h 	 	that calls `ssh` with default arguments,
+#h 	 	eg: loading a custom config file
+#h 	 		`ssh -F ${XDG_CONFIG_DIR}/ssh/config`.
+#h 	 	If we execute it like
+#h 	 		command-shadowed ssh -F ${XDG_CONFIG_DIR}/ssh/config
+#h 	 	the copy will be executed from
+#h 	 		${HOME}/.nix-profile/bin
+#h 	 	whereas
+#h 	 		command -p ssh [...]
+#h 	 	would have executed from
+#h 	 		/usr/bin
+#h 	 	and
+#h 	 		command ssh [...]
+#h 	 	would have crashed in an infinite loop of self-recursion.
 #h
 #h OPTIONS:
-#h 	General Options
-#h 		-h
-#h 			Print this help message and exit.
-#h 		-v
-#h 			Do not execute the command but search for the command and
-#h 			print the absolute pathname of utilities, the name for builtins
-#h 			or the expansion of aliases.
+#h 	-h
+#h 		Print this help message and exit.
+#h
+#h 	-v
+#h 		Do not execute the command but search for the command and
+#h 		print the absolute pathname of utilities, the name for builtins
+#h 		or the expansion of aliases.
 #h
 #h EXIT STATUS:
-#h 	Presumably, the same as if running `command [args...]`
+#h 	?
+#h 		Presumably, the same as if running `command [args...]`
 #h
 #h ENVIRONMENT:
 #h 	PATH
