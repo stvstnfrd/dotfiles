@@ -26,9 +26,26 @@ jobs:
     - run: sudo apt-get update --fix-missing
     - name: Install everything from scratch
       env:
-        NIX_DAEMON: '--no-daemon'
-        DOCKER_OS_VERSION: '${{ matrix.os }}'
+        DOCKER_OS: '${{ matrix.os }}'
       run: make docker.from-scratch
+  devstack:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - debian-bullseye
+        - debian-buster
+        - debian-stretch
+        - ubuntu-bionic
+        - ubuntu-focal
+        - ubuntu-jammy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the sandbox
+      env:
+        DOCKER_OS: '${{ matrix.os }}'
+      run: make docker.build
   lint:
     runs-on: ubuntu-latest
     steps:

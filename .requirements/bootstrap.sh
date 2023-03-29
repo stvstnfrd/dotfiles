@@ -13,9 +13,6 @@ if [ ! -d "${HOME}/.config/dotfiles" ]; then
     git clone \
         https://github.com/stvstnfrd/dotfiles.git \
         "${HOME}/.config/dotfiles"
-    cd "${HOME}/.config/dotfiles"
-    git fetch origin
-    git checkout -b fix/build origin/fix/build
 fi
 cd "${HOME}/.config/dotfiles"
 export PATH="${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:${PATH}"
