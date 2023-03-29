@@ -1,5 +1,5 @@
 #!/bin/sh
-set -eau
+set -aeu
 file=${1}
 echo '
     BEGIN {

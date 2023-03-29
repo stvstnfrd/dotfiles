@@ -1,0 +1,5 @@
+#!/bin/sh
+_command=$(command-shadowed -v "${0}")
+private_directory="${XDG_CONFIG_HOME:-${HOME}/.config}/mozilla"
+[ -d "${private_directory}" ] || mkdir -p "${private_directory}"
+firejail --private="${private_directory}" "${_command}" "${@}"

@@ -44,19 +44,30 @@ FIND_FILES_ALL=( \
 LINT_SH_ALL=$(FIND_FILES_ALL) | $(XARGS_SHELLCHECK)
 XARGS_SHELLCHECK = xargs -0 --no-run-if-empty shellcheck --external-sources
 
-AWK_LINT=$(shell command -v awk-lint >/dev/null 2>&1 && echo awk-lint || echo "echo '\n\ta b c\td ef\n\ng' | awk -f")
-AWK_FILES=$(shell grep \
-    --recursive \
-    --files-with-match \
-    '^\#!\/usr\/bin\/awk' \
-)
+ifneq (,$(wildcard utils/.local/bin/awk-lint))
+AWK_LINT=utils/.local/bin/awk-lint
+else ifneq (,$(shell command -v awk-lint 2>/dev/null))
+AWK_LINT=awk-lint
+endif
 
 .PHONY: lint-awk
 lint-awk: $(AWK_FILES)
-
-.PHONY: $(AWK_FILES)
-$(AWK_FILES):
-	@$(AWK_LINT) "$(@)"
+ifeq (,$(AWK_LINT))
+	@echo "Helper script 'lint-awk' missing; cannot continue."
+	@exit 1
+else
+	grep \
+		--recursive \
+		--binary-files=without-match \
+		--files-with-match \
+		'^\#!\/usr\/bin\/awk' \
+		--null \
+	| xargs -0 \
+		-n 1 \
+		--no-run-if-empty \
+		$(AWK_LINT) \
+	;
+endif
 
 .PHONY: lint
 lint: lint-awk  ## Run the linter against all files
