@@ -26,4 +26,4 @@ docker.sh:  ## Start a container in a POSIX shell
 	$(DOCKER_RUN) --rm -it --name dotfiles dotfiles:latest sh --login
 
 docker.from-scratch:  ## Bootstrap the container from scratch
-	docker build -t dotfiles:latest --file .requirements/docker/from-scratch/$(DOCKER_OS_ID)-$(DOCKER_OS_VERSION).dockerfile .
+	docker build --build-arg DOCKER_OS_ID=$(DOCKER_OS_ID) --build-arg DOCKER_OS_VERSION=$(DOCKER_OS_VERSION) -t dotfiles:latest --file .requirements/from-scratch.dockerfile .
