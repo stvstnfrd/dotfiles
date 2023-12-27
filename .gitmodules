@@ -67,3 +67,6 @@
 [submodule "vim-plugins/.config/vim/bundle/rainbow_parentheses"]
 	path = vim-plugins/.config/vim/bundle/rainbow_parentheses
 	url = git@github.com:kien/rainbow_parentheses.vim.git
+[submodule "vim-plugins/.config/vim/bundle/yaml"]
+	path = vim-plugins/.config/vim/bundle/yaml
+	url = https://github.com/stephpy/vim-yaml.git
