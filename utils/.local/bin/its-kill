@@ -8,6 +8,7 @@ get_process_id() {
 			"${search}" \
 		| fzf \
 			--tac \
+			--exact \
 		;
 	)"
 	if [ -n "${process_id}" ]
