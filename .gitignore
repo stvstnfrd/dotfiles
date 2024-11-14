@@ -4,5 +4,6 @@
 .zcomp*
 autojump/.local/bin/pip*
 autojump/.local/lib/
+backup/
 config.local
 history

@@ -72,6 +72,15 @@ do
     fi
 done
 
+# It's likely that this symlink (if it exists)
+# points to a terminal we've already found above (see: *${terminals}*),
+# so it's unlikely that this will be true,
+# but let's check it anyway, to be sure (:shrug:).
+if [ -e /etc/alternatives/x-terminal-emulator ]
+then
+    exec /etc/alternatives/x-terminal-emulator "${@}"
+fi
+
 message="Could not find a terminal emulator; please install one:
 
 Suggestions:

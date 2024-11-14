@@ -28,10 +28,8 @@
 #h OVERVIEW:
 #h 	 By setting **GREP_EXCLUDE_PATH**=; and **GREP_EXCLUDE_GLOB**=;,
 #h 	 **grep-right** fallback
-#h 	 
+#h
 #h 	 TODO: More here...
-#h 	 
-#h 	 
 #h
 #h OPTIONS:
 #h 	 **grep-right** acts as a proxy wrapper for **grep**,
@@ -98,8 +96,6 @@ set -eau # o pipefail
 
 GREP_EXCLUDE_PATH=${GREP_EXCLUDE_PATH:-'.cvs:.git:.hg:.svn:__pycache__:test_root:dist:node_modules:coverage:htmlcov:cover'}
 GREP_EXCLUDE_GLOB=${GREP_EXCLUDE_GLOB:-'*.po:*.mo'}
-
-_NAME=${0}
 
 help() { grep '^#h' "${1}" | sed 's/^#h \?//g'; }
 usage() { echo "Usage:"; help "${@}" | awk 'BEGIN { inside=0 }; /^[^\t]/ { inside=0 }  inside; /^SYNOPSIS/ { inside=1 };'; }

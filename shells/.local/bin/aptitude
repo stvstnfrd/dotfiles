@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+_command="$(command-shadowed -v "${0}")"
+_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}/aptitude"
+CONFIG_BASE="${_HOME}/.aptitude"
+CONFIG_FILE="${CONFIG_BASE}/config"
+
+[ -d "${CONFIG_BASE}" ] || mkdir -p "${CONFIG_BASE}"
+[ -e "${CONFIG_FILE}" ] || touch "${CONFIG_FILE}"
+
+HOME="${_HOME}" "${_command}" "${@}"

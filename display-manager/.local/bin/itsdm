@@ -38,15 +38,28 @@
 #h 		failure
 #h
 #h ENVIRONMENT:
+#h 	ITSDM_PATH
+#h 		A colon-separated list of paths which contain
+#h 		available *.desktop* xsession files.
+#h
+#h 	ITSDM_VT1, ITSDM_VT2, ..., ITSDM_VT9
+#h 		A preferred desktop (x)session to be run
+#h 		on the specified virtual terminal.
+#h 		The string is passed directly to to `fzf`
+#h 		(eg: `fzf --query "${ITSDM_VT1}"`),
+#h 		so you can use any fuzzy text matching that it supports.
+#h 		For example, from least specific to most:
+#h 			- `i3` (matches any filename matching `i3`)
+#h 			- `^i3` (matches any filename starting with `i3`)
+#h 			- `^i3.desktop$` (matches only one file named `i3.desktop`
+#h 		See *man fzf* for more details.
+#h
 #h 	XDG_CACHE_HOME
 #h 		The base location for logs, default is *${HOME}/.cache*.
 #h
 #h 	PAGER
 #h 		The pager to be used when invoked with **-m**, **--manual**,
 #h 		defaults to **less**.
-#h
-# 	If they exist, the list of available options will be pulled from
-# 	*.desktop* files in the following directories:
 #h
 #h FILES:
 #h
@@ -80,13 +93,30 @@ while getopts ":hmM" option; do case ${option} in
     *) ;;
 esac; done
 
+if [ -z "${ITSDM_PATH}" ]
+then
+    ITSDM_PATH=''
+    if [ -d '/usr/share/xsessions' ]
+    then
+        ITSDM_PATH="/usr/share/xsessions:${ITSDM_PATH}"
+    fi
+    if [ -d "${NIX_PROFILE:-${HOME}/.nix-profile}/share/xsessions" ]
+    then
+        ITSDM_PATH="${NIX_PROFILE:-${HOME}/.nix-profile}/share/xsessions:${ITSDM_PATH}"
+    fi
+    if [ -d "${HOME}/.local/share/xsessions" ]
+    then
+        ITSDM_PATH="${HOME}/.local/share/xsessions:${ITSDM_PATH}"
+    fi
+fi
+
 log() {
     level=${1}
     message=${2}
     logfile=${XDG_CACHE_HOME}/itsdm/log
     test -e "${logfile}" || mkdir -p "$(dirname "${logfile}")"
     datestamp=$(date +'%Y-%m-%d %H:%M:%S')
-    echo "${datestamp}	${level}	${message}" >>"${logfile}"
+    echo "${datestamp}	${level}	$$	${message}" >>"${logfile}"
 }
 gather_choices() {
     grep_args=
@@ -135,7 +165,11 @@ display_choices_sh() {
     return 1
 }
 display_choices_fzf() {
+    default=''
+    eval "default=\${ITSDM_VT${XDG_VTNR}}"
     fzf \
+        --query="${default}" \
+        --select-1 \
         --preview="grep \
         '^\(Name\|Exec\|Comment\)=' \
         {} \
@@ -194,15 +228,25 @@ check_choice() {
 }
 handle_choice() {
     choice=${1}
-    check_choice "${choice}" || return ${?}
-    check_exec "${choice}" || return ${?}
-    execute_app "${choice}"
+    if [ -n "${choice}" ]
+    then
+        log INFO "Attempting to exec choice: ${choice}" >&2
+        check_choice "${choice}" || return ${?}
+        check_exec "${choice}" || return ${?}
+        execute_app "${choice}"
+    else
+        log INFO "Falling back to default sh(ell): ${SHELL:-sh}" >&2
+        exec "${SHELL:-sh}"
+    fi
 }
 main() {
+    log DEBUG "Initialize" >&2
     if command -v fzf >/dev/null 2>&1
     then
+        log DEBUG "FZF available" >&2
         choice=$(gather_choices | display_choices_fzf)
     else
+        log DEBUG "FZF not available" >&2
         # shellcheck disable=SC2046
         choice=$(display_choices_sh $(gather_choices))
     fi

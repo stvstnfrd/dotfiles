@@ -1,5 +1,6 @@
 Include ~/.local/share/ssh/config
 
 Host *
-    IdentityFile ~/.local/share/ssh/keys/id_rsa
+    AddKeysToAgent yes
+    IdentityFile ~/.config/ssh/keys/id_rsa
     UserKnownHostsFile ~/.cache/ssh_known_hosts

@@ -61,3 +61,12 @@
 [submodule "vim-plugins/.config/vim/bundle/syntastic"]
 	path = vim-plugins/.config/vim/bundle/syntastic
 	url = https://github.com/vim-syntastic/syntastic.git
+[submodule "vim-plugins/.config/vim/bundle/rainbow_csv"]
+	path = vim-plugins/.config/vim/bundle/rainbow_csv
+	url = git@github.com:mechatroner/rainbow_csv.git
+[submodule "vim-plugins/.config/vim/bundle/rainbow_parentheses"]
+	path = vim-plugins/.config/vim/bundle/rainbow_parentheses
+	url = git@github.com:kien/rainbow_parentheses.vim.git
+[submodule "vim-plugins/.config/vim/bundle/yaml"]
+	path = vim-plugins/.config/vim/bundle/yaml
+	url = https://github.com/stephpy/vim-yaml.git

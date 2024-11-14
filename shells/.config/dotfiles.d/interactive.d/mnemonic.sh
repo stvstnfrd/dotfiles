@@ -18,8 +18,14 @@ fi
 alias h='head '
 alias i='ipython '
 # j
-alias k='kill '
-alias k9='kill -9 '
+if command -v its-kill >/dev/null 2>&1
+then
+	alias k='its-kill '
+	alias k9='its-kill -9 '
+else
+	alias k='kill '
+	alias k9='kill -9 '
+fi
 # l
 _name=
 for _level in $(seq 1 5); do
